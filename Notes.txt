@@ -1,0 +1,24 @@
+
+
+Do NOT install bootstrap - You will get an older version 1.0.0
+
+Instead, install the following.
+   PM> Install-Package Twitter.Bootstrap
+
+Bundling Note: When adding the bundles for bootstrap (and probably any 
+bundles, be sure NOT to use the .min. versions)
+
+Important Git changes (http://sedodream.com/2012/05/05/GitCustomizingColorsForWindowsIncludingPoshgit.aspx)
+   git config --global color.status.changed "cyan normal bold" 
+   git config --global color.status.untracked "cyan normal bold"
+
+   
+Objectives
+   Entity Framework Migrations
+   MySql data layer with Migrations
+   DynamoDb data layer
+   Web Service Layer (as Windows Service)
+   Add more common code
+   All projects in one solution
+   Best Practices page with examples of favorite snippets
+   

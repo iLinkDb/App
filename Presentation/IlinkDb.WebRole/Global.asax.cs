@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
+using AppCommon;
+
 namespace IlinkDb.WebRole
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -22,6 +24,9 @@ namespace IlinkDb.WebRole
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Logging.LogInfo("Application_Start");
+            
         }
     }
 }
