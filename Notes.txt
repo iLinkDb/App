@@ -12,6 +12,8 @@ Important Git changes (http://sedodream.com/2012/05/05/GitCustomizingColorsForWi
    git config --global color.status.changed "cyan normal bold" 
    git config --global color.status.untracked "cyan normal bold"
 
+Starting more than one project in Visual Studio
+http://stackoverflow.com/questions/3697092/starting-multiple-projects-when-debugging-in-visual-studio-2010   
    
 Objectives
    Entity Framework Migrations
