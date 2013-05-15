@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlinkDb.WebRole", "IlinkDb.WebRole\IlinkDb.WebRole.csproj", "{AC49F9CA-8E03-4201-82C9-47B6A665131A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlinkDb.WebRole.Tests", "IlinkDb.WebRole.Tests\IlinkDb.WebRole.Tests.csproj", "{77FA7596-39DE-403D-8209-F5284E123788}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC49F9CA-8E03-4201-82C9-47B6A665131A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC49F9CA-8E03-4201-82C9-47B6A665131A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC49F9CA-8E03-4201-82C9-47B6A665131A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC49F9CA-8E03-4201-82C9-47B6A665131A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77FA7596-39DE-403D-8209-F5284E123788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77FA7596-39DE-403D-8209-F5284E123788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77FA7596-39DE-403D-8209-F5284E123788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77FA7596-39DE-403D-8209-F5284E123788}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
