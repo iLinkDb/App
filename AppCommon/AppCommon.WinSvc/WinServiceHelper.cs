@@ -58,9 +58,9 @@ namespace AppCommon
             try
             {
                 ServiceController watchDogSvc = new ServiceController();
-                watchDogSvc.ServiceName = "abcWatchDog";
+                watchDogSvc.ServiceName = "IlinkDbWatchDog";
 
-                retVal = "abcWatchDog prior status: " + watchDogSvc.Status;
+                retVal = "IlinkDbWatchDog prior status: " + watchDogSvc.Status;
 
                 if (watchDogSvc.Status != ServiceControllerStatus.Running)
                 {
@@ -86,7 +86,7 @@ namespace AppCommon
 
         private static AssemblyInstaller GetInstaller(Type type)
         {
-            // AssemblyInstaller installer = new AssemblyInstaller(typeof(abcWatchDog).Assembly, null);
+            // AssemblyInstaller installer = new AssemblyInstaller(typeof(IlinkDbWatchDog).Assembly, null);
             AssemblyInstaller installer = new AssemblyInstaller(type.Assembly, null);
             installer.UseNewContext = true;
             return installer;

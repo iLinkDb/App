@@ -122,8 +122,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,6 +184,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -231,10 +232,25 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AppCommon\AppCommon.Logging\AppCommon.Logging.csproj">
+      <Project>{5bfab067-72fc-4efd-86d3-227d9182d868}</Project>
+      <Name>AppCommon.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\AppCommon\NLog.Targets.Syslog\src\NLog.Targets.Syslog\NLog.Targets.Syslog.csproj">
+      <Project>{d888ee7e-4394-4fb1-9b37-29513ff8a91a}</Project>
+      <Name>NLog.Targets.Syslog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IlinkDb.Service.Controllers\IlinkDb.Service.Controllers.csproj">
+      <Project>{d1736d84-9a33-4eb3-9d25-123250f9c030}</Project>
+      <Name>IlinkDb.Service.Controllers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

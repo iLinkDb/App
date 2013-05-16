@@ -103,6 +103,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IlinkDb.Service.Controllers\IlinkDb.Service.Controllers.csproj">
+      <Project>{d1736d84-9a33-4eb3-9d25-123250f9c030}</Project>
+      <Name>IlinkDb.Service.Controllers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IlinkDb.WebService\IlinkDb.WebService.csproj">
       <Project>{DC7CD1EF-E77F-4DCB-BAD6-A72691A4C4F3}</Project>
       <Name>IlinkDb.WebService</Name>

@@ -14,6 +14,9 @@ Important Git changes (http://sedodream.com/2012/05/05/GitCustomizingColorsForWi
 
 Starting more than one project in Visual Studio
 http://stackoverflow.com/questions/3697092/starting-multiple-projects-when-debugging-in-visual-studio-2010   
+
+In the Windows Service Layer, I used nuGet Gui to add: Microsoft ASP.NET Web API Self Host
+
    
 Objectives
    Entity Framework Migrations

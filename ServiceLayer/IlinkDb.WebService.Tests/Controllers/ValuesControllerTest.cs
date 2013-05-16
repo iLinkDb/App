@@ -6,7 +6,7 @@ using System.Text;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IlinkDb.WebService;
-using IlinkDb.WebService.Controllers;
+using IlinkDb.Service.Controllers;
 
 namespace IlinkDb.WebService.Tests.Controllers
 {

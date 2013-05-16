@@ -13,11 +13,16 @@ namespace IlinkDb.WebService
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
+
+            routes.MapRoute(name: "SvcDefault", url: "{controller}/{action}/{id}",
+                namespaces: new[] { "IlinkDb.Service.Controllers" },
+                defaults: new {controller = "V1", action = "Version", id = UrlParameter.Optional});
+            
         }
     }
 }
