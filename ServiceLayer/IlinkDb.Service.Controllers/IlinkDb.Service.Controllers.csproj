@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HomeController.cs" />
+    <Compile Include="LinkController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="V1Controller.cs" />
     <Compile Include="ValuesController.cs" />
@@ -97,6 +98,14 @@
     <ProjectReference Include="..\..\AppCommon\AppCommon.Misc\AppCommon.Misc.csproj">
       <Project>{05c26666-e4c3-43b9-979a-89e1d9449f3b}</Project>
       <Name>AppCommon.Misc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BusinessLayer\IlinkDb.Business\IlinkDb.Business.csproj">
+      <Project>{309e1d5f-a56f-491c-a8c9-3a688b4a87fd}</Project>
+      <Name>IlinkDb.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BusinessLayer\IlinkDb.Entity\IlinkDb.Entity.csproj">
+      <Project>{0b7349cf-3a9a-4877-8f4e-3cf7bc6e96e4}</Project>
+      <Name>IlinkDb.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
