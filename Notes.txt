@@ -17,6 +17,16 @@ http://stackoverflow.com/questions/3697092/starting-multiple-projects-when-debug
 
 In the Windows Service Layer, I used nuGet Gui to add: Microsoft ASP.NET Web API Self Host
 
+To enable CORS in the WebAPI project, this article helped: 
+http://www.codeguru.com/csharp/.net/net_asp/using-cross-origin-resource-sharing-cors-in-asp.net-web-api.html
+The short version is to add this to the web.config.
+	<system.webServer>
+		<httpProtocol>
+		  <customHeaders>
+			<add name="Access-Control-Allow-Origin" value="*"/>
+		  </customHeaders>
+		</httpProtocol>
+	<system.webServer>
    
 Objectives
    Entity Framework Migrations

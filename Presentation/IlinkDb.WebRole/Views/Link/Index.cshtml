@@ -4,33 +4,76 @@
 
 <div class="container">
 
-    <h1>Just some list</h1>
-    <form data-bind="submit: addItem">
-        New item:
-    <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
-        <button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
-        <p>Your items:</p>
-        <select multiple="multiple" width="50" data-bind="options: items"></select>
-    </form>
+    <h1>Links</h1>
+
+    <ul id="update-links" data-bind="foreach: links">
+        <li>
+            <span class="item">Id</span> <span data-bind="text: $data.Id"></span>
+            <span class="item">Link</span>
+            <input type="text" data-bind="value: $data.Url" />
+        </li>
+    </ul>
+
+    @*        <div>
+            <input type="button" value="Update" data-bind="click: $root.update"/>
+            <input type="button" value="Delete Item" data-bind="click: $root.remove"/>
+        </div>*@
 
 </div>
-<!-- /container -->
 
+<div class="float-right">
+    <h2>Add New Link</h2>
+    <form id="addLink" data-bind="submit: create">
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Url</legend>
+            @Html.EditorForModel()
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+    </form>
+</div>
 
 @section scripts
 {
     <script type='text/javascript'>
-        var SimpleListModel = function (items) {
-            this.items = ko.observableArray(items);
-            this.itemToAdd = ko.observable("");
-            this.addItem = function () {
-                if (this.itemToAdd() != "") {
-                    this.items.push(this.itemToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
-                    this.itemToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
-                }
-            }.bind(this);  // Ensure that "this" is always this view model
-        };
 
-        ko.applyBindings(new SimpleListModel(["Alpha", "Beta", "Gamma"]));
+        function LinksViewModel() {
+            var self = this;
+            self.links = ko.observableArray();
+
+            // New code
+            // '@ViewBag.ApiUrl';
+            var baseUri = 'http://localhost:30441/link/list';
+
+            self.create = function (formElement) {
+                // If the form data is valid, post the serialized form data to the web API.
+                $(formElement).validate();
+                if ($(formElement).valid()) {
+                    $.post(baseUri, $(formElement).serialize(), null, "json")
+                        .done(function (o) {
+                            // Add the new product to the view-model.
+                            self.products.push(o);
+                        });
+                }
+            }
+
+            self.update = function (link) {
+                $.ajax({ type: "PUT", url: baseUri + '/' + product.Id, data: link });
+            }
+
+            self.remove = function (link) {
+                // First remove from the server, then from the view-model.
+                $.ajax({ type: "DELETE", url: baseUri + '/' + link.Id })
+                    .done(function () { self.products.remove(link); });
+            }
+
+            $.getJSON(baseUri, self.links);
+        }
+
+        $(document).ready(function () {
+            ko.applyBindings(new LinksViewModel());
+        })
     </script>
 }

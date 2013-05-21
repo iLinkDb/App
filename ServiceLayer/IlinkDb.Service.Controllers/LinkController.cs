@@ -22,6 +22,7 @@ namespace IlinkDb.Service.Controllers
         public HttpResponseMessage List()
         {
             HttpResponseMessage retVal = new HttpResponseMessage();
+
             string logMsg = "LinkController/List";
 
             try
