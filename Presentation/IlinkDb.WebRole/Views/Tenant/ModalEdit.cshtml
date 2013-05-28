@@ -1,0 +1,62 @@
+﻿<style type="text/css">
+
+    .modal-backdrop {
+        opacity: 0.4;
+    }
+
+</style>
+
+<div id="modalEdit" class="modal hide">
+    <div class="modal-header">
+        <button type="button" class="close modalCancel" aria-hidden="true">&times;</button>
+        <h3>Edit Tenant</h3>
+    </div>
+    <div class="modal-body">
+        <table>
+            <tr>
+                <td>Id</td>
+                <td><span id="id"></span></td>
+
+            </tr>
+            <tr>
+                <td>Domain</td>
+                <td>
+                    <input id="domain" type="text" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="modalSave" class="btn btn-primary">Save changes</a>
+        <a href="#" class="btn modalCancel">Close</a>
+    </div>
+</div>
+<script type='text/javascript'>
+
+    $('.modalCancel').click(function () {
+        // Check for changes and confirm losing them.
+        console.log('modalCancel');
+        $('#modalEdit').modal('hide');
+    });
+
+    $('#modalSave').click(function () {
+        // Save the changs...
+        console.log('modalSave');
+
+        //var fred = ko.dependentObservable(function () {
+        //    // var search = this.search().toLowerCase();
+        //        return ko.utils.arrayFirst(this.filteredItems(), function (item) {
+        //            return ko.utils.stringStartsWith(item.Id, 2);
+        //        });
+        //}, ko.dependentObservable);
+        console.dir(ko);
+        console.dir(ko.observableArray);
+
+        var match = ko.utils.arrayFirst(ko.observableArray, function (item) {
+            return true;    // 2 === item.id;
+        });
+        console.dir(match);
+
+        $('#modalEdit').modal('hide');
+    });
+
+</script>

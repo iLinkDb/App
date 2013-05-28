@@ -45,7 +45,7 @@ namespace IlinkDb.Business.Test
                 System.Diagnostics.Debug.Print("Two: " + link.Id + " " + link.Url);
             }
 
-            Link newOne = _linkManager.Add(one);
+            Link newOne = _linkManager.Save(one);
 
             Assert.IsTrue(newOne.Id > 0, "Id on new object was not set");
             Assert.IsTrue(_linkManager.List().Count == priorCount + 1, "Failed to add new object to collection");

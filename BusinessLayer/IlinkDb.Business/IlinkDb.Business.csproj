@@ -43,6 +43,7 @@
     <Compile Include="LinkManager.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TenantManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppCommon\AppCommon.Logging\AppCommon.Logging.csproj">

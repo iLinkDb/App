@@ -11,7 +11,8 @@ namespace IlinkDb.Data
     public interface IRepository
     {
         void Initialize();
-        T Add<T>(T t) where T : EntityBase;
+        T Get<T>(long id) where T : EntityBase;
+        T Save<T>(T t) where T : EntityBase;
         IQueryable<T> List<T>() where T : EntityBase;
     }
 }

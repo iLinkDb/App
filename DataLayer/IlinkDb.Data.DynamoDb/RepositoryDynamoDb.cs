@@ -34,7 +34,17 @@ namespace IlinkDb.Data.DynamoDb
             catch (Exception e) { Console.WriteLine(e.Message); }
         }
 
-        public T Add<T>(T t) where T : Entity.EntityBase
+        public void Initialize()
+        {
+            // Nothing to do here.  This method only works on memory databases.
+        }
+
+        public T Get<T>(long id) where T : EntityBase
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Save<T>(T t) where T : Entity.EntityBase
         {
             T retVal = t;
 
@@ -53,18 +63,12 @@ namespace IlinkDb.Data.DynamoDb
                 Console.WriteLine("Exception: " + ex.Message);
             }
 
-
             return retVal;
         }
 
         public IQueryable<T> List<T>() where T : Entity.EntityBase
         {
             throw new NotImplementedException();
-        }
-
-        public void Initialize()
-        {
-            // Nothing to do here.  This method only works on memory databases.
         }
     }
 }

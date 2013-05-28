@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tenants</h2>
+<div class="hero-unit">
+    <h1>Tenants</h1>
+    <p>Some description here...</p>
+    <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="span2">
+    </div>
+    <div class="span4">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Id</td>
+                    <td>Tenant</td>
+                </tr>
+            </thead>
+            <tbody id="update-links" data-bind="foreach: tenants">
+                <tr>
+                    <td width="20px">
+                        <i class='icon-pencil' data-bind="click: $parent.editItem"></i>
+                    </td>
+                    <td data-bind="text: $data.Id"></td>
+                    <td class="item" data-bind="text: $data.Domain"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="span6">
+    </div>
+</div>
+
+@section scripts
+{
+    <script type='text/javascript'>
+
+        function TenantsViewModel() {
+            var self = this;
+            self.tenants = ko.observableArray();
+
+            // New code
+            // '@ViewBag.ApiUrl';
+            var baseUri = 'http://localhost:30441/tenant/list';
+
+            self.create = function (formElement) {
+                // If the form data is valid, post the serialized form data to the web API.
+                $(formElement).validate();
+                if ($(formElement).valid()) {
+                    $.post(baseUri, $(formElement).serialize(), null, "json")
+                        .done(function (o) {
+                            // Add the new product to the view-model.
+                            self.products.push(o);
+                        });
+                }
+            }
+
+            self.update = function (tenant) {
+                $.ajax({ type: "PUT", url: baseUri + '/' + product.Id, data: tenant });
+            }
+
+            self.remove = function (tenant) {
+                // First remove from the server, then from the view-model.
+                $.ajax({ type: "DELETE", url: baseUri + '/' + tenant.Id })
+                    .done(function () { self.products.remove(tenant); });
+            }
+
+            self.editItem = function (tenant) {
+                $("#modalEdit .modal-body #id").html(tenant.Id);
+                $("#modalEdit .modal-body #domain").val(tenant.Domain);                
+                $('#modalEdit').modal({ "backdrop": "static" });
+            }
+
+            $.getJSON(baseUri, self.tenants);
+        }
+
+        $(document).ready(function () {
+            ko.applyBindings(new TenantsViewModel());
+        })
+    </script>
+
+    @Html.Partial("ModalEdit")
+}

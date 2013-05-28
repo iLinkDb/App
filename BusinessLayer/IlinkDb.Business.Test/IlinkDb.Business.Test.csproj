@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="LinkTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TenantTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppCommon\AppCommon.Logging\AppCommon.Logging.csproj">
@@ -72,7 +73,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

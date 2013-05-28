@@ -3,42 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 
 using IlinkDb.Data;
 using IlinkDb.Entity;
 
 namespace IlinkDb.Business
 {
-    public class LinkManager
+    public class TenantManager
     {
         private IRepository _db;
 
-        public LinkManager()
+        public TenantManager()
             : this(false)
         {
         }
 
-        public LinkManager(bool initializeData)
+        public TenantManager(bool initializeData)
         {
             _db = Factory.Current.Repository;
             if (initializeData)
             { _db.Initialize(); }
         }
 
-        public Link Get(long id)
+        public Tenant Get(long id)
         {
-            return _db.Get<Link>(id);
+            return _db.Get<Tenant>(id);
         }
 
-        public Link Save(Link link)
+        public Tenant Save(Tenant tenant)
         {
-            return _db.Save<Link>(link);
+            return _db.Save<Tenant>(tenant);
         }
 
-        public List<Link> List()
+        public List<Tenant> List()
         {
-            return _db.List<Link>().ToList();
+            return _db.List<Tenant>().ToList();
         }
     }
 }

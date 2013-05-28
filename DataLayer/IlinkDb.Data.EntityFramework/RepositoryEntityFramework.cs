@@ -18,33 +18,20 @@ namespace IlinkDb.Data.EntityFramework
             _context = new EntityFrameworkContext();
         }
 
-        //public IQueryable<Person> ListPeople()
-        //{
-        //   return _context.Persons.AsQueryable();
-        //}
-
-        //public Person AddPerson(Person person)
-        //{
-        //   Person retVal = null;
-
-        //   //using (var db = _context)
-        //   //{
-        //   //   retVal = db.Set<Person>().Add(person);
-        //   //   db.SaveChanges();
-        //   //}
-        //   retVal = _context.Set<Person>().Add(person);
-        //   _context.SaveChanges();
-
-        //   return retVal;
-        //}
-
-        public IQueryable<T> List<T>() where T : EntityBase
+        public void Initialize()
         {
-            return _context.Set<T>();
+            // Nothing to do here.  This method only works on memory databases.
         }
 
+        public T Get<T>(long id) where T : EntityBase
+        {
+            T retVal = _context.Set<T>()
+                    .Where(o => o.Id == id)
+                    .FirstOrDefault();
+            return retVal;
+        }
 
-        public T Add<T>(T t) where T : EntityBase
+        public T Save<T>(T t) where T : EntityBase
         {
             T retVal = null;
 
@@ -54,10 +41,9 @@ namespace IlinkDb.Data.EntityFramework
             return retVal;
         }
 
-
-        public void Initialize()
+        public IQueryable<T> List<T>() where T : EntityBase
         {
-            // Nothing to do here.  This method only works on memory databases.
+            return _context.Set<T>();
         }
     }
 

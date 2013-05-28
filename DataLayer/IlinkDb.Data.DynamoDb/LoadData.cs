@@ -177,7 +177,7 @@ namespace IlinkDb.Data.DynamoDb
                                    res.DescribeTableResult.Table.TableStatus);
                     status = res.DescribeTableResult.Table.TableStatus;
                 }
-                catch (ResourceNotFoundException resouceNotFound)
+                catch (ResourceNotFoundException)
                 {
                     // DescribeTable is eventually consistent. So you might
                     // get resource not found. So we handle the potential exception.
