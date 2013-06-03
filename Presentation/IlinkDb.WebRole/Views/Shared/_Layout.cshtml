@@ -6,8 +6,6 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap")
-    @Scripts.Render("~/bundles/modernizr")
-    <script type='text/javascript' src="~/Scripts/knockout-2.2.1.debug.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -59,6 +57,11 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/modernizr")
+    <script type='text/javascript' src="~/Scripts/knockout-2.2.1.debug.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
 
     @RenderSection("scripts", required: false)
 </body>

@@ -67,5 +67,35 @@ namespace IlinkDb.Service.Controllers
             }
             return retVal;
         }
+
+        [AcceptVerbs("PUT")]
+        public HttpResponseMessage Put(Tenant tenant)
+        {
+            HttpResponseMessage retVal = Request.CreateResponse(HttpStatusCode.OK, tenant);
+
+            string logMsg = "TenantController/Put";
+
+            try
+            {
+                TenantManager mgr = new TenantManager();
+                Tenant updatedTenant = mgr.Save(tenant);
+
+                Logging.LogDebug(logMsg + string.Format(" Tenant: {0}", updatedTenant));
+
+                retVal = Request.CreateResponse(HttpStatusCode.OK, updatedTenant);
+
+                //string uri = Url.Route(null, new { id = timesheet.Id }); // Where is the modified timesheet?
+                //response.Headers.Location = new Uri(Request.RequestUri, uri);
+
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex);
+                retVal.StatusCode = HttpStatusCode.InternalServerError;
+                retVal.Content = new StringContent(ex.Message);
+            }
+            return retVal;
+
+        }    
     }
 }

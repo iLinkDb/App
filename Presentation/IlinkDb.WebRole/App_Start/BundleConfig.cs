@@ -26,6 +26,12 @@ namespace IlinkDb.WebRole
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.js"));
 
+            //bundles.Add(new ScriptBundle("~/bundles/validate").Include(
+            //            "~/Scripts/validate.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/unobtrusive").Include(
+            //            "~/Scripts/validate.unobtrusive.js"));
+
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                             "~/Content/bootstrap.css",
                             "~/Content/bootstrap-responsive.css"));
