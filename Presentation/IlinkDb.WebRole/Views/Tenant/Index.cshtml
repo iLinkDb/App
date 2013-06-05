@@ -33,7 +33,9 @@
                     </tr>
                 </tbody>
             </table>
-
+<div class="pull-right">
+    <a id="modalAdd" class="btn btn-success" data-toggle="modal" href="#modalEdit">Add Tenant</a>
+</div>
         </div>
         <div class="span6">
         </div>
@@ -103,7 +105,7 @@
 
                 var self = this;
                 $.ajax({
-                    url: 'http://' + restHost + '/' + controller + '/put',
+                    url: 'http://' + restHost + '/' + controller + '/' + httpVerb.toLowerCase(),
                     type: httpVerb,
                     data: json,
                     dataType: 'json',

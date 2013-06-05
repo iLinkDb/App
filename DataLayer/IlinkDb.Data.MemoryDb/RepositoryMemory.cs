@@ -13,6 +13,9 @@ namespace IlinkDb.Data.MemoryDb
         private IList<Link> _linkList;
         private IList<Tenant> _tenantList;
 
+        private int _linkListCount;
+        private int _tenantListCount;
+
         public RepositoryMemory()
         {
             Initialize();
@@ -31,9 +34,10 @@ namespace IlinkDb.Data.MemoryDb
                     Url = "www." + random.Word() + random.Word() + ".com"
                 });
             }
+            _linkListCount = _linkList.Count + 1;
 
             _tenantList = new List<Tenant>();
-            for (int iLoop = 0; iLoop < random.Int(30, 40); iLoop++)
+            for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
             {
                 _tenantList.Add(new Tenant
                 {
@@ -47,7 +51,7 @@ namespace IlinkDb.Data.MemoryDb
                 Id = _tenantList.Count + 1,
                 Domain = "test"
             });
-
+            _tenantListCount = _tenantList.Count + 1;
         }
 
         public T Get<T>(long id) where T : EntityBase
@@ -83,17 +87,20 @@ namespace IlinkDb.Data.MemoryDb
 
             if (typeof(T).Name == "Link")
             {
-                t.Id = _linkList.Count + 1;
+                t.Id = _linkListCount++;
                 Link link = t as Link;
                 _linkList.Add(link);
                 retVal = t;
             }
             else if (typeof(T).Name == "Tenant")
             {
-                Tenant existing = _tenantList.First(o => o.Id == t.Id);
+                Tenant existing = null;
+                if (t.Id > 0)
+                { existing = _tenantList.First(o => o.Id == t.Id); }
+
                 if (existing == null)
                 {
-                    t.Id = _tenantList.Count + 1;
+                    t.Id = _tenantListCount++;
                     Tenant tenant = t as Tenant;
                     _tenantList.Add(tenant);
                 }

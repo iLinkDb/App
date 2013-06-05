@@ -68,6 +68,12 @@ namespace IlinkDb.Service.Controllers
             return retVal;
         }
 
+        [AcceptVerbs("POST")]
+        public HttpResponseMessage Post(Tenant tenant)
+        {
+            return Put(tenant);
+        }
+
         [AcceptVerbs("PUT")]
         public HttpResponseMessage Put(Tenant tenant)
         {
