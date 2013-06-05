@@ -70,5 +70,11 @@ namespace IlinkDb.Data.DynamoDb
         {
             throw new NotImplementedException();
         }
+
+
+        public bool Delete<T>(T t) where T : EntityBase
+        {
+            throw new NotImplementedException();
+        }
     }
 }

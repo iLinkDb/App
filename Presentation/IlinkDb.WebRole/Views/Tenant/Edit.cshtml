@@ -1,0 +1,44 @@
+﻿@model IlinkDb.Entity.Tenant
+
+<div class="modal hide" id="modalEdit">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Edit Tenant</h3>
+    </div>
+
+    <form id="frmEdit" data-bind="submit: function (form) { postEdit(form) }">
+        <div class="modal-body">
+            @Html.LabelFor(m => m.Domain)
+            @Html.TextBoxFor(m => m.Domain)
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <input type="submit" class="btn btn-primary" value="Save" />
+        </div>
+    </form>
+</div>
+<script type='text/javascript'>
+
+    $('#modalEdit').on('hide', function () {
+        var form = $('#frmEdit');
+        form.validate().resetForm();
+        form.get(0).reset();
+        form.removeData('itemOne');
+        form.find("input[type='hidden'][id='id']").remove();
+    });
+
+    $('#modalEdit').on('show', function () {
+        var form = $('#frmEdit');
+        var itemOne = form.data('itemOne');
+        if (!itemOne)
+            return;
+
+        $('<input>').attr('type', 'hidden')
+                    .attr('id', 'id')
+                    .attr('name', 'id')
+                    .val(itemOne.id()).prependTo(form);
+        form.find('#Domain').val(itemOne.domain());
+    });
+
+</script>

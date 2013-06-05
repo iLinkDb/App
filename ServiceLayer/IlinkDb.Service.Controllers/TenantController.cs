@@ -78,6 +78,7 @@ namespace IlinkDb.Service.Controllers
             try
             {
                 TenantManager mgr = new TenantManager();
+
                 Tenant updatedTenant = mgr.Save(tenant);
 
                 Logging.LogDebug(logMsg + string.Format(" Tenant: {0}", updatedTenant));
@@ -96,6 +97,42 @@ namespace IlinkDb.Service.Controllers
             }
             return retVal;
 
+        }
+
+        [AcceptVerbs("DELETE")]
+        public HttpResponseMessage Delete(Tenant tenant)
+        {
+            HttpResponseMessage retVal = Request.CreateResponse(HttpStatusCode.OK, tenant);
+
+            string logMsg = "TenantController/Delete";
+
+            try
+            {
+                TenantManager mgr = new TenantManager();
+
+                bool success = mgr.Delete(tenant);
+
+                string delMsg = "Success deleting";
+                if (!success)
+                { delMsg = "Failure deleting"; }
+
+                Logging.LogDebug(logMsg + string.Format(" {0} Tenant: {1}", delMsg, tenant));
+
+                retVal = Request.CreateResponse(HttpStatusCode.OK, success);
+
+                //string uri = Url.Route(null, new { id = timesheet.Id }); // Where is the modified timesheet?
+                //response.Headers.Location = new Uri(Request.RequestUri, uri);
+
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex);
+                retVal.StatusCode = HttpStatusCode.InternalServerError;
+                retVal.Content = new StringContent(ex.Message);
+            }
+            return retVal;
+
         }    
+    
     }
 }

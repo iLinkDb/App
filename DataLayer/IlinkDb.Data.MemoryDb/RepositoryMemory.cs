@@ -33,7 +33,7 @@ namespace IlinkDb.Data.MemoryDb
             }
 
             _tenantList = new List<Tenant>();
-            for (int iLoop = 0; iLoop < random.Int(3, 10); iLoop++)
+            for (int iLoop = 0; iLoop < random.Int(30, 40); iLoop++)
             {
                 _tenantList.Add(new Tenant
                 {
@@ -90,9 +90,18 @@ namespace IlinkDb.Data.MemoryDb
             }
             else if (typeof(T).Name == "Tenant")
             {
-                t.Id = _tenantList.Count + 1;
-                Tenant tenant = t as Tenant;
-                _tenantList.Add(tenant);
+                Tenant existing = _tenantList.First(o => o.Id == t.Id);
+                if (existing == null)
+                {
+                    t.Id = _tenantList.Count + 1;
+                    Tenant tenant = t as Tenant;
+                    _tenantList.Add(tenant);
+                }
+                else
+                {
+                    Tenant tenant = t as Tenant;
+                    existing.Domain = tenant.Domain;
+                }
                 retVal = t;
             }
             else
@@ -115,5 +124,27 @@ namespace IlinkDb.Data.MemoryDb
             throw new NotImplementedException(typeof(T).Name + " for List method not implemented in RepositoryMemory");
         }
 
+        public bool Delete<T>(T t) where T : EntityBase
+        {
+            bool retVal = false;
+
+            if (typeof(T).Name == "Link")
+            {
+                Link existing = _linkList.First(o => o.Id == t.Id);
+                if (existing != null)
+                { _linkList.Remove(existing); retVal = true; }
+            }
+            else if (typeof(T).Name == "Tenant")
+            {
+                Tenant existing = _tenantList.First(o => o.Id == t.Id);
+                if (existing != null)
+                { _tenantList.Remove(existing); retVal = true; }
+            }
+            else
+            {
+                throw new NotImplementedException(typeof(T).Name + " for Add method not implemented in RepositoryMemory");
+            }
+            return retVal;
+        }
     }
 }

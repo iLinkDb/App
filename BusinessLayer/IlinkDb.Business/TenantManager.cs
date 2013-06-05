@@ -35,6 +35,12 @@ namespace IlinkDb.Business
             return _db.Save<Tenant>(tenant);
         }
 
+        public bool Delete(Tenant tenant)
+        {
+            return _db.Delete<Tenant>(tenant);
+        }
+
+
         public List<Tenant> List()
         {
             return _db.List<Tenant>().ToList();

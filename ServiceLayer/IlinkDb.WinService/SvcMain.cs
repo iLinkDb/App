@@ -11,7 +11,6 @@ using System.Timers;
 using System.Reflection;
 
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.SelfHost;

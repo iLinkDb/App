@@ -45,6 +45,12 @@ namespace IlinkDb.Data.EntityFramework
         {
             return _context.Set<T>();
         }
+
+
+        public bool Delete<T>(T t) where T : EntityBase
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
