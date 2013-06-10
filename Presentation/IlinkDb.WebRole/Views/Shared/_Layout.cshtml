@@ -11,8 +11,9 @@
         .modal-backdrop {
             opacity: 0.4;
         }
-
     </style>
+    <link href="~/Content/siteNotes.css" rel="stylesheet" />
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
@@ -21,6 +22,11 @@
 
     @Scripts.Render("~/bundles/jqueryval")
 
+    <style type="text/css">
+        .breadcrumb {
+            padding-top: 48px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,6 +41,7 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li class="active">@Html.ActionLink("Tenant", "Index", "Tenant")</li>
+                        <li>@Html.ActionLink("Best Practices", "Index", "Bp")</li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#contact">Contact</a></li>
                         <li class="dropdown">
@@ -51,9 +58,12 @@
                         </li>
                     </ul>
                     <form class="navbar-form pull-right">
-                        <input class="span2" type="text" placeholder="Email">
+                        <ul class="nav">
+                            <li><a href="#">login</a></li>
+                        </ul>
+                        @*                        <input class="span2" type="text" placeholder="Email">
                         <input class="span2" type="password" placeholder="Password">
-                        <button type="submit" class="btn">Sign in</button>
+                        <button type="submit" class="btn">Sign in</button>*@
                     </form>
                 </div>
                 <!--/.nav-collapse -->
@@ -69,7 +79,20 @@
         </footer>
 
     </div>
-
+    <div class="container">
+        <div class="row">
+            <div id="siteNotes" class="span12">
+                <div class="text-center">
+                    <span class="pull-left"><b>Notes</b> Add</span>
+                    (Everything below this line will not be displaed on the live site)
+                </div>
+                <br />
+                <ul>
+                    <li>Item One</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     @RenderSection("scripts", required: false)
 </body>
 </html>

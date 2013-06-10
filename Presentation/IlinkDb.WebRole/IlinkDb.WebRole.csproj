@@ -136,6 +136,7 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\siteNotes.css" />
     <Content Include="favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -236,6 +237,14 @@
     <Content Include="Views\Tenant\Edit.cshtml" />
     <Content Include="Views\Bp\Index.cshtml" />
     <Content Include="Views\Bp\Icons.cshtml" />
+    <Content Include="Views\Bp\Button.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Bp\Code.cshtml" />
+    <Content Include="Views\Bp\Definition.cshtml" />
+    <Content Include="Views\Bp\DropDown.cshtml" />
+    <Content Include="Views\Bp\Html.cshtml" />
+    <Content Include="Views\Bp\Radio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
