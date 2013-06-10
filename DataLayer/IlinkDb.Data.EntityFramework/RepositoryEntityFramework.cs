@@ -51,6 +51,48 @@ namespace IlinkDb.Data.EntityFramework
         {
             throw new NotImplementedException();
         }
+
+
+        public Tenant TenantGet(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tenant TenantSave(Tenant tenant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TenantDelete(Tenant tenant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Tenant> TenantList()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Link LinkGet(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Link LinkSave(Link link)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool LinkDelete(Link link)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Link> LinkList()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

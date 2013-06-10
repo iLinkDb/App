@@ -11,9 +11,28 @@ namespace IlinkDb.Data
     public interface IRepository
     {
         void Initialize();
-        T Get<T>(long id) where T : EntityBase;
-        T Save<T>(T t) where T : EntityBase;
-        bool Delete<T>(T t) where T : EntityBase;
-        IQueryable<T> List<T>() where T : EntityBase;
+        //T Get<T>(long id) where T : EntityBase;
+        //T Save<T>(T t) where T : EntityBase;
+        //bool Delete<T>(T t) where T : EntityBase;
+        //IQueryable<T> List<T>() where T : EntityBase;
+
+        #region Link
+
+        Link LinkGet(long id);
+        Link LinkSave(Link link);
+        bool LinkDelete(Link link);
+        IQueryable<Link> LinkList();
+
+        #endregion
+
+        #region Tenant
+
+        Tenant TenantGet(long id);
+        Tenant TenantSave(Tenant tenant);
+        bool TenantDelete(Tenant tenant);
+        IQueryable<Tenant> TenantList();
+
+        #endregion
+
     }
 }

@@ -25,17 +25,14 @@ namespace IlinkDb.Data.MemoryDb
         {
             var random = new RandomData();
 
-            _linkList = new List<Link>();
-            for (int iLoop = 0; iLoop < random.Int(3, 10); iLoop++)
-            {
-                _linkList.Add(new Link
-                {
-                    Id = iLoop + 1,
-                    Url = "www." + random.Word() + random.Word() + ".com"
-                });
-            }
-            _linkListCount = _linkList.Count + 1;
+            LinkInitialize(random);
+            TenantInitialize(random);
+        }
 
+        #region Tenant
+
+        private void TenantInitialize(RandomData random)
+        {
             _tenantList = new List<Tenant>();
             for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
             {
@@ -52,106 +49,136 @@ namespace IlinkDb.Data.MemoryDb
                 Domain = "test"
             });
             _tenantListCount = _tenantList.Count + 1;
+
         }
 
-        public T Get<T>(long id) where T : EntityBase
+        public Tenant TenantGet(long id)
         {
-            T retVal = null;
-
-            if (typeof(T).Name == "Link")
+            Tenant retVal = null;
+            foreach (Tenant item in _tenantList)
             {
-                foreach (Link item in _linkList)
-                {
-                    if (item.Id == id)
-                    { retVal = item as T; break; }
-                }
-            }
-            else if (typeof(T).Name == "Tenant")
-            {
-                foreach (Tenant item in _tenantList)
-                {
-                    if (item.Id == id)
-                    { retVal = item as T; break; }
-                }
-            }
-            else
-            {
-                throw new NotImplementedException(typeof(T).Name + " for Add method not implemented in RepositoryMemory");
+                if (item.Id == id)
+                { retVal = item; break; }
             }
             return retVal;
         }
 
-        public T Save<T>(T t) where T : EntityBase
+        public Tenant TenantSave(Tenant newOne)
         {
-            T retVal = t;
+            Tenant retVal = null;
 
-            if (typeof(T).Name == "Link")
-            {
-                t.Id = _linkListCount++;
-                Link link = t as Link;
-                _linkList.Add(link);
-                retVal = t;
-            }
-            else if (typeof(T).Name == "Tenant")
-            {
-                Tenant existing = null;
-                if (t.Id > 0)
-                { existing = _tenantList.First(o => o.Id == t.Id); }
+            if (newOne.Id > 0)
+            { retVal = _tenantList.First(o => o.Id == newOne.Id); }
 
-                if (existing == null)
-                {
-                    t.Id = _tenantListCount++;
-                    Tenant tenant = t as Tenant;
-                    _tenantList.Add(tenant);
-                }
-                else
-                {
-                    Tenant tenant = t as Tenant;
-                    existing.Domain = tenant.Domain;
-                }
-                retVal = t;
+            if (retVal == null)
+            {
+                newOne.Id = _tenantListCount++;
+                _tenantList.Add(newOne);
+                retVal = newOne;
             }
             else
             {
-                throw new NotImplementedException(typeof(T).Name + " for Save method not implemented in RepositoryMemory");
+                retVal.Domain = newOne.Domain;
             }
+
             return retVal;
         }
 
-        public IQueryable<T> List<T>() where T : EntityBase
-        {
-            if (typeof(T).Name == "Link")
-            {
-                return ((IEnumerable<T>)_linkList).Select(x => x).AsQueryable();
-            }
-            else if (typeof(T).Name == "Tenant")
-            {
-                return ((IEnumerable<T>)_tenantList).Select(x => x).AsQueryable();
-            }
-            throw new NotImplementedException(typeof(T).Name + " for List method not implemented in RepositoryMemory");
-        }
-
-        public bool Delete<T>(T t) where T : EntityBase
+        public bool TenantDelete(Tenant tenant)
         {
             bool retVal = false;
 
-            if (typeof(T).Name == "Link")
-            {
-                Link existing = _linkList.First(o => o.Id == t.Id);
-                if (existing != null)
-                { _linkList.Remove(existing); retVal = true; }
+            Tenant existing = _tenantList.First(o => o.Id == tenant.Id);
+            if (existing != null)
+            { 
+                _tenantList.Remove(existing); 
+                retVal = true; 
             }
-            else if (typeof(T).Name == "Tenant")
+
+            return retVal;
+        }
+
+        public IQueryable<Tenant> TenantList()
+        {
+            return ((IEnumerable<Tenant>)_tenantList).Select(x => x).AsQueryable();
+        }
+
+        #endregion
+
+        #region Link
+
+        private void LinkInitialize(RandomData random)
+        {
+            _linkList = new List<Link>();
+            for (int iLoop = 0; iLoop < random.Int(3, 10); iLoop++)
             {
-                Tenant existing = _tenantList.First(o => o.Id == t.Id);
-                if (existing != null)
-                { _tenantList.Remove(existing); retVal = true; }
+                _linkList.Add(new Link
+                {
+                    Id = iLoop + 1,
+                    Url = "www." + random.Word() + random.Word() + ".com"
+                });
+            }
+            _linkListCount = _linkList.Count + 1;
+        }
+
+        public Link LinkGet(long id)
+        {
+            Link retVal = null;
+            foreach (Link item in _linkList)
+            {
+                if (item.Id == id)
+                { retVal = item; break; }
+            }
+            return retVal;
+        }
+
+        public Link LinkSave(Link newOne)
+        {
+            Link retVal = null;
+
+            if (newOne.Id > 0)
+            { retVal = _linkList.First(o => o.Id == newOne.Id); }
+
+            if (retVal == null)
+            {
+                newOne.Id = _linkListCount++;
+                _linkList.Add(newOne);
+                retVal = newOne;
             }
             else
             {
-                throw new NotImplementedException(typeof(T).Name + " for Add method not implemented in RepositoryMemory");
+                retVal.Url = newOne.Url;
             }
+
             return retVal;
+        }
+
+        public bool LinkDelete(Link link)
+        {
+            bool retVal = false;
+
+            Link existing = _linkList.First(o => o.Id == link.Id);
+            if (existing != null)
+            {
+                _linkList.Remove(existing);
+                retVal = true;
+            }
+
+            return retVal;
+        }
+
+        public IQueryable<Link> LinkList()
+        {
+            return ((IEnumerable<Link>)_linkList).Select(x => x).AsQueryable();
+        }
+
+        #endregion
+
+
+
+        public IQueryable<Tenant> List()
+        {
+            throw new NotImplementedException();
         }
     }
 }

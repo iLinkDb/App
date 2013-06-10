@@ -27,23 +27,22 @@ namespace IlinkDb.Business
 
         public Tenant Get(long id)
         {
-            return _db.Get<Tenant>(id);
+            return _db.TenantGet(id);
         }
 
         public Tenant Save(Tenant tenant)
         {
-            return _db.Save<Tenant>(tenant);
+            return _db.TenantSave(tenant);
         }
 
         public bool Delete(Tenant tenant)
         {
-            return _db.Delete<Tenant>(tenant);
+            return _db.TenantDelete(tenant);
         }
-
 
         public List<Tenant> List()
         {
-            return _db.List<Tenant>().ToList();
+            return _db.TenantList().ToList();
         }
     }
 }

@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
@@ -233,6 +234,8 @@
     <Content Include="Views\Tenant\Index.cshtml" />
     <Content Include="Views\Tenant\Delete.cshtml" />
     <Content Include="Views\Tenant\Edit.cshtml" />
+    <Content Include="Views\Bp\Index.cshtml" />
+    <Content Include="Views\Bp\Icons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

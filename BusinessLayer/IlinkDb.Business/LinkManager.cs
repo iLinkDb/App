@@ -28,17 +28,17 @@ namespace IlinkDb.Business
 
         public Link Get(long id)
         {
-            return _db.Get<Link>(id);
+            return _db.LinkGet(id);
         }
 
         public Link Save(Link link)
         {
-            return _db.Save<Link>(link);
+            return _db.LinkSave(link);
         }
 
         public List<Link> List()
         {
-            return _db.List<Link>().ToList();
+            return _db.LinkList().ToList();
         }
     }
 }

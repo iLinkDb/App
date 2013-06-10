@@ -53,7 +53,7 @@ namespace IlinkDb.Service.Controllers
             try
             {
                 TenantManager mgr = new TenantManager();
-                IEnumerable<Tenant> tenants = mgr.List();
+                List<Tenant> tenants = mgr.List();
 
                 Logging.LogDebug(logMsg + " Tenants Count: " + tenants.Count());
 
