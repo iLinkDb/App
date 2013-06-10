@@ -42,6 +42,9 @@
     <Compile Include="RandomData.cs" />
     <Compile Include="RepositoryMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rep_Link.cs" />
+    <Compile Include="Rep_Note.cs" />
+    <Compile Include="Rep_Tenant.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppCommon\AppCommon.Misc\AppCommon.Misc.csproj">

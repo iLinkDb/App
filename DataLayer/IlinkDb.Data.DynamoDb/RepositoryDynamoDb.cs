@@ -15,7 +15,7 @@ using AppCommon;
 
 namespace IlinkDb.Data.DynamoDb
 {
-    public class RepositoryDynamoDb : IRepository
+    public partial class RepositoryDynamoDb : IRepository
     {
         private static AmazonDynamoDBClient client;
 
@@ -73,52 +73,6 @@ namespace IlinkDb.Data.DynamoDb
 
 
         public bool Delete<T>(T t) where T : EntityBase
-        {
-            throw new NotImplementedException();
-        }
-
-
-        #region Tenant
-
-        public Tenant TenantGet(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Tenant TenantSave(Tenant tenant)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TenantDelete(Tenant tenant)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Tenant> TenantList()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-
-        public Link LinkGet(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Link LinkSave(Link link)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool LinkDelete(Link link)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Link> LinkList()
         {
             throw new NotImplementedException();
         }

@@ -34,5 +34,15 @@ namespace IlinkDb.Data
 
         #endregion
 
+        #region Note
+
+        Note NoteGet(long id);
+        Note NoteSave(Note note);
+        bool NoteDelete(Note note);
+        IQueryable<Note> NoteList();
+        IQueryable<Note> NoteListForPath(string path);
+
+        #endregion
+
     }
 }
