@@ -1,5 +1,48 @@
 ﻿@{
-    ViewBag.Title = "Index";
+   ViewBag.Title = "Index";
 }
+@section script{
+   <script type="text/javascript">
+      $(document).ready(function () {
+         $(":button").click(buttonClick);
+      });
 
-<h2>Best Practices</h2>
+      function buttonClick() {
+         location.href = '@Url.Content("~/Bp/SelectArea/")' + this.value;
+      }
+   </script>
+}
+<ul class="breadcrumb">
+   <li>@Html.ActionLink("Home", "Index", "Home") <span class="divider">/</span></li>
+   <li class="active">Best Practices</li>
+</ul>
+<h2>
+   Best Practices</h2>
+<div class="container-fluid">
+   <div class="row-fluid">
+      <div class="span2">
+         <!--Sidebar content-->
+         &nbsp;
+      </div>
+      <div class="span10">
+         <h4>
+            Form Elements</h4>
+         <button id="btnButton" type="button" class="btn btn-primary" value="button">
+            Buttons</button>
+         <button id="btnDropdown" type="button" class="btn btn-primary" value="dropdown">
+            Dropdowns</button>
+         <button id="btnDefinition" type="button" class="btn btn-primary" value="definition">
+            Definition Lists</button>
+         <button id="btnRadio" type="button" class="btn btn-primary" value="radio">
+            Radio Buttons</button>
+         <h4>
+            Html</h4>
+         <button id="btnHtml" type="button" class="btn btn-primary" value="html">
+            Html</button>
+         <h4>
+            Other Elements</h4>
+         <button id="btnButton" type="button" class="btn btn-primary" value="code">
+            Code</button>
+      </div>
+   </div>
+</div>

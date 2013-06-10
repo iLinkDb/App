@@ -20,5 +20,18 @@ namespace IlinkDb.WebRole.Controllers
         {
             return View();
         }
+		
+      public ActionResult SelectArea(string id)
+      {
+         if (string.IsNullOrEmpty(id))
+         {
+            return View("Index");
+         }
+         else
+         {
+            return View(id);
+         }
+      }
+		
     }
 }

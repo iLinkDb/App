@@ -1,0 +1,149 @@
+﻿@{
+   ViewBag.Title = "Button";
+}
+<ul class="breadcrumb">
+   <li>@Html.ActionLink("Home", "Index", "Home") <span class="divider">/</span></li>
+   <li>@Html.ActionLink("Best Practices", "Index") <span class="divider">/</span></li>
+   <li class="active">Button</li>
+</ul>
+<h2>
+   Button</h2>
+<h3>
+   Examples</h3>
+<p>
+   Button styles can be applied to anything with the <code>.btn</code> class applied.
+   However, typically you'll want to apply these to only <code>&lt;a&gt;</code> and
+   <code>&lt;button&gt;</code> elements for the best rendering.</p>
+<table class="table table-bordered table-striped">
+   <thead>
+      <tr>
+         <th>
+            Button
+         </th>
+         <th>
+            class=""
+         </th>
+         <th>
+            Description
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>
+            <button type="button" class="btn">
+               Default</button>
+         </td>
+         <td>
+            <code>btn</code>
+         </td>
+         <td>
+            Standard gray button with gradient
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-primary">
+               Primary</button>
+         </td>
+         <td>
+            <code>btn btn-primary</code>
+         </td>
+         <td>
+            Provides extra visual weight and identifies the primary action in a set of buttons
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-info">
+               Info</button>
+         </td>
+         <td>
+            <code>btn btn-info</code>
+         </td>
+         <td>
+            Used as an alternative to the default styles
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-success">
+               Success</button>
+         </td>
+         <td>
+            <code>btn btn-success</code>
+         </td>
+         <td>
+            Indicates a successful or positive action
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-warning">
+               Warning</button>
+         </td>
+         <td>
+            <code>btn btn-warning</code>
+         </td>
+         <td>
+            Indicates caution should be taken with this action
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-danger">
+               Danger</button>
+         </td>
+         <td>
+            <code>btn btn-danger</code>
+         </td>
+         <td>
+            Indicates a dangerous or potentially negative action
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-inverse">
+               Inverse</button>
+         </td>
+         <td>
+            <code>btn btn-inverse</code>
+         </td>
+         <td>
+            Alternate dark gray button, not tied to a semantic action or use
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <button type="button" class="btn btn-link">
+               Link</button>
+         </td>
+         <td>
+            <code>btn btn-link</code>
+         </td>
+         <td>
+            Deemphasize a button by making it look like a link while maintaining button behavior
+         </td>
+      </tr>
+   </tbody>
+</table>
+<h3>
+   Html Source</h3>
+<pre>
+            &lt;button type="button" class="btn btn-primary"&gt;Primary&lt;/button&gt;
+</pre>
+<div class="input-append">
+   <input class="span2" id="appendedDropdownButton" type="text">
+   <div class="btn-group">
+      <button class="btn dropdown-toggle" data-toggle="dropdown">
+         Action <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+         <li><a href="#"><i class="icon-pencil"></i>Edit</a></li>
+         <li><a href="#"><i class="icon-trash"></i>Delete</a></li>
+         <li><a href="#"><i class="icon-ban-circle"></i>Ban</a></li>
+         <li class="divider"></li>
+         <li><a href="#"><i class="i"></i>Make admin</a></li>
+      </ul>
+   </div>
+</div>
