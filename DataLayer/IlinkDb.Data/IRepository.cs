@@ -44,5 +44,13 @@ namespace IlinkDb.Data
 
         #endregion
 
+        #region User
+
+        User UserGet(long id);
+        User UserSave(User user);
+        bool UserDelete(User user);
+        IQueryable<User> UserList();
+
+        #endregion
     }
 }

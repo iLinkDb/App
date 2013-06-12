@@ -12,5 +12,8 @@ namespace IlinkDb.Entity
     {
         [JsonProperty(PropertyName = "id")]
         public long Id { get; set; }
+
+        [JsonProperty(PropertyName = "deleted")]
+        public long Deleted { get; set; }
     }
 }
