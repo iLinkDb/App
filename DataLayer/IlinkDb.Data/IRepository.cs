@@ -46,10 +46,11 @@ namespace IlinkDb.Data
 
         #region User
 
-        User UserGet(long id);
-        User UserSave(User user);
-        bool UserDelete(User user);
-        IQueryable<User> UserList();
+        //TODO Put User setting back in IRepository IF.
+        //User UserGet(long id);
+        //User UserSave(User user);
+        //bool UserDelete(User user);
+        //IQueryable<User> UserList();
 
         #endregion
     }

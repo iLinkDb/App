@@ -20,13 +20,14 @@
 </div>
 <script type='text/javascript'>
 
-    $('#modalEdit').on('hide', function () {
-        var form = $('#frmEdit');
-        form.validate().resetForm();
-        form.get(0).reset();
-        form.removeData('itemOne');
-        form.find("input[type='hidden'][id='id']").remove();
-    });
+    $('#modalEdit').on('hide', am.EditDialog('frmEdit'));
+    //function () {
+    //    var form = $('#frmEdit');
+    //    form.validate().resetForm();
+    //    form.get(0).reset();
+    //    form.removeData('itemOne');
+    //    form.find("input[type='hidden'][id='id']").remove();
+    //});
 
     $('#modalEdit').on('show', function () {
         var form = $('#frmEdit');
