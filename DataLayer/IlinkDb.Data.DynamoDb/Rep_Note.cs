@@ -35,5 +35,11 @@ namespace IlinkDb.Data.DynamoDb
         {
             throw new NotImplementedException();
         }
+
+
+        public Note AddNote(long projectId, Note note)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

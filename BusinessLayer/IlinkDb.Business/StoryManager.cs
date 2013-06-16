@@ -44,5 +44,10 @@ namespace IlinkDb.Business
         {
             return _db.StoryList(projectId).ToList();
         }
+
+        public Note AddNote(long projectId, Note note)
+        {
+            return _db.AddNote(projectId, note);
+        }
     }
 }

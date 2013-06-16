@@ -40,7 +40,8 @@ namespace IlinkDb.Data
         Note NoteSave(Note note);
         bool NoteDelete(Note note);
         IQueryable<Note> NoteList();
-//        IQueryable<Note> NoteListForPath(string path);
+        //        IQueryable<Note> NoteListForPath(string path);
+        Note AddNote(long projectId, Note note);
 
         #endregion
 

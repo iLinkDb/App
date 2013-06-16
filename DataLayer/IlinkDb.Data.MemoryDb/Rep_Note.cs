@@ -95,5 +95,11 @@ namespace IlinkDb.Data.MemoryDb
         //{
         //    return ((IEnumerable<Note>)_noteList).Select(x => x).Where(w => w.NotePath == path).AsQueryable();
         //}
+
+
+        public Note AddNote(long projectId, Note note)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

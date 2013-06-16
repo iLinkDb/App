@@ -78,5 +78,31 @@ namespace IlinkDb.Data.PivotalApi
 
             return retVal;
         }
+
+        public Note AddNote(long projectId, Note note)
+        {
+            Note retVal = null;
+
+
+
+            //PivotApiPutRequest putRequest = new PivotApiPutRequest("rooms/message");
+
+            //putRequest.PostRequest = roomMessage.PostRequest;
+
+            //PivotApiResponse response = Common.PutXmlToPivotApi(putRequest);
+
+            //if (!response.Success)
+            //{
+            //    throw new Exception(response.StatusCode + " " + response.ErrorMessage);
+            //}
+
+            //return response.NewId;
+
+
+
+
+
+            return retVal;
+        }
     }
 }
