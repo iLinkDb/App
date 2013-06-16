@@ -88,13 +88,23 @@ namespace IlinkDb.Entity
                     { retVal = work; }
                     else
                     {
-                        // PivotalApi likes to put a UTC on the end which TryParse
-                        // doesn't know how to deal with.
-                        // The doc also states "By default, all dates are returned
-                        // in the user's timezone", so the UTC doesn't really help us.
-                        string dateText = element.Value.Replace("UTC", "");
-                        if (DateTime.TryParse(dateText, out work))
-                        { retVal = work; }
+                        // PivotalApi likes to put a UTC or EST on the end 
+                        // which TryParse doesn't know how to deal with.
+
+                        // TODO Fix DateTime Conversions for all time zones.
+                        string value = element.Value;
+                        if (value.Contains(" UTC"))
+                        {
+                            value = value.Replace(" UTC", "");
+                            if (DateTime.TryParse(value, out work))
+                            { retVal = work; }
+                        }
+                        else if (value.Contains(" EDT"))
+                        {
+                            value = value.Replace(" EDT", "");
+                            if (DateTime.TryParse(value, out work))
+                            { retVal = work; }
+                        }
                     }
                 }
             }

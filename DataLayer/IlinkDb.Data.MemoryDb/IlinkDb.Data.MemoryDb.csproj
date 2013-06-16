@@ -45,6 +45,7 @@
     <Compile Include="Rep_Link.cs" />
     <Compile Include="Rep_Note.cs" />
     <Compile Include="Rep_Project.cs" />
+    <Compile Include="Rep_Story.cs" />
     <Compile Include="Rep_Tenant.cs" />
     <Compile Include="Rep_User.cs" />
   </ItemGroup>

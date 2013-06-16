@@ -9,19 +9,18 @@ using IlinkDb.Business;
 namespace IlinkDb.Business.Test
 {
     /// <summary>
-    /// Summary description for NoteTests
+    /// Summary description for StoryTests
     /// </summary>
     [TestClass]
-    public class NoteTests
+    public class StoryTests
     {
-        NoteManager _noteManager;
+        private TestContext testContextInstance;
+        StoryManager _storyManager;
 
-        public NoteTests()
+        public StoryTests()
         {
             //
         }
-
-        private TestContext testContextInstance;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -51,11 +50,9 @@ namespace IlinkDb.Business.Test
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        [TestInitialize()]
-        public void TestInitialize()
-        {
-            _noteManager = new NoteManager(true);
-        }
+        // Use TestInitialize to run code before running each test 
+        // [TestInitialize()]
+        // public void MyTestInitialize() { }
         //
         // Use TestCleanup to run code after each test has run
         // [TestCleanup()]
@@ -63,15 +60,19 @@ namespace IlinkDb.Business.Test
         //
         #endregion
 
-        //[TestMethod]
-        //public void AddNoteTest()
-        //{
-        //    Note note = new Note { NotePath = "/fred", Status = NoteStatusEnum.Open, Text = "AddNoteTest" };
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            _storyManager = new StoryManager(true);
+        }
 
-        //    Note saveOne = _noteManager.Save(note);
 
-        //    Assert.IsNotNull(saveOne, "Add failed to return a new object");
-        //    Assert.IsTrue(saveOne.Id > 0, "New object Id was not > 0");
-        //}
+        [TestMethod]
+        public void StoryListCountGreaterThanZeroTest()
+        {
+            long projectId = 830205;
+            List<Story> list = _storyManager.List(projectId);
+            Assert.IsTrue(list.Count > 0, "List method failed to return any items");
+        }
     }
 }

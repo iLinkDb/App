@@ -40,7 +40,7 @@ namespace IlinkDb.Data
         Note NoteSave(Note note);
         bool NoteDelete(Note note);
         IQueryable<Note> NoteList();
-        IQueryable<Note> NoteListForPath(string path);
+//        IQueryable<Note> NoteListForPath(string path);
 
         #endregion
 
@@ -60,6 +60,15 @@ namespace IlinkDb.Data
         Project ProjectSave(Project project);
         bool ProjectDelete(Project project);
         IQueryable<Project> ProjectList();
+
+        #endregion
+
+        #region Story
+
+        Story StoryGet(long id);
+        Story StorySave(Story story);
+        bool StoryDelete(Story story);
+        IQueryable<Story> StoryList(long projectId);
 
         #endregion
     }

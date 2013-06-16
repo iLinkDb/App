@@ -21,8 +21,7 @@ namespace IlinkDb.Data.MemoryDb
             _noteList.Add(new Note
             {
                 Id = _noteList.Count + 1,
-                NotePath = "/",
-                Status = NoteStatusEnum.Open,
+                User = "Tom Tuttle",
                 Text = "The main note for the root of the site."
             });
             _noteListCount = _noteList.Count + 1;
@@ -33,8 +32,7 @@ namespace IlinkDb.Data.MemoryDb
                 _noteList.Add(new Note
                 {
                     Id = iLoop + 1,
-                    NotePath = "/tenant",
-                    Status = NoteStatusEnum.Open,
+                    User = "Tom Tuttle",
                     Text = random.Ipsum(10, 30)
                 });
             }
@@ -66,10 +64,9 @@ namespace IlinkDb.Data.MemoryDb
             }
             else
             {
-                retVal.NotePath = newOne.NotePath;
-                retVal.Status = newOne.Status;
+                retVal.User = newOne.User;
                 retVal.Text = newOne.Text;
-                retVal.DateAddedUtc = newOne.DateAddedUtc;
+                retVal.DateAdded = newOne.DateAdded;
             }
 
             return retVal;
@@ -94,9 +91,9 @@ namespace IlinkDb.Data.MemoryDb
             return ((IEnumerable<Note>)_noteList).Select(x => x).AsQueryable();
         }
 
-        public IQueryable<Note> NoteListForPath(string path)
-        {
-            return ((IEnumerable<Note>)_noteList).Select(x => x).Where(w => w.NotePath == path).AsQueryable();
-        }
+        //public IQueryable<Note> NoteListForPath(string path)
+        //{
+        //    return ((IEnumerable<Note>)_noteList).Select(x => x).Where(w => w.NotePath == path).AsQueryable();
+        //}
     }
 }

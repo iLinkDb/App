@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using IlinkDb.Entity;
 using IlinkDb.Business;
-
 
 namespace IlinkDb.Business.Test
 {
@@ -45,15 +45,14 @@ namespace IlinkDb.Business.Test
         {
             string dateText = "2013/05/20 01:55:10 UTC";
 
-            DateTime work;
-            bool success = false;
+            DateTimeFormatInfo dt = new DateTimeFormatInfo();
 
-            if (!DateTime.TryParse(dateText, out work))
-            {
-                dateText = dateText.Replace("UTC", "");
-                success = DateTime.TryParse(dateText, out work);
-                Assert.IsTrue(success, "Failed to convert date");
-            }
+            DateTime work;
+            DateTimeStyles style = DateTimeStyles.AdjustToUniversal;
+            CultureInfo cultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+
+            bool success = DateTime.TryParse(dateText, cultureInfo, style, out work);
+            Assert.IsTrue(success, "Failed to convert date");
         }
     }
 }

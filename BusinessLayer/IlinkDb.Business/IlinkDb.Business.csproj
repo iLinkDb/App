@@ -45,6 +45,7 @@
     <Compile Include="NoteManager.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryManager.cs" />
     <Compile Include="TenantManager.cs" />
   </ItemGroup>
   <ItemGroup>
