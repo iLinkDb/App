@@ -14,6 +14,7 @@ namespace IlinkDb.Business.Test
     [TestClass]
     public class TenantTests
     {
+        private TestContext testContextInstance;
         TenantManager _tenantManager;
 
         public TenantTests()
@@ -21,7 +22,6 @@ namespace IlinkDb.Business.Test
             //
         }
 
-        private TestContext testContextInstance;
 
         /// <summary>
         ///Gets or sets the test context which provides

@@ -36,7 +36,7 @@ namespace IlinkDb.Data.DynamoDb
 
         public void Initialize()
         {
-            // Nothing to do here.  This method only works on memory databases.
+            // Nothing to do here.  This method is mainly for the memory databases.
         }
 
         public T Get<T>(long id) where T : EntityBase

@@ -54,6 +54,7 @@
     <Compile Include="NoteTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TenantTests.cs" />
+    <Compile Include="ProjectTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppCommon\AppCommon.Logging\AppCommon.Logging.csproj">

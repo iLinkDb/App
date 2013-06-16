@@ -53,5 +53,14 @@ namespace IlinkDb.Data
         //IQueryable<User> UserList();
 
         #endregion
+
+        #region Project
+
+        Project ProjectGet(long id);
+        Project ProjectSave(Project project);
+        bool ProjectDelete(Project project);
+        IQueryable<Project> ProjectList();
+
+        #endregion
     }
 }

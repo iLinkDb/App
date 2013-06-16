@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlinkDb.WebRole.UiTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppCommon.Testing", "AppCommon\AppCommon.Testing\AppCommon.Testing.csproj", "{9C96AD01-CF5A-462F-9343-AF3EB35F6830}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlinkDb.Data.PivotalApi", "DataLayer\IlinkDb.Data.PivotalApi\IlinkDb.Data.PivotalApi.csproj", "{B6098CA1-27B2-4D00-8DDD-977B9956626A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{9C96AD01-CF5A-462F-9343-AF3EB35F6830}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C96AD01-CF5A-462F-9343-AF3EB35F6830}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C96AD01-CF5A-462F-9343-AF3EB35F6830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6098CA1-27B2-4D00-8DDD-977B9956626A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6098CA1-27B2-4D00-8DDD-977B9956626A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6098CA1-27B2-4D00-8DDD-977B9956626A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6098CA1-27B2-4D00-8DDD-977B9956626A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,5 +167,6 @@ Global
 		{A7591D4D-0ADD-4C59-9525-006315990B28} = {BA7CD946-65F5-4C77-8AB9-941B5F50A064}
 		{2F0C7F33-A458-45ED-82F0-6DEA4A30B607} = {BA7CD946-65F5-4C77-8AB9-941B5F50A064}
 		{007582B8-0C58-40A8-8041-5879AE223853} = {BA7CD946-65F5-4C77-8AB9-941B5F50A064}
+		{B6098CA1-27B2-4D00-8DDD-977B9956626A} = {BA7CD946-65F5-4C77-8AB9-941B5F50A064}
 	EndGlobalSection
 EndGlobal

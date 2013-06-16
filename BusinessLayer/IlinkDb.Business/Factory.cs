@@ -8,6 +8,7 @@ using IlinkDb.Data;
 using IlinkDb.Data.DynamoDb;
 using IlinkDb.Data.EntityFramework;
 using IlinkDb.Data.MemoryDb;
+using IlinkDb.Data.PivotalApi;
 
 namespace IlinkDb.Business
 {
@@ -45,15 +46,25 @@ namespace IlinkDb.Business
 
             switch (repositoryType.ToLower())
             {
+                case "entity":
+                case "entityframework":
+                    _repository = new RepositoryEntityFramework();
+                    break;
+
+                case "dynamodb":
+                    _repository = new RepositoryDynamoDb();
+                    break;
+                case "pivot":
+                    _repository = new RepositoryPivotal();
+                    break;
+
                 case "ram":
                 case "memory":
                     _repository = new RepositoryMemory();
                     break;
-                case "dynamodb":
-                    _repository = new RepositoryDynamoDb();
-                    break;
+
                 default:
-                    _repository = new RepositoryEntityFramework();
+                    _repository = new RepositoryMemory();
                     break;
             }
         }
