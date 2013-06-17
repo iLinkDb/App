@@ -30,10 +30,15 @@ namespace IlinkDb.Business
             return _db.NoteGet(id);
         }
 
-        public Note Save(Note note)
+        public Note AddNote(Story story, Note note)
         {
-            return _db.NoteSave(note);
+            return _db.Add(story, note);
         }
+
+        //public Note Save(Note note)
+        //{
+        //    return _db.NoteSave(note);
+        //}
 
         public bool Delete(Note note)
         {

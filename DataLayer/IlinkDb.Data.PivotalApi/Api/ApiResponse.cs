@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IlinkDb.Data.PivotalApi
 {
-    public class PivotApiResponse
+    public class ApiResponse
     {
         public string Xml { get; set; }
         public int NewId { get; set; }

@@ -6,36 +6,39 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 
+using AppCommon;
+
 namespace IlinkDb.Data.PivotalApi
 {
-    public class Common
+    public class PivotApi
     {
+        // Pivotal Community site: http://community.pivotaltracker.com/pivotal/problems/common
         internal const string ApiVersion = "v3";
         internal const string ApiToken = "4a445bda5668e2e79a6a5852810f36b0";
 
         internal const string ApiUrl = "https://www.pivotaltracker.com/services";
 
-        internal static PivotApiResponse GetXmlFromPivotApi(PivotApiGetRequest getRequest)
+        internal static ApiResponse Get(GetRequest getRequest)
         {
-            PivotApiResponse retVal = new PivotApiResponse();
+            ApiResponse retVal = new ApiResponse();
 
-            string url = string.Format("{0}/{1}/{2}", ApiUrl, ApiVersion, getRequest.Action);
-
-            url += "?token=" + ApiToken;
-
-            // url += "&format=xml";
-
-            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
-            //CredentialCache myCache = new CredentialCache();
-            //myCache.Add(new Uri(url), "Basic", new NetworkCredential(ApiToken, ""));
-            //myReq.Credentials = myCache;
-
-            myReq.ContentType = "application/xml";
-            myReq.ContentLength = 0;
-            myReq.Method = "GET";
+            string logMsg = "PivotApi/Get";
 
             try
             {
+
+                string url = string.Format("{0}/{1}/{2}?token={3}", 
+                    ApiUrl, ApiVersion, getRequest.Action, ApiToken);
+
+                HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
+                //CredentialCache myCache = new CredentialCache();
+                //myCache.Add(new Uri(url), "Basic", new NetworkCredential(ApiToken, ""));
+                //myReq.Credentials = myCache;
+
+                myReq.ContentType = "application/xml";
+                myReq.ContentLength = 0;
+                myReq.Method = "GET";
+
                 HttpWebResponse wr = (HttpWebResponse)myReq.GetResponse();
                 retVal.StatusCode = (int)wr.StatusCode;
 
@@ -46,50 +49,69 @@ namespace IlinkDb.Data.PivotalApi
             }
             catch (WebException ex)
             {
+                Logging.LogError(logMsg + ", WEBEXCEPTION: " + ex.Message, ex);
                 HttpWebResponse exResponse = (HttpWebResponse)ex.Response;
                 retVal.StatusCode = (int)exResponse.StatusCode;
                 retVal.ErrorMessage = ex.Message;
             }
+            catch (Exception ex)
+            { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
+
             return retVal;
         }
 
-        internal static PivotApiResponse PutXmlToPivotApi(PivotApiPutRequest putRequest)
+        internal static ApiResponse Post(PostRequest putRequest)
         {
-            PivotApiResponse retVal = new PivotApiResponse();
+            ApiResponse retVal = new ApiResponse();
 
-            string url = string.Format("{0}/{1}/{2}", ApiUrl, ApiVersion, putRequest.Action);
-
-            url += "?auth_token=" + ApiToken;
-
-            url += "&format=xml";
-
-            string postRequest = url + Uri.EscapeUriString(putRequest.PostRequest);
-
-            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(postRequest);
-            myReq.Method = "POST";
-
+            string logMsg = "PivotApi/Post";
             try
             {
-                using (HttpWebResponse response = (HttpWebResponse)myReq.GetResponse())
+                string url = string.Format("{0}/{1}/{2}?token={3}", 
+                    ApiUrl, ApiVersion, putRequest.Action, ApiToken);
+
+                HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
+
+                byte[] byteArray = Encoding.UTF8.GetBytes(putRequest.XmlDoc.InnerXml);
+
+                myReq.ContentType = "application/xml";
+                myReq.ContentLength = byteArray.Length;
+                myReq.Method = "POST";
+
+                Stream dataStream = myReq.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                HttpWebResponse wr = (HttpWebResponse)myReq.GetResponse();
+                retVal.StatusCode = (int)wr.StatusCode;
+
+                string location = wr.Headers["Location"];
+
+                if (!string.IsNullOrEmpty(location))
                 {
-                    // in the case of a PivotApi exception, the reason is in the response body, so need to extract this.
-                    using (Stream receiveStream = response.GetResponseStream())
+                    int pos = location.LastIndexOf("/");
+                    if (pos > 0)
                     {
-                        Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
-                        using (StreamReader readStream = new StreamReader(receiveStream, encode))
-                        {
-                            retVal.Xml = readStream.ReadToEnd();
-                            retVal.Success = true;
-                        }
+                        int newId = 0;
+                        if (int.TryParse(location.Substring(pos + 1), out newId))
+                        { retVal.NewId = newId; }
                     }
                 }
+
+                Stream receiveStream = wr.GetResponseStream();
+                StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
+                retVal.Xml = reader.ReadToEnd();
+                retVal.Success = true;
             }
             catch (WebException ex)
             {
+                Logging.LogError(logMsg + ", WEBEXCEPTION: " + ex.Message, ex);
                 HttpWebResponse exResponse = (HttpWebResponse)ex.Response;
                 retVal.StatusCode = (int)exResponse.StatusCode;
                 retVal.ErrorMessage = ex.Message;
             }
+            catch (Exception ex)
+            { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
 
             return retVal;
         }

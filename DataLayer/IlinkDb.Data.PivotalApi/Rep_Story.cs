@@ -16,7 +16,7 @@ namespace IlinkDb.Data.PivotalApi
         public Story StoryGet(long id)
         {
             throw new NotImplementedException();
-            string logMsg = "RepositoryPivotal/StoryGet";
+            string logMsg = "Rep_Story/StoryGet";
 
             try
             { }
@@ -27,7 +27,7 @@ namespace IlinkDb.Data.PivotalApi
         public Story StorySave(Story story)
         {
             throw new NotImplementedException();
-            string logMsg = "RepositoryPivotal/StorySave";
+            string logMsg = "Rep_Story/StorySave";
 
             try
             { }
@@ -38,7 +38,7 @@ namespace IlinkDb.Data.PivotalApi
         public bool StoryDelete(Story story)
         {
             throw new NotImplementedException();
-            string logMsg = "RepositoryPivotal/StoryDelete";
+            string logMsg = "Rep_Story/StoryDelete";
 
             try
             { }
@@ -50,13 +50,13 @@ namespace IlinkDb.Data.PivotalApi
         {
             IQueryable<Story> retVal = new List<Story>().AsQueryable();
 
-            string logMsg = "RepositoryPivotal/StoryList";
+            string logMsg = "Rep_Story/StoryList";
 
             try
             {
                 string action = string.Format("projects/{0}/stories", projectId);
-                PivotApiGetRequest getRequest = new PivotApiGetRequest(action);
-                PivotApiResponse response = Common.GetXmlFromPivotApi(getRequest);
+                GetRequest getRequest = new GetRequest(action);
+                ApiResponse response = PivotApi.Get(getRequest);
 
                 if (response.Success)
                 {
@@ -79,30 +79,5 @@ namespace IlinkDb.Data.PivotalApi
             return retVal;
         }
 
-        public Note AddNote(long projectId, Note note)
-        {
-            Note retVal = null;
-
-
-
-            //PivotApiPutRequest putRequest = new PivotApiPutRequest("rooms/message");
-
-            //putRequest.PostRequest = roomMessage.PostRequest;
-
-            //PivotApiResponse response = Common.PutXmlToPivotApi(putRequest);
-
-            //if (!response.Success)
-            //{
-            //    throw new Exception(response.StatusCode + " " + response.ErrorMessage);
-            //}
-
-            //return response.NewId;
-
-
-
-
-
-            return retVal;
-        }
     }
 }

@@ -9,14 +9,13 @@ using IlinkDb.Business;
 namespace IlinkDb.Business.Test
 {
     /// <summary>
-    /// Summary description for NoteTests
+    /// Summary description for TaskTests
     /// </summary>
     [TestClass]
-    public class NoteTests
+    public class TaskTests
     {
-        NoteManager _noteManager;
-
-        public NoteTests()
+        TaskManager _taskManager;
+        public TaskTests()
         {
             //
         }
@@ -54,40 +53,27 @@ namespace IlinkDb.Business.Test
         [TestInitialize()]
         public void TestInitialize()
         {
-            _noteManager = new NoteManager(true);
-        }
-        //
+            _taskManager= new TaskManager(true);
+        }        //
         // Use TestCleanup to run code after each test has run
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
         #endregion
 
-        //[TestMethod]
-        //public void AddNoteTest()
-        //{
-        //    Note note = new Note { NotePath = "/fred", Status = NoteStatusEnum.Open, Text = "AddNoteTest" };
-
-        //    Note saveOne = _noteManager.Save(note);
-
-        //    Assert.IsNotNull(saveOne, "Add failed to return a new object");
-        //    Assert.IsTrue(saveOne.Id > 0, "New object Id was not > 0");
-        //}
-
         [TestMethod]
-        public void AddNoteTest()
+        public void AddTaskTest()
         {
             long projectId = 830205;
 
             StoryManager storyManager = new StoryManager(true);
             List<Story> storyList = storyManager.List(projectId);
 
-            Note note = new Note();
-            // note.User = "ilinkdb";
-            note.Text = "from API test @ " + DateTime.Now;
-            Note newNote = _noteManager.AddNote(storyList[1], note);
-            Assert.IsNotNull(newNote, "newNote should not have been null");
-            Assert.IsTrue(newNote.Id > 0, "newNote ID should have been > 0");
+            Task task = new Task();
+            task.Description = "First task from API";
+            Task newTask = _taskManager.Add(storyList[1], task);
+            Assert.IsNotNull(newTask, "newTask should not have been null");
+            Assert.IsTrue(newTask.Id > 0, "newTask ID should have been > 0");
         }
 
     }

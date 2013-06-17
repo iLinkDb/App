@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace IlinkDb.Data.PivotalApi
 {
-    internal class PivotApiGetRequest
+    public class PostRequest
     {
         public string Action { get; set; }
+        public XmlDocument XmlDoc { get; set; }
 
-        public PivotApiGetRequest()
+        public PostRequest()
         {
         }
 
-        public PivotApiGetRequest(string action)
+        public PostRequest(string action)
         {
             Action = action;
         }
     }
-
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Xml;
 using System.Xml.Linq;
 
 using AppCommon;
@@ -42,32 +43,38 @@ namespace IlinkDb.Entity
             { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
         }
 
-        public string PivotApiPostRequest
+        public XmlDocument XmlDoc
         {
             get
             {
-                string logMsg = "Note/PivotApiPostRequest";
-                StringBuilder sb = new StringBuilder();
+                string logMsg = "Note/XmlDoc";
+
+                XmlDocument retVal = new XmlDocument();
 
                 try
                 {
-                    if (Id > 0)
-                    { sb.AppendFormat("&id={0}", Id); }
+                    XmlElement xmlNode = retVal.CreateElement("note");
 
                     if (!string.IsNullOrEmpty(Text))
-                    { sb.AppendFormat("&text={0}", Text); }
+                    {
+                        XmlElement element = retVal.CreateElement("text");
+                        element.InnerText = Text;
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (!string.IsNullOrEmpty(User))
-                    { sb.AppendFormat("&author={0}", User); }
+                    {
+                        XmlElement element = retVal.CreateElement("author");
+                        element.InnerText = User;
+                        xmlNode.AppendChild(element);
+                    }
 
-                    if (DateAdded.HasValue)
-                    { sb.AppendFormat("&noted_at={0}", DateAdded); }
-
+                    retVal.AppendChild(xmlNode);
                 }
                 catch (Exception ex)
                 { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
 
-                return sb.ToString();
+                return retVal;
             }
         }
 

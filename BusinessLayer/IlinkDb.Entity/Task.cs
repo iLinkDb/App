@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Xml;
 using System.Xml.Linq;
 
 using AppCommon;
@@ -46,37 +47,56 @@ namespace IlinkDb.Entity
             { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
         }
 
-        public string PivotApiPostRequest
+        public XmlDocument XmlDoc
         {
             get
             {
-                string logMsg = "Task/PivotApiPostRequest";
-                StringBuilder sb = new StringBuilder();
+                string logMsg = "Task/XmlDoc";
+
+                XmlDocument retVal = new XmlDocument();
 
                 try
                 {
-                    if (Id > 0)
-                    { sb.AppendFormat("&id={0}", Id); }
+                    XmlElement xmlNode = retVal.CreateElement("task");
 
                     if (!string.IsNullOrEmpty(Description))
-                    { sb.AppendFormat("&description={0}", Description); }
+                    {
+                        XmlElement element = retVal.CreateElement("description");
+                        element.InnerText = Description;
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (Position > 0)
-                    { sb.AppendFormat("&position={0}", Position); }
+                    {
+                        XmlElement element = retVal.CreateElement("position");
+                        element.InnerText = Position.ToString();
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (Complete.HasValue)
-                    { sb.AppendFormat("&complete={0}", Complete); }
+                    {
+                        XmlElement element = retVal.CreateElement("complete");
+                        if (Complete.GetValueOrDefault())
+                        { element.InnerText = "true"; }
+                        else
+                        { element.InnerText = "false"; }
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (CreatedAt.HasValue)
-                    { sb.AppendFormat("&created_at={0}", CreatedAt); }
+                    {
+                        XmlElement element = retVal.CreateElement("created_at");
+                        element.InnerText = CreatedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
+                        xmlNode.AppendChild(element);
+                    }
 
+                    retVal.AppendChild(xmlNode);
                 }
                 catch (Exception ex)
                 { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
 
-                return sb.ToString();
+                return retVal;
             }
         }
-
     }
 }

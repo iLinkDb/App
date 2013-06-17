@@ -97,7 +97,7 @@ namespace IlinkDb.Data.MemoryDb
         //}
 
 
-        public Note AddNote(long projectId, Note note)
+        public Note Add(Story story, Note note)
         {
             throw new NotImplementedException();
         }

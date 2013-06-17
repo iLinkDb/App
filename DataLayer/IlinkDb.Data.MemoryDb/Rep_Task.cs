@@ -2,41 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using IlinkDb.Entity;
 
-namespace IlinkDb.Data.DynamoDb
+namespace IlinkDb.Data.MemoryDb
 {
-    public partial class RepositoryDynamoDb : IRepository
+    public partial class RepositoryMemory : IRepository
     {
 
-        public Note NoteGet(long id)
+        public Task GetTask(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Note NoteSave(Note note)
+        public Task Save(Task task)
         {
             throw new NotImplementedException();
         }
 
-        public bool NoteDelete(Note note)
+        public bool Delete(Task task)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Note> NoteList()
+        public IQueryable<Task> List(Story story)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Note> NoteListForPath(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Note Add(Story story, Note note)
+        public Task Add(Story story, Task task)
         {
             throw new NotImplementedException();
         }

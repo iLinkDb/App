@@ -74,17 +74,5 @@ namespace IlinkDb.Business.Test
             Assert.IsTrue(list.Count > 0, "List method failed to return any items");
         }
 
-        [TestMethod]
-        public void AddNoteTest()
-        {
-            long projectId = 830205;
-            Note note = new Note();
-            note.User = "ilinkdb";
-            note.Text = "Note added from API";
-            Note newNote = _storyManager.AddNote(projectId, note);
-            Assert.IsNotNull(newNote, "newNote should not have been null");
-            Assert.IsTrue(newNote.Id > 0, "newNote ID should have been > 0");
-        }
-
     }
 }

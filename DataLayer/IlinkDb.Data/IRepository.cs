@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using IlinkDb.Entity;
 
@@ -40,8 +39,7 @@ namespace IlinkDb.Data
         Note NoteSave(Note note);
         bool NoteDelete(Note note);
         IQueryable<Note> NoteList();
-        //        IQueryable<Note> NoteListForPath(string path);
-        Note AddNote(long projectId, Note note);
+        Note Add(Story story, Note note);
 
         #endregion
 
@@ -70,7 +68,17 @@ namespace IlinkDb.Data
         Story StorySave(Story story);
         bool StoryDelete(Story story);
         IQueryable<Story> StoryList(long projectId);
+//        Story Add(Project project, Story story);
 
+        #region Task
+
+        Task GetTask(long id);
+        Task Save(Task task);
+        bool Delete(Task task);
+        IQueryable<Task> List(Story story);
+        Task Add(Story story, Task task);
+
+        #endregion
         #endregion
     }
 }

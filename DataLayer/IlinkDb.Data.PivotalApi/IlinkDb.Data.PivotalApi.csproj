@@ -40,15 +40,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Common.cs" />
-    <Compile Include="Api\PivotApiGetRequest.cs" />
-    <Compile Include="Api\PivotApiPutRequest.cs" />
-    <Compile Include="Api\PivotApiResponse.cs" />
+    <Compile Include="Api\GetRequest.cs" />
+    <Compile Include="Api\PostRequest.cs" />
+    <Compile Include="Api\ApiResponse.cs" />
     <Compile Include="RepositoryPivotal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rep_Link.cs" />
     <Compile Include="Rep_Note.cs" />
     <Compile Include="Rep_Project.cs" />
     <Compile Include="Rep_Story.cs" />
+    <Compile Include="Rep_Task.cs" />
     <Compile Include="Rep_Tenant.cs" />
   </ItemGroup>
   <ItemGroup>

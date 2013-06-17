@@ -54,8 +54,8 @@ namespace IlinkDb.Data.PivotalApi
 
             try
             {
-                PivotApiGetRequest getRequest = new PivotApiGetRequest("projects");
-                PivotApiResponse response = Common.GetXmlFromPivotApi(getRequest);
+                GetRequest getRequest = new GetRequest("projects");
+                ApiResponse response = PivotApi.Get(getRequest);
 
                 if (response.Success)
                 {

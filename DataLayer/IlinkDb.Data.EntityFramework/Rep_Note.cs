@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using IlinkDb.Entity;
 
@@ -36,7 +35,7 @@ namespace IlinkDb.Data.EntityFramework
         }
 
 
-        public Note AddNote(long projectId, Note note)
+        public Note Add(Story story, Note note)
         {
             throw new NotImplementedException();
         }
