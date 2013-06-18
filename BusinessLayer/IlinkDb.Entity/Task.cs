@@ -98,5 +98,6 @@ namespace IlinkDb.Entity
                 return retVal;
             }
         }
+    
     }
 }

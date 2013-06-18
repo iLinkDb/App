@@ -35,6 +35,11 @@ namespace IlinkDb.Business
             return _db.StorySave(story);
         }
 
+        public Story Add(long projectId, Story story)
+        {
+            return _db.Add(projectId, story);
+        }
+
         public bool Delete(Story story)
         {
             return _db.StoryDelete(story);

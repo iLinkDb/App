@@ -79,5 +79,32 @@ namespace IlinkDb.Data.PivotalApi
             return retVal;
         }
 
+        public Story Add(long projectId, Story story)
+        {
+            Story retVal = null;
+
+            string logMsg = "Rep_Story/Add";
+
+            string postAction = string.Format("projects/{0}/stories", projectId);
+            PostRequest postRequest = new PostRequest(postAction);
+
+            postRequest.XmlDoc = story.XmlDoc;
+
+            ApiResponse response = PivotApi.Post(postRequest);
+
+            if (response.Success)
+            {
+                XDocument doc = XDocument.Parse(response.Xml);
+                XElement node = doc.Descendants("task").FirstOrDefault();
+
+                retVal = new Story(node);
+            }
+            else
+            {
+                Logging.LogError(logMsg + string.Format(", ERROR Code: {0}, Message: {1}",
+                  response.StatusCode, response.ErrorMessage));
+            }
+            return retVal;
+        }
     }
 }

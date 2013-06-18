@@ -30,5 +30,17 @@ namespace IlinkDb.Data.DynamoDb
         {
             throw new NotImplementedException();
         }
+
+
+        public Story Add(Story story)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Story Add(long projectId, Story story)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Xml;
 using System.Xml.Linq;
 
 using AppCommon;
@@ -16,7 +18,7 @@ namespace IlinkDb.Entity
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public string StoryType { get; set; }
+        public StoryTypeEnum StoryType { get; set; }
         public string Url { get; set; }
 
         public string CurrentState { get; set; }
@@ -36,6 +38,7 @@ namespace IlinkDb.Entity
         public Story()
         {
             _noteList = new List<Note>();
+            Estimate = -1;
         }
 
         public Story(XElement node)
@@ -46,11 +49,15 @@ namespace IlinkDb.Entity
             {
                 Id = EntityHelper.GetIntElementValue(node, "id");
                 ProjectId = EntityHelper.GetIntElementValue(node, "project_id");
-                Estimate = EntityHelper.GetIntElementValue(node, "estimate");
+                Estimate = EntityHelper.GetIntElementValue(node, "estimate", -1);
 
                 Name = EntityHelper.GetStringElementValue(node, "name");
                 Description = EntityHelper.GetStringElementValue(node, "description");
-                StoryType = EntityHelper.GetStringElementValue(node, "story_type");
+
+                XElement elementStoryType = node.Element("story_type");
+                if (elementStoryType != null)
+                { StoryType = Conversion.GetEnumFromString<StoryTypeEnum>(elementStoryType.Value, StoryTypeEnum.Feature); }
+
                 Url = EntityHelper.GetStringElementValue(node, "url");
 
                 CurrentState = EntityHelper.GetStringElementValue(node, "current_state");
@@ -90,60 +97,109 @@ namespace IlinkDb.Entity
 
         }
 
-        public string PivotApiPostRequest
+        public XmlDocument XmlDoc
         {
             get
             {
-                string logMsg = "Story/PivotApiPostRequest";
-                StringBuilder sb = new StringBuilder();
+                string logMsg = "Story/XmlDoc";
+
+                XmlDocument retVal = new XmlDocument();
 
                 try
                 {
+                    XmlElement xmlNode = retVal.CreateElement("story");
+
+                    XmlElement storyTypeElement = retVal.CreateElement("story_type");
+                    storyTypeElement.InnerText = Conversion.GetEnumDescription(StoryType);
+                    xmlNode.AppendChild(storyTypeElement);
+
                     if (Id > 0)
-                    { sb.AppendFormat("&id={0}", Id); }
+                    {
+                        XmlElement element = retVal.CreateElement("id");
+                        element.InnerText = Id.ToString();
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (ProjectId >= 0)
-                    { sb.AppendFormat("&project_id={0}", ProjectId); }
+                    {
+                        XmlElement element = retVal.CreateElement("project_id");
+                        element.InnerText = ProjectId.ToString();
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (Estimate >= 0)
-                    { sb.AppendFormat("&estimate={0}", Estimate); }
+                    {
+                        XmlElement element = retVal.CreateElement("estimate");
+                        element.InnerText = Estimate.ToString();
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (!string.IsNullOrEmpty(Name))
-                    { sb.AppendFormat("&name={0}", Name); }
+                    {
+                        XmlElement element = retVal.CreateElement("name");
+                        element.InnerText = Name;
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (!string.IsNullOrEmpty(Description))
-                    { sb.AppendFormat("&description={0}", Description); }
-
-                    if (!string.IsNullOrEmpty(StoryType))
-                    { sb.AppendFormat("&story_type={0}", StoryType); }
+                    {
+                        XmlElement element = retVal.CreateElement("description");
+                        element.InnerText = Description;
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (!string.IsNullOrEmpty(Url))
-                    { sb.AppendFormat("&url={0}", Url); }
-
+                    {
+                        XmlElement element = retVal.CreateElement("url");
+                        element.InnerText = Url;
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (!string.IsNullOrEmpty(CurrentState))
-                    { sb.AppendFormat("&current_state={0}", CurrentState); }
-
+                    {
+                        XmlElement element = retVal.CreateElement("current_state");
+                        element.InnerText = CurrentState;
+                        xmlNode.AppendChild(element);
+                    }
                     if (!string.IsNullOrEmpty(RequestedBy))
-                    { sb.AppendFormat("&requested_by={0}", RequestedBy); }
-
+                    {
+                        XmlElement element = retVal.CreateElement("requested_by");
+                        element.InnerText = RequestedBy;
+                        xmlNode.AppendChild(element);
+                    }
                     if (!string.IsNullOrEmpty(OwnedBy))
-                    { sb.AppendFormat("&owned_by={0}", OwnedBy); }
-
+                    {
+                        XmlElement element = retVal.CreateElement("owned_by");
+                        element.InnerText = OwnedBy;
+                        xmlNode.AppendChild(element);
+                    }
                     if (!string.IsNullOrEmpty(Labels))
-                    { sb.AppendFormat("&labels={0}", Labels); }
+                    {
+                        XmlElement element = retVal.CreateElement("labels");
+                        element.InnerText = Labels;
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (CreatedAt.HasValue)
-                    { sb.AppendFormat("&created_at={0}", CreatedAt); }
+                    {
+                        XmlElement element = retVal.CreateElement("created_at");
+                        element.InnerText = CreatedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
+                        xmlNode.AppendChild(element);
+                    }
 
                     if (AcceptedAt.HasValue)
-                    { sb.AppendFormat("&accepted_at={0}", AcceptedAt); }
+                    {
+                        XmlElement element = retVal.CreateElement("accepted_at");
+                        element.InnerText = AcceptedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
+                        xmlNode.AppendChild(element);
+                    }
 
+                    retVal.AppendChild(xmlNode);
                 }
                 catch (Exception ex)
                 { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
 
-                return sb.ToString();
+                return retVal;
             }
         }
 

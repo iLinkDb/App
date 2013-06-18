@@ -68,7 +68,8 @@ namespace IlinkDb.Data
         Story StorySave(Story story);
         bool StoryDelete(Story story);
         IQueryable<Story> StoryList(long projectId);
-//        Story Add(Project project, Story story);
+        //        Story Add(Project project, Story story);
+        Story Add(long projectId, Story story);
 
         #region Task
 

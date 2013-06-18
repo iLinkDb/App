@@ -31,8 +31,12 @@ namespace IlinkDb.Entity
         }
 
         internal static int GetIntElementValue(XElement node, string nodeName)
+        { return GetIntElementValue(node, nodeName, 0); }
+
+
+        internal static int GetIntElementValue(XElement node, string nodeName, int defaultValue)
         {
-            int retVal = 0;
+            int retVal = defaultValue;
 
             string logMsg = "EntityHelper/GetIntElementValue";
 
@@ -113,5 +117,6 @@ namespace IlinkDb.Entity
 
             return retVal;
         }
+
     }
 }

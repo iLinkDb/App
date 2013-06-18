@@ -3,95 +3,129 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace AppCommon
 {
-   public class Conversion
-   {
-      private static string DateTimeUrlFormat = "yyyyMMddHHmmss";
+    public class Conversion
+    {
+        private static string DateTimeUrlFormat = "yyyyMMddHHmmss";
 
 
-      public static long GetId(string idValue)
-      {
-         long retVal = 0;
-         long.TryParse(idValue, out retVal);
-         return retVal;
-      }
+        public static long GetId(string idValue)
+        {
+            long retVal = 0;
+            long.TryParse(idValue, out retVal);
+            return retVal;
+        }
 
-      public static string FormatMySqlGuid(string guid)
-      {
-         string retVal = guid;
-         if (!String.IsNullOrEmpty(guid))
-         {
-            if (guid.Contains("{"))
+        public static string FormatMySqlGuid(string guid)
+        {
+            string retVal = guid;
+            if (!String.IsNullOrEmpty(guid))
             {
-               retVal = guid.Replace("{", "").Replace("}", "");
+                if (guid.Contains("{"))
+                {
+                    retVal = guid.Replace("{", "").Replace("}", "");
+                }
             }
-         }
-         return retVal;
-      }
+            return retVal;
+        }
 
-      public static string FormatPhone(string phone)
-      {
-         string retVal = "";
-         if (!String.IsNullOrEmpty(phone))
-         {
-            string workPhone = phone.Replace("(", "").Replace(")", "").Replace(".", "").Replace("-", "").Replace(" ", "");
-
-            int len = workPhone.Length;
-            if (len < 5)
+        public static string FormatPhone(string phone)
+        {
+            string retVal = "";
+            if (!String.IsNullOrEmpty(phone))
             {
-               retVal = workPhone;
+                string workPhone = phone.Replace("(", "").Replace(")", "").Replace(".", "").Replace("-", "").Replace(" ", "");
+
+                int len = workPhone.Length;
+                if (len < 5)
+                {
+                    retVal = workPhone;
+                }
+                else if (len < 8)
+                {
+                    retVal = String.Format("{0}-{1}", workPhone.Substring(0, len - 4), workPhone.Substring(len - 4, 4));
+                }
+                else if (len < 11)
+                {
+                    retVal = String.Format("({0}) {1}-{2}",
+                                           workPhone.Substring(0, len - 7),
+                                           workPhone.Substring(len - 7, 3),
+                                           workPhone.Substring(len - 4, 4));
+                }
+                else
+                {
+                    retVal = String.Format("+{0} ({1}) {2}-{3}",
+                                           workPhone.Substring(0, len - 10),
+                                           workPhone.Substring(len - 10, 3),
+                                           workPhone.Substring(len - 7, 3),
+                                           workPhone.Substring(len - 4, 4));
+                }
             }
-            else if (len < 8)
+
+            return retVal;
+        }
+
+        public static string FormatCreditCardFourDashFour(string creditCardNumber)
+        {
+            string retVal = creditCardNumber.Substring(0, 4) + "-" + creditCardNumber.Substring(creditCardNumber.Length - 4, 4);
+            return retVal;
+        }
+
+        public static string DateTimeIso8601FormatToString(DateTime dateTime)
+        {
+            string retVal = dateTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+
+            return retVal;
+        }
+
+        public static string EncodeDateForUrl(DateTime workDate)
+        {
+            string retVal = workDate.ToString(DateTimeUrlFormat);
+            return retVal;
+        }
+
+        public static DateTime DecodeDateFromUrl(string workDate)
+        {
+            CultureInfo culture = CultureInfo.InvariantCulture;
+            DateTime retVal = DateTime.ParseExact(workDate, DateTimeUrlFormat, culture);
+
+            return retVal;
+        }
+
+        public static T GetEnumFromString<T>(string value, T defaultValue) where T : struct, IConvertible
+        {
+            if (!typeof(T).IsEnum) throw new ArgumentException("T must be an enumerated type");
+            if (string.IsNullOrEmpty(value)) return defaultValue;
+
+            foreach (T item in Enum.GetValues(typeof(T)))
             {
-               retVal = String.Format("{0}-{1}", workPhone.Substring(0, len - 4), workPhone.Substring(len - 4, 4));
+                if (item.ToString().ToLower().Equals(value.Trim().ToLower())) return item;
             }
-            else if (len < 11)
+
+            return defaultValue;
+        }
+
+        public static string GetEnumDescription(Enum en)
+        {
+            Type type = en.GetType();
+
+            MemberInfo[] memInfo = type.GetMember(en.ToString());
+
+            if (memInfo != null && memInfo.Length > 0)
             {
-               retVal = String.Format("({0}) {1}-{2}",
-                                      workPhone.Substring(0, len - 7),
-                                      workPhone.Substring(len - 7, 3),
-                                      workPhone.Substring(len - 4, 4));
+                object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                if (attrs != null && attrs.Length > 0)
+                {
+                    return ((DescriptionAttribute)attrs[0]).Description;
+                }
             }
-            else
-            {
-               retVal = String.Format("+{0} ({1}) {2}-{3}",
-                                      workPhone.Substring(0, len - 10),
-                                      workPhone.Substring(len - 10, 3),
-                                      workPhone.Substring(len - 7, 3),
-                                      workPhone.Substring(len - 4, 4));
-            }
-         }
 
-         return retVal;
-      }
-
-       public static string FormatCreditCardFourDashFour(string creditCardNumber)
-       {
-           string retVal = creditCardNumber.Substring(0, 4) + "-" + creditCardNumber.Substring(creditCardNumber.Length - 4, 4);
-           return retVal;
-       }
-
-       public static string DateTimeIso8601FormatToString(DateTime dateTime)
-       {
-           string retVal = dateTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-
-           return retVal;
-       }
-
-      public static string EncodeDateForUrl(DateTime workDate)
-      {
-         string retVal = workDate.ToString(DateTimeUrlFormat);
-         return retVal;
-      }
-
-      public static DateTime DecodeDateFromUrl(string workDate)
-      {
-         CultureInfo culture = CultureInfo.InvariantCulture;
-         DateTime retVal = DateTime.ParseExact(workDate, DateTimeUrlFormat, culture);
-
-         return retVal;
-      }
-   }
+            return en.ToString();
+        }
+    }
 }

@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Xml;
+using System.Xml.Linq;
 using Newtonsoft.Json;
+
+using AppCommon;
 
 namespace IlinkDb.Entity
 {
@@ -15,5 +20,6 @@ namespace IlinkDb.Entity
 
         [JsonProperty(PropertyName = "deleted")]
         public long Deleted { get; set; }
+
     }
 }

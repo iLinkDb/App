@@ -46,6 +46,7 @@
     <Compile Include="EntityHelper.cs" />
     <Compile Include="Enumerations\NoteStatusEnum.cs" />
     <Compile Include="Enumerations\NoteTypeEnum.cs" />
+    <Compile Include="Enumerations\StoryTypeEnum.cs" />
     <Compile Include="Enumerations\UserRoleEnum.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Note.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\..\AppCommon\AppCommon.Logging\AppCommon.Logging.csproj">
       <Project>{5bfab067-72fc-4efd-86d3-227d9182d868}</Project>
       <Name>AppCommon.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\AppCommon\AppCommon.Misc\AppCommon.Misc.csproj">
+      <Project>{05c26666-e4c3-43b9-979a-89e1d9449f3b}</Project>
+      <Name>AppCommon.Misc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

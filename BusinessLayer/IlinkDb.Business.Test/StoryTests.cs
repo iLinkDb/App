@@ -74,5 +74,22 @@ namespace IlinkDb.Business.Test
             Assert.IsTrue(list.Count > 0, "List method failed to return any items");
         }
 
+        [TestMethod]
+        public void AddStoryTest()
+        {
+            long projectId = 830205;
+
+            Story story = new Story();
+            story.ProjectId = projectId;
+            story.Name = "Story with label";
+            story.Labels = "Just_Some_Label";
+            story.RequestedBy = "Tom Tuttle";
+            // story.StoryType = "feature";
+            // story.Description = "Desc for story";
+
+            Story newStory = _storyManager.Add(projectId, story);
+            Assert.IsNotNull(newStory, "newStory should not have been null");
+            Assert.IsTrue(newStory.Id > 0, "newStory ID should have been > 0");
+        }
     }
 }

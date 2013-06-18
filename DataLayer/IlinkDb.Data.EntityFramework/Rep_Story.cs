@@ -30,5 +30,11 @@ namespace IlinkDb.Data.EntityFramework
         {
             throw new NotImplementedException();
         }
+
+
+        public Story Add(long projectId, Story story)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
