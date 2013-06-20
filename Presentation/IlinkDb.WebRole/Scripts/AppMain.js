@@ -4,26 +4,36 @@ if (typeof am == 'undefined' || !am) {
 }
 
 am.EditDialog = function (formName) {
+    console.log('am.EditDialog');
     console.dir(formName);
-    console.dir(this);
 
     //    $('#modalEdit').on('hide', function () {
     var form = $('#' + formName);
+    console.dir(form);
     form.validate().resetForm();
     form.get(0).reset();
     form.removeData('itemOne');
+    console.log("after removeData");
     form.find("input[type='hidden'][id='id']").remove();
+    console.log("after remove()");
     //    });
 
 };
 
 am.PostEdit = function (form) {
+    //console.log('am.PostEdit');
+    //console.dir(form);
+
     form = $(form);
     //                if (!form.valid())
     //                    return;
+//    am.assert(viewModel != undefined, "viewModel != undefined");
     var json = JSON.stringify(am._getItemFromForm(form));
 
+    console.log('In PostEdit');
+
     var update = form.find("input[type='hidden'][id='id']").val();
+    console.log('update: ' + update);
     var httpVerb = !update ? "POST" : "PUT";
 
     var self = this;
@@ -34,14 +44,16 @@ am.PostEdit = function (form) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (jsonObject) {
+            console.log('self');
+            console.dir(self);
             if (update) {
-                var match = ko.utils.arrayFirst(self.itemList(), function (item) {
+                var match = ko.utils.arrayFirst(viewModel.itemList(), function (item) {
                     return jsonObject.id === item.id();
                 });
                 match.updateItem(jsonObject);
             }
             else {
-                self.itemList.push(new itemOne(jsonObject));
+                viewModel.itemList.push(new itemOne(jsonObject));
             }
             $('#modalEdit').modal('hide');
         }
@@ -55,4 +67,11 @@ am._getItemFromForm = function (form) {
         itemOne[this.name] = $(this).val();
     });
     return itemOne;
+}
+
+am.assert = function(value, desc) {
+    var li = document.createElement("li");
+    li.className = value ? "pass" : "fail";
+    li.appendChild(document.createTextNode(desc));
+    document.getElementById("results").appendChild(li);
 }

@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Ver2";
+}
+
+<div class="hero-unit">
+    <h2>Tenants</h2>
+
+    <div class="row">
+        <div class="span2">
+        </div>
+        <div class="span4">
+            <table id="tenants" class="table table-striped table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>Id</td>
+                        <td>Tenant</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: viewModel.itemList">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td data-bind="text: id"></td>
+                        <td class="item" data-bind="text: domain"></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+        </div>
+    </div>
+</div>
+
+<ul id="results"></ul>
+
+@section scripts
+{
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+
+    <script type='text/javascript'>
+        var restHost = 'localhost:30441';
+        var controller = 'tenant';
+
+        function itemOne(itemOne) {
+            am.assert(itemOne != undefined, "itemOne != undefined for: " + itemOne.id);
+            this.id = ko.observable(itemOne.id);
+            this.domain = ko.observable(itemOne.domain);
+        }
+
+        var viewModel = {
+            itemList: ko.observableArray([]),
+
+            loadItemList: function () {
+                var self = this;
+                $.getJSON('http://' + restHost + '/' + controller + '/list',
+                    function (itemList) {
+                        self.itemList.removeAll();
+                        $.each(itemList, function (index, item) {
+                            self.itemList.push(new itemOne(item));
+                        });
+                    }
+                );
+            }
+        };
+
+        $(function () {
+            am.assert(true, "jQuery is working");
+            ko.applyBindings(viewModel);
+            viewModel.loadItemList();
+            am.assert(viewModel.itemList != undefined, "viewModel.itemList != undefined");
+
+            setTimeout('showMatch()', 1000);
+        });
+
+        function showMatch() {
+            var match = ko.utils.arrayFirst(viewModel.itemList(), function (item) {
+                // console.log(item.id);
+                return 7 === item.id();
+            });
+
+            console.dir(match);
+            console.log("viewModel.itemList().length = " + viewModel.itemList().length);
+            // am.assert(viewModel.itemList().length, "viewModel.itemList().length = ");
+        }
+    </script>
+}
+

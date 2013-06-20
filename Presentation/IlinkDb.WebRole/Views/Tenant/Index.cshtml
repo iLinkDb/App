@@ -42,13 +42,22 @@
     </div>
 </div>
 
+<ul id="results"></ul>
+
 @section scripts
 {
+    <style>
+        #results li.pass { color: green; }
+        #results li.fail { color: red; }
+
+    </style>
+
     <script type='text/javascript'>
         var restHost = 'localhost:30441';
         var controller = 'tenant';
 
         function itemOne(itemOne) {
+            // console.log('itemOne');
             this.id = ko.observable(itemOne.id);
             this.domain = ko.observable(itemOne.domain);
 
@@ -69,6 +78,8 @@
                 this.domain(itemOne.domain);
             };
         }
+
+        console.log('Declaring viewModel');
 
         var viewModel = {
             itemList: ko.observableArray([]),
@@ -94,7 +105,7 @@
                 return itemOne;
             },
 
-            postEdit: am.PostEdit(),
+            postEdit: function (form) { am.PostEdit(form) },
 
             postDelete: function (form) {
                 form = $(form);
@@ -120,12 +131,13 @@
                     }
                 });
             }
-
         };
 
         $(function () {
             ko.applyBindings(viewModel);
             viewModel.loadItemList();
+
+            am.assert(false, "Fail!");
 
             // Without these lines, the dialogs close when somebody clicks outside of them.
             $('#modalEdit').modal({ "backdrop": "static", show: false });

@@ -20,7 +20,7 @@
 </div>
 <script type='text/javascript'>
 
-    $('#modalEdit').on('hide', am.EditDialog('frmEdit'));
+    $('#modalEdit').on('hide', function () { am.EditDialog('frmEdit') });
     //function () {
     //    var form = $('#frmEdit');
     //    form.validate().resetForm();
@@ -35,6 +35,8 @@
         if (!itemOne)
             return;
 
+        console.log('show modalEdit for item:');
+        console.dir(itemOne);
         $('<input>').attr('type', 'hidden')
                     .attr('id', 'id')
                     .attr('name', 'id')

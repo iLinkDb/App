@@ -16,5 +16,9 @@ namespace IlinkDb.WebRole.Controllers
             return View();
         }
 
+        public ActionResult Ver2()
+        {
+            return View();
+        }
     }
 }
