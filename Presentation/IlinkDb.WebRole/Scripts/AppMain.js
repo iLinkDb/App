@@ -3,37 +3,23 @@ if (typeof am == 'undefined' || !am) {
     am = {};
 }
 
-am.EditDialog = function (formName) {
-    console.log('am.EditDialog');
-    console.dir(formName);
-
-    //    $('#modalEdit').on('hide', function () {
+am.EditDialogHide = function (formName) {
     var form = $('#' + formName);
-    console.dir(form);
     form.validate().resetForm();
     form.get(0).reset();
     form.removeData('itemOne');
-    console.log("after removeData");
     form.find("input[type='hidden'][id='id']").remove();
-    console.log("after remove()");
-    //    });
-
 };
 
 am.PostEdit = function (form) {
-    //console.log('am.PostEdit');
-    //console.dir(form);
-
     form = $(form);
     //                if (!form.valid())
     //                    return;
-//    am.assert(viewModel != undefined, "viewModel != undefined");
     var json = JSON.stringify(am._getItemFromForm(form));
 
     console.log('In PostEdit');
 
     var update = form.find("input[type='hidden'][id='id']").val();
-    console.log('update: ' + update);
     var httpVerb = !update ? "POST" : "PUT";
 
     var self = this;
@@ -69,7 +55,7 @@ am._getItemFromForm = function (form) {
     return itemOne;
 }
 
-am.assert = function(value, desc) {
+am.assert = function (value, desc) {
     var li = document.createElement("li");
     li.className = value ? "pass" : "fail";
     li.appendChild(document.createTextNode(desc));
