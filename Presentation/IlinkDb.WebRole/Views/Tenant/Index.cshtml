@@ -20,7 +20,7 @@
                         <td>&nbsp;</td>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: viewModel.itemList">
+                <tbody data-bind="foreach: tenantViewModel.itemList">
                     <tr>
                         <td width="20px">
                             <a href="#modalEdit" data-bind="click: function (form) { editItem() }" data-toggle="modal" class='icon-pencil'></a>
@@ -50,30 +50,27 @@
         var restHost = 'localhost:30441';
         var controller = 'tenant';
 
-        function itemOne(itemOne) {
-            // console.log('itemOne');
-            this.id = ko.observable(itemOne.id);
-            this.domain = ko.observable(itemOne.domain);
+        function tenant(tenant) {
+            this.id = ko.observable(tenant.id);
+            this.domain = ko.observable(tenant.domain);
+
+            this.updateItem = function (tenant) {
+                this.id(tenant.id);
+                this.domain(tenant.domain);
+            };
 
             this.editItem = function () {
                 var form = $('#frmEdit');
-                form.data('itemOne', this);
+                form.data('tenant', this);
             };
 
             this.deleteItem = function () {
                 var form = $('#frmDelete');
-                form.data('itemOne', this);
-            };
-
-            this.updateItem = function (itemOne) {
-                this.id(itemOne.id);
-                this.domain(itemOne.domain);
+                form.data('tenant', this);
             };
         }
 
-        console.log('Declaring viewModel');
-
-        var viewModel = {
+        var tenantViewModel = {
             itemList: ko.observableArray([]),
 
             loadItemList: function () {
@@ -82,7 +79,7 @@
                     function (itemList) {
                         self.itemList.removeAll();
                         $.each(itemList, function (index, item) {
-                            self.itemList.push(new itemOne(item));
+                            self.itemList.push(new tenant(item));
                         });
                     }
                 );
@@ -90,8 +87,8 @@
         };
 
         $(function () {
-            ko.applyBindings(viewModel);
-            viewModel.loadItemList();
+            ko.applyBindings(tenantViewModel);
+            tenantViewModel.loadItemList();
 
             am.assert(true, "Pass");
             am.assert(false, "Fail!");

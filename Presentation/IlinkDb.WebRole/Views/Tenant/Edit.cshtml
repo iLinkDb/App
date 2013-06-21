@@ -6,7 +6,7 @@
         <h3>Edit Tenant</h3>
     </div>
 
-    <form id="frmEdit" data-bind="submit: function (form) { am.PostEdit(form, 'modalEdit') }">
+    <form id="frmEdit" data-bind="submit: function (form) { am.PostEdit(form, 'modalEdit', tenantViewModel) }">
         <div class="modal-body">
             @Html.LabelFor(m => m.Domain)
             @Html.TextBoxFor(m => m.Domain)
@@ -20,7 +20,19 @@
 </div>
 <script type='text/javascript'>
 
-    $('#modalEdit').on('show', function () { am.DialogShow('frmEdit') });
     $('#modalEdit').on('hide', function () { am.DialogHide('frmEdit') });
-    
+
+    $('#modalEdit').on('show', function () {
+        var form = $('#frmEdit');
+        var tenant = form.data('tenant');
+        if (!tenant)
+            return;
+
+        $('<input>').attr('type', 'hidden').attr('id', 'id').attr('name', 'id')
+            .val(tenant.id()).prependTo(form);
+
+        // Update the form fields to be edited.
+        form.find('#Domain').val(tenant.domain());
+    });
+
 </script>

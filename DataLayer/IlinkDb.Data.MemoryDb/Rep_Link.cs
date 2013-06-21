@@ -16,7 +16,7 @@ namespace IlinkDb.Data.MemoryDb
         private void LinkInitialize(RandomData random)
         {
             _linkList = new List<Link>();
-            for (int iLoop = 0; iLoop < random.Int(3, 10); iLoop++)
+            for (int iLoop = 0; iLoop < random.Int(7, 10); iLoop++)
             {
                 _linkList.Add(new Link
                 {

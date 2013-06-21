@@ -8,6 +8,18 @@
 // ====================================================================================================
 // ====================================================================================================
 // ====================================================================================================
+am.DialogShow = function (formName) {
+    var form = $('#' + formName);
+    var itemOne = form.data('tenant');
+    if (!itemOne)
+        return;
+
+    $('<input>').attr('type', 'hidden')
+                .attr('id', 'id')
+                .attr('name', 'id')
+                .val(itemOne.id()).prependTo(form);
+    form.find('#Domain').val(itemOne.domain());
+}
 // ====================================================================================================
             _getItemFromForm: function (form) {
                 form = $(form);
@@ -19,33 +31,7 @@
             },
 
 // ====================================================================================================
-    $('#modalDelete').on('show', function () {
-        var form = $('#frmDelete');
-        var itemOne = form.data('itemOne');
-        if (!itemOne)
-            return;
-
-        $('<input>').attr('type', 'hidden')
-                    .attr('id', 'id')
-                    .attr('name', 'id')
-                    .val(itemOne.id()).prependTo(form);
-        @* This line will need changed *@
-        $("#spnDelete").html('(' + itemOne.id() + ') ' + itemOne.domain());
-    });
 // ====================================================================================================
-    $('#modalEdit').on('show', function () {
-        var form = $('#frmEdit');
-        var itemOne = form.data('itemOne');
-        if (!itemOne)
-            return;
-
-        $('<input>').attr('type', 'hidden')
-                    .attr('id', 'id')
-                    .attr('name', 'id')
-                    .val(itemOne.id()).prependTo(form);
-        form.find('#Domain').val(itemOne.domain());
-    });
-
 // ====================================================================================================
 // Without these lines, the dialogs close when somebody clicks outside of them.
 $('#modalEdit').modal({ "backdrop": "static", show: false });

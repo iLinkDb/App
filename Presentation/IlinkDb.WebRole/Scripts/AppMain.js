@@ -3,35 +3,28 @@ if (typeof am == 'undefined' || !am) {
     am = {};
 }
 
+am.assert = function (value, desc) {
+    var li = document.createElement("li");
+    li.className = value ? "pass" : "fail";
+    li.appendChild(document.createTextNode(desc));
+    document.getElementById("assertResults").appendChild(li);
+}
+
 am.DialogHide = function (formName) {
     var form = $('#' + formName);
     form.validate().resetForm();
     form.get(0).reset();
-    form.removeData('itemOne');
+    form.removeData('tenant');
     form.find("input[type='hidden'][id='id']").remove();
 };
 
-am.DialogShow = function (formName) {
-    var form = $('#' + formName);
-    var itemOne = form.data('itemOne');
-    if (!itemOne)
-        return;
-
-    $('<input>').attr('type', 'hidden')
-                .attr('id', 'id')
-                .attr('name', 'id')
-                .val(itemOne.id()).prependTo(form);
-    form.find('#Domain').val(itemOne.domain());
-}
-
-am.PostEdit = function (form, modalName) {
+am.PostEdit = function (form, modalName, viewModel) {
     form = $(form);
     //                if (!form.valid())
     //                    return;
-    var json = JSON.stringify(am._getItemFromForm(form));
+    var json = JSON.stringify(am.GetItemFromForm(form));
 
-    console.log('In PostEdit');
-    console.dir(json);
+    // console.log('In PostEdit');
 
     var update = form.find("input[type='hidden'][id='id']").val();
     var httpVerb = !update ? "POST" : "PUT";
@@ -51,16 +44,16 @@ am.PostEdit = function (form, modalName) {
                 match.updateItem(jsonObject);
             }
             else {
-                viewModel.itemList.push(new itemOne(jsonObject));
+                viewModel.itemList.push(new tenant(jsonObject));
             }
             $('#' + modalName).modal('hide');
         }
     });
 }
 
-am.PostDelete = function (form, modalName) {
+am.PostDelete = function (form, modalName, viewModel) {
     form = $(form);
-    var json = JSON.stringify(this._getItemFromForm(form));
+    var json = JSON.stringify(this.GetItemFromForm(form));
 
     var deleteId = form.find("input[type='hidden'][id='id']").val();
 
@@ -83,20 +76,13 @@ am.PostDelete = function (form, modalName) {
     });
 }
 
-am._getItemFromForm = function (form) {
+am.GetItemFromForm = function (form) {
     form = $(form);
-    var itemOne = {};
+    var item = {};
     form.find('input[type!=submit],select').each(function () {
-        itemOne[this.name] = $(this).val();
+        item[this.name] = $(this).val();
     });
-    return itemOne;
-}
-
-am.assert = function (value, desc) {
-    var li = document.createElement("li");
-    li.className = value ? "pass" : "fail";
-    li.appendChild(document.createTextNode(desc));
-    document.getElementById("assertResults").appendChild(li);
+    return item;
 }
 
 am.initModal = function (modalName) {

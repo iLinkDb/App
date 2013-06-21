@@ -5,7 +5,7 @@
             ×</button>
         <h3>Delete Tenant?</h3>
     </div>
-    <form id="frmDelete" data-bind="submit: function (form) { am.PostDelete(form, 'modalDelete') }">
+    <form id="frmDelete" data-bind="submit: function (form) { am.PostDelete(form, 'modalDelete', tenantViewModel) }">
         <div class="modal-body">
             <p>Are you sure you want to delete this tenant?</p>
             <p><span id="spnDelete"></span></p>
@@ -19,7 +19,21 @@
 </div>
 <script type='text/javascript'>
 
-    $('#modalDelete').on('show', function () { am.DialogShow('frmDelete') });
     $('#modalDelete').on('hide', function () { am.DialogHide('frmDelete') });
+
+    $('#modalDelete').on('show', function () {
+        var form = $('#frmDelete');
+        var tenant = form.data('tenant');
+        if (!tenant)
+        { return; }
+
+        $('<input>').attr('type', 'hidden').attr('id', 'id').attr('name', 'id')
+            .val(tenant.id()).prependTo(form);
+
+        // This line should show whatever we want to display to the
+        // user so they are sure which item they are deleting.
+        $("#spnDelete").html('(' + tenant.id() + ') ' + tenant.domain());
+    });
+
 
 </script>
