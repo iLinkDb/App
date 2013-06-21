@@ -5,7 +5,7 @@
             ×</button>
         <h3>Delete Tenant?</h3>
     </div>
-    <form id="frmDelete" data-bind="submit: function (form) { postDelete(form) }">
+    <form id="frmDelete" data-bind="submit: function (form) { am.PostDelete(form, 'modalDelete') }">
         <div class="modal-body">
             <p>Are you sure you want to delete this tenant?</p>
             <p><span id="spnDelete"></span></p>
@@ -19,26 +19,7 @@
 </div>
 <script type='text/javascript'>
 
-    $('#modalDelete').on('hide', function () {
-        var form = $('#frmDelete');
-        form.validate().resetForm();
-        form.get(0).reset();
-        form.removeData('itemOne');
-        form.find("input[type='hidden'][id='id']").remove();
-    });
-
-    $('#modalDelete').on('show', function () {
-        var form = $('#frmDelete');
-        var itemOne = form.data('itemOne');
-        if (!itemOne)
-            return;
-
-        $('<input>').attr('type', 'hidden')
-                    .attr('id', 'id')
-                    .attr('name', 'id')
-                    .val(itemOne.id()).prependTo(form);
-        @* This line will need changed *@
-        $("#spnDelete").html('(' + itemOne.id() + ') ' + itemOne.domain());
-    });
+    $('#modalDelete').on('show', function () { am.DialogShow('frmDelete') });
+    $('#modalDelete').on('hide', function () { am.DialogHide('frmDelete') });
 
 </script>

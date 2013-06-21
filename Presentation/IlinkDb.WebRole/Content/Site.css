@@ -59,3 +59,11 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+
+#assertResults li.pass {
+    color: green;
+}
+
+#assertResults li.fail {
+    color: red;
+}
