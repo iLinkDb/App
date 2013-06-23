@@ -1,0 +1,54 @@
+﻿@model IlinkDb.Entity.Story
+
+<div class="modal hide" id="modalEdit">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Edit Tenant</h3>
+    </div>
+
+    <form id="frmEdit" data-bind="submit: function (form) { PostEdit(form, 'modalEdit', storyViewModel) }">
+        <div class="modal-body">
+            <input type="hidden" name="ProjectId" value ="830205" />
+
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, 4, 80, new { @class = "input-xxlarge" } )
+
+            @Html.LabelFor(m => m.Estimate)
+            @Html.TextBoxFor(m => m.Estimate)
+
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <input type="submit" class="btn btn-primary" value="Save" />
+        </div>
+    </form>
+</div>
+<script type='text/javascript'>
+
+    $('#modalEdit').on('hide', function () { am.DialogHide('frmEdit') });
+
+    $('#modalEdit').on('show', function () {
+        console.log('Event fired: modalEdit show');
+        var form = $('#frmEdit');
+        var story = form.data('story');
+        if (!story)
+            return;
+
+        console.dir(story);
+        $('<input>').attr('type', 'hidden').attr('id', 'id').attr('name', 'id')
+            .val(story.id()).prependTo(form);
+
+        console.log('form show');
+        // Update the form fields to be edited.
+        form.find("#ProjectId").val(story.projectId());
+        form.find('#Name').val(story.name());
+        form.find('#Description').val(story.description());
+        form.find('#Estimate').val(story.estimate());
+
+    });
+
+</script>

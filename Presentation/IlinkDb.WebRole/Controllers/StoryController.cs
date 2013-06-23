@@ -6,17 +6,18 @@ using System.Web.Mvc;
 
 namespace IlinkDb.WebRole.Controllers
 {
-    public class TenantController : Controller
+    public class StoryController : Controller
     {
         //
-        // GET: /Tenant/
+        // GET: /Story/
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Test()
+
+        public ActionResult List()
         {
             return View();
         }

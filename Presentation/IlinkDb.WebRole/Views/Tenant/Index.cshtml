@@ -41,9 +41,6 @@
         </div>
     </div>
 </div>
-
-<ul id="assertResults"></ul>
-
 @section scripts
 {
     <script type='text/javascript'>
@@ -90,13 +87,16 @@
             ko.applyBindings(tenantViewModel);
             tenantViewModel.loadItemList();
 
-            am.assert(true, "Pass");
-            am.assert(false, "Fail!");
-
             am.initModal('modalEdit');
             am.initModal('modalDelete');
 
+            //$('#story').myStoryBuddy({
+            //    propertyName: 'a custom value'
+            //});
+
         });
+
+
 
     </script>
 }

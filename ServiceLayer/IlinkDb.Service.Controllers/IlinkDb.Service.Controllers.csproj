@@ -84,6 +84,7 @@
     <Compile Include="HomeController.cs" />
     <Compile Include="LinkController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryController.cs" />
     <Compile Include="TenantController.cs" />
     <Compile Include="V1Controller.cs" />
     <Compile Include="ValuesController.cs" />

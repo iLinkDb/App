@@ -1,14 +1,14 @@
-﻿//bh namesapce
+﻿//application namesapce
 if (typeof am == 'undefined' || !am) {
     am = {};
 }
 
-am.assert = function (value, desc) {
-    var li = document.createElement("li");
-    li.className = value ? "pass" : "fail";
-    li.appendChild(document.createTextNode(desc));
-    document.getElementById("assertResults").appendChild(li);
-}
+//am.assert = function (value, desc) {
+//    var li = document.createElement("li");
+//    li.className = value ? "pass" : "fail";
+//    li.appendChild(document.createTextNode(desc));
+//    document.getElementById("assertResults").appendChild(li);
+//}
 
 am.DialogHide = function (formName) {
     var form = $('#' + formName);
@@ -79,7 +79,9 @@ am.PostDelete = function (form, modalName, viewModel) {
 am.GetItemFromForm = function (form) {
     form = $(form);
     var item = {};
-    form.find('input[type!=submit],select').each(function () {
+    console.log('GetItemFromForm, before the loop');
+    form.find('input[type!=submit],select,textarea').each(function () {
+        console.dir(this.name);
         item[this.name] = $(this).val();
     });
     return item;

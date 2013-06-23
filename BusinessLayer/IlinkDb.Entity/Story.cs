@@ -6,30 +6,56 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Xml;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 using AppCommon;
 
 namespace IlinkDb.Entity
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class Story : EntityBase
     {
+        [JsonProperty(PropertyName = "projectid")]
+        [Display(Name = "Project Id")]
         public long ProjectId { get; set; }
+
+        [JsonProperty(PropertyName = "estimate")]
         public int Estimate { get; set; }
 
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        [JsonProperty(PropertyName = "storytype")]
         public StoryTypeEnum StoryType { get; set; }
+
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
+        [JsonProperty(PropertyName = "currentstate")]
         public string CurrentState { get; set; }
+
+        [JsonProperty(PropertyName = "requestedby")]
         public string RequestedBy { get; set; }
+
+        [JsonProperty(PropertyName = "ownedby")]
         public string OwnedBy { get; set; }
+
+        [JsonProperty(PropertyName = "labels")]
         public string Labels { get; set; }
 
+        [JsonProperty(PropertyName = "createdat")]
         public DateTime? CreatedAt { get; set; }
+
+        [JsonProperty(PropertyName = "acceptedat")]
         public DateTime? AcceptedAt { get; set; }
 
+        [JsonProperty(PropertyName = "notes")]
         public List<Note> Notes { get { return _noteList; } }
+
+        [JsonProperty(PropertyName = "tasks")]
         public List<Task> Tasks { get { return _taskList; } }
 
         private List<Note> _noteList { get; set; }
@@ -39,6 +65,14 @@ namespace IlinkDb.Entity
         {
             _noteList = new List<Note>();
             Estimate = -1;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Id: {0}", Id);
+            sb.AppendFormat(", Name: {0}", Name);
+            return sb.ToString();
         }
 
         public Story(XElement node)

@@ -125,6 +125,7 @@
     <Compile Include="Controllers\BpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
+    <Compile Include="Controllers\StoryController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,6 +220,7 @@
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\MyStoryBuddy.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -246,6 +248,11 @@
     <Content Include="Views\Bp\DropDown.cshtml" />
     <Content Include="Views\Bp\Html.cshtml" />
     <Content Include="Views\Bp\Radio.cshtml" />
+    <Content Include="Views\Story\Index.cshtml" />
+    <Content Include="Views\Story\StoryEdit.cshtml" />
+    <Content Include="Views\Story\Fred.cshtml" />
+    <Content Include="Views\Tenant\Test.cshtml" />
+    <Content Include="Views\Story\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
