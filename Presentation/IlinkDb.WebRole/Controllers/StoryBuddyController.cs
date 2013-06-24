@@ -4,22 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using IlinkDb.Entity;
+
 namespace IlinkDb.WebRole.Controllers
 {
-    public class StoryController : Controller
+    public class StoryBuddyController : Controller
     {
         //
-        // GET: /Story/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        // GET: /StoryBuddy/
 
         public ActionResult List()
         {
-            return View();
+            Story story = new Story { ProjectId = 830205 };
+            return View(story);
         }
+
     }
 }

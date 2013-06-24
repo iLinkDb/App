@@ -41,3 +41,7 @@ Objectives
    Best Practices page with examples of favorite snippets
    Automatic paging when list contain more than xx items.
    Pivotal Traker - search for stories by label.
+
+
+Stories need to be filtered by page (using labels)
+Need to see comments and tasks for stories

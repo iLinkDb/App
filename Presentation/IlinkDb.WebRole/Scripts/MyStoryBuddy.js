@@ -42,30 +42,9 @@
     }
 
     Plugin.prototype = {
-
         init: function () {
-            var ul = document.createElement("ul");
-            ul.setAttribute("id", "msbAssert");
-            //ul.appendChild(document.createElement("msbAssert"));
-            // document.getElementById("story").appendChild(ul);
-            this.element.appendChild(ul);
-
-            var body = "";
-            body += "<div id='msb_main' class='container'>";
-            body += "  <div class='row'>";
-            body += "    <div id='siteNotes' class='span12'>";
-            body += "      <div class='text-center'>";
-            body += "        <span class='pull-left'><b>Notes</b> Add</span>";
-            body += "        (Everything below this line will not be displaed on the live site)";
-            body += "      </div>";
-            body += "      <br />";
-            body += "      <div id='msbContent' />";
-            body += "    </div>";
-            body += "  </div>";
-            body += "</div>";
-            $(this.element).append(body);
-            $('#msbContent').load('/Story/list', '#msbContent');
-        },
+            $(this.element).load('/StoryBuddy/list');
+        }
     };
 
     // A really lightweight plugin wrapper around the constructor,

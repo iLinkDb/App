@@ -10,7 +10,7 @@
     <div class="row">
         <div class="span2">
         </div>
-        <div class="span4">
+        <div id="divTenant" class="span4">
             <table id="tenants" class="table table-striped table-hover table-condensed">
                 <thead>
                     <tr>
@@ -84,7 +84,9 @@
         };
 
         $(function () {
-            ko.applyBindings(tenantViewModel);
+            console.log('applyBindings for tenantViewModel');
+            ko.applyBindings(tenantViewModel, document.getElementById("divTenant"));
+            
             tenantViewModel.loadItemList();
 
             am.initModal('modalEdit');
