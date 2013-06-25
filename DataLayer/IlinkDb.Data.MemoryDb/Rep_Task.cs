@@ -14,7 +14,7 @@ namespace IlinkDb.Data.MemoryDb
 
         private IList<Task> TaskInitialize(RandomData random, Story story)
         {
-            _taskList = new List<Task>(); 
+            _taskList = new List<Task>();
 
             // Add a random number of tasks.
             for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
@@ -22,8 +22,8 @@ namespace IlinkDb.Data.MemoryDb
                 _taskList.Add(new Task
                 {
                     Id = iLoop + 1,
-                    Description = "task " + random.Ipsum(10, 30),
-                    Position = iLoop + 1                    
+                    Description = random.Ipsum(10, 30) + " task",
+                    Position = iLoop + 1
                 });
             }
             return _taskList;

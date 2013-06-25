@@ -22,7 +22,7 @@ namespace IlinkDb.Data.MemoryDb
                 {
                     Id = iLoop + 1,
                     ProjectId = 830205,
-                    Name = random.Ipsum(3, 8),
+                    Name =  random.Ipsum(3, 8) + " story",
                     Description = random.Ipsum(10, 20),
                     Estimate = random.Int(0, 3)
                 };
