@@ -23,7 +23,9 @@
 
     $('#modalDelete').on('show', function () {
         var form = $('#frmDelete');
+        am.TraceDir("modalDelete on show form", form);
         var tenant = form.data('tenant');
+        am.TraceDir("modalDelete on show tenant", tenant);
         if (!tenant)
         { return; }
 

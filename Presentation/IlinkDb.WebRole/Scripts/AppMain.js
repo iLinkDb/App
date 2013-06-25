@@ -9,8 +9,16 @@ if (typeof am == 'undefined' || !am) {
 //    li.appendChild(document.createTextNode(desc));
 //    document.getElementById("assertResults").appendChild(li);
 //}
+am.Trace = function (message) {
+    console.log("               Trace: " + message);
+}
+am.TraceDir = function (message, obj) {
+    console.log("               Trace: " + message);
+    console.dir(obj);
+}
 
 am.DialogHide = function (formName) {
+    am.Trace("am.DialogHide");
     var form = $('#' + formName);
     form.validate().resetForm();
     form.get(0).reset();
@@ -19,6 +27,7 @@ am.DialogHide = function (formName) {
 };
 
 am.PostEdit = function (form, modalName, viewModel) {
+    am.Trace("am.PostEdit");
     form = $(form);
     //                if (!form.valid())
     //                    return;

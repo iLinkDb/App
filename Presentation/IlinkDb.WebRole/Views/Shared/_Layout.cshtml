@@ -85,8 +85,10 @@
     <div id="story"></div>
 
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(function () { $('#story').myStoryBuddy({ propertyName: 'a custom value' }); });
+    </script>
+
 </body>
-<script type="text/javascript">
-    $(function () {  $('#story').myStoryBuddy({ propertyName: 'a custom value' }); });
-</script>
 </html>
