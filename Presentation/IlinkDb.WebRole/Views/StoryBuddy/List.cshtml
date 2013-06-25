@@ -75,6 +75,13 @@
                             @Html.TextBoxFor(m => m.Estimate)
                         </div>
                         <div class="tab-pane active" id="task">tasks for story</div>
+                        <ul>
+                            <li>
+                                hard coded task
+                            </li>
+
+                        </ul>
+
                         <div class="tab-pane" id="comment">comments for story</div>
                     </div>
                 </div>
@@ -98,7 +105,8 @@
     msb.controller = 'story';
 
     msb.story = function (item) {
-        console.log("trace: msb.story");
+        am.Trace("msb.story");
+        console.dir(item);
         this.id = ko.observable(item.id);
         this.projectId = ko.observable(item.projectId);
         this.name = ko.observable(item.name);
@@ -194,12 +202,14 @@
     });
 
     $('#msbModalEdit').on('show', function () {
-        am.Trace("trace: msbModalEdit onShow");
+        am.Trace("msbModalEdit onShow");
         var form = $('#msbFormEdit');
         var story = form.data('story');
         if (!story)
             return;
 
+        am.Trace("story: ");
+        console.dir(story);
         $('<input>').attr('type', 'hidden').attr('id', 'id').attr('name', 'id')
             .val(story.id()).prependTo(form);
 

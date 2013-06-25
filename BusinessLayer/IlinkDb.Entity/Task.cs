@@ -6,23 +6,31 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Xml;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 using AppCommon;
 
 namespace IlinkDb.Entity
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class Task : EntityBase
     {
         [Required]
+        [JsonProperty(PropertyName = "description")]
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
         [Required]
+        [JsonProperty(PropertyName = "position")]
+        [Display(Name = "Position")]
         public int Position { get; set; }
 
-        [Required]
+        [JsonProperty(PropertyName = "complete")]
+        [Display(Name = "Complete")]
         public bool? Complete { get; set; }
 
-        [Required]
+        [JsonProperty(PropertyName = "createdAt")]
+        [Display(Name = "CreatedAt")]
         public DateTime? CreatedAt { get; set; }
 
         public Task()
