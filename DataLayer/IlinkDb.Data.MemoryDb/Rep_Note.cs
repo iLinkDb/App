@@ -13,14 +13,16 @@ namespace IlinkDb.Data.MemoryDb
         private IList<Note> _noteList;
         private int _noteListCount;
 
-        private void NoteInitialize(RandomData random)
+        private void NoteInitialize(RandomData random, Story story)
         {
-            _noteList = new List<Note>();
+            if (_noteList == null)
+            { _noteList = new List<Note>(); }
 
             // Add one known domain to the list.
             _noteList.Add(new Note
             {
                 Id = _noteList.Count + 1,
+                StoryId = story.Id,
                 User = "Tom Tuttle",
                 Text = "The main note for the root of the site."
             });

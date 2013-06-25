@@ -11,7 +11,7 @@ namespace IlinkDb.Data.DynamoDb
     public partial class RepositoryDynamoDb : IRepository
     {
 
-        public Task GetTask(long id)
+        public Task Get(long id)
         {
             throw new NotImplementedException();
         }

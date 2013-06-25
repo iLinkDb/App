@@ -53,10 +53,18 @@ namespace IlinkDb.Entity
         public DateTime? AcceptedAt { get; set; }
 
         [JsonProperty(PropertyName = "notes")]
-        public List<Note> Notes { get { return _noteList; } }
+        public List<Note> Notes
+        {
+            get { return _noteList; }
+            set { _noteList = value; }
+        }
 
         [JsonProperty(PropertyName = "tasks")]
-        public List<Task> Tasks { get { return _taskList; } }
+        public List<Task> Tasks
+        {
+            get { return _taskList; }
+            set { _taskList = value; }
+        }
 
         private List<Note> _noteList { get; set; }
         private List<Task> _taskList { get; set; }

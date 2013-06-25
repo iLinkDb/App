@@ -9,30 +9,75 @@ namespace IlinkDb.Data.MemoryDb
 {
     public partial class RepositoryMemory : IRepository
     {
+        private IList<Task> _taskList;
+        private int _taskListCount;
 
-        public Task GetTask(long id)
+        private IList<Task> TaskInitialize(RandomData random, Story story)
         {
-            throw new NotImplementedException();
-        }
+            _taskList = new List<Task>(); 
 
-        public Task Save(Task task)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(Task task)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Task> List(Story story)
-        {
-            throw new NotImplementedException();
+            // Add a random number of tasks.
+            for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
+            {
+                _taskList.Add(new Task
+                {
+                    Id = iLoop + 1,
+                    Description = "task " + random.Ipsum(10, 30),
+                    Position = iLoop + 1                    
+                });
+            }
+            return _taskList;
         }
 
         public Task Add(Story story, Task task)
         {
             throw new NotImplementedException();
+        }
+
+        public Task Get(long id)
+        {
+            Task retVal = _taskList.First<Task>(t => t.Id == id);
+            return retVal;
+        }
+
+        public Task Save(Task newOne)
+        {
+            Task retVal = null;
+
+            if (newOne.Id > 0)
+            { retVal = _taskList.First(o => o.Id == newOne.Id); }
+
+            if (retVal == null)
+            {
+                newOne.Id = _taskListCount++;
+                _taskList.Add(newOne);
+                retVal = newOne;
+            }
+            else
+            {
+                retVal.Description = newOne.Description;
+            }
+
+            return retVal;
+        }
+
+        public bool Delete(Task task)
+        {
+            bool retVal = false;
+
+            Task existing = _taskList.First(o => o.Id == task.Id);
+            if (existing != null)
+            {
+                _taskList.Remove(existing);
+                retVal = true;
+            }
+
+            return retVal;
+        }
+
+        public IQueryable<Task> List(Story story)
+        {
+            return ((IEnumerable<Task>)_taskList).Select(x => x).AsQueryable();
         }
     }
 }

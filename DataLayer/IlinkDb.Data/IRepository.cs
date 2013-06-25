@@ -73,7 +73,7 @@ namespace IlinkDb.Data
 
         #region Task
 
-        Task GetTask(long id);
+        Task Get(long id);
         Task Save(Task task);
         bool Delete(Task task);
         IQueryable<Task> List(Story story);

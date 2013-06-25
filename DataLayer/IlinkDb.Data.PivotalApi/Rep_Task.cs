@@ -11,8 +11,7 @@ namespace IlinkDb.Data.PivotalApi
 {
     public partial class RepositoryPivotal : IRepository
     {
-
-        public Task GetTask(long id)
+        public Task Get(long id)
         {
             throw new NotImplementedException();
         }
@@ -60,6 +59,5 @@ namespace IlinkDb.Data.PivotalApi
             }
             return retVal;
         }
-
     }
 }

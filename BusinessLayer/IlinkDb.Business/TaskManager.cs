@@ -26,7 +26,7 @@ namespace IlinkDb.Business
 
         public Task Get(long id)
         {
-            return _db.GetTask(id);
+            return _db.Get(id);
         }
 
         public Task Add(Story story, Task task)

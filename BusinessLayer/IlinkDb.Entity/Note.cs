@@ -13,6 +13,8 @@ namespace IlinkDb.Entity
 {
     public class Note : EntityBase
     {
+        public long StoryId { get; set; }
+
         [Required]
         public string Text { get; set; }
 

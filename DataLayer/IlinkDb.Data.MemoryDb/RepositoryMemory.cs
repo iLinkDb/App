@@ -21,7 +21,7 @@ namespace IlinkDb.Data.MemoryDb
 
             LinkInitialize(random);
             TenantInitialize(random);
-            NoteInitialize(random);
+            //NoteInitialize(random);
             StoryInitialize(random);
         }
     }

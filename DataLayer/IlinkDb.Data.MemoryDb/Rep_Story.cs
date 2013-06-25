@@ -18,14 +18,18 @@ namespace IlinkDb.Data.MemoryDb
             _storyList = new List<Story>();
             for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
             {
-                _storyList.Add(new Story
+                Story newStory = new Story
                 {
                     Id = iLoop + 1,
                     ProjectId = 830205,
-                    Name = random.Ipsum(3,8),
+                    Name = random.Ipsum(3, 8),
                     Description = random.Ipsum(10, 20),
                     Estimate = random.Int(0, 3)
-                });
+                };
+
+                newStory.Tasks = TaskInitialize(random, newStory).ToList();
+
+                _storyList.Add(newStory);
             }
 
         }

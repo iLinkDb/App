@@ -10,7 +10,7 @@ namespace IlinkDb.Data.EntityFramework
     public partial class RepositoryEntityFramework : IRepository
     {
 
-        public Task GetTask(long id)
+        public Task Get(long id)
         {
             throw new NotImplementedException();
         }
