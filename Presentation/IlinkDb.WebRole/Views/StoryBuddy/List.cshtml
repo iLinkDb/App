@@ -15,7 +15,7 @@
         <div class='container'>
             <div id="msbLink"><a href="#">Stories</a></div>
             <div id="msbStories" class='row hide'>
-                <div id='siteNotes' class='span12'>
+                <div id='myStoryBuddy' class='span12'>
                     <div class='text-center'>
                         <span class='pull-left'><b>Stories</b></span>
                         (Everything below this line will not be displaed on the live site)
@@ -49,22 +49,34 @@
         <div class="modal hide" id="msbModalEdit">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Edit Tenant</h3>
+                <h3>Edit <span id="spnTitle"></span> </h3>
             </div>
 
             <form id="msbFormEdit" data-bind="submit: function (form) { msb.PostEdit() }">
                 <div class="modal-body">
                     <input type="hidden" name="ProjectId" value="830205" />
 
-                    @Html.LabelFor(m => m.Name)
-                    @Html.TextBoxFor(m => m.Name)
+                    <ul id="storyTab" class="nav nav-tabs">
+                        <li><a href="#edit" data-toggle="tab">Edit</a></li>
+                        <li><a href="#task" data-toggle="tab">Tasks</a></li>
+                        <li><a href="#comment" data-toggle="tab">Comments</a></li>
+                    </ul>
 
-                    @Html.LabelFor(m => m.Description)
-                    @Html.TextAreaFor(m => m.Description, 4, 80, new { @class = "input-xxlarge" })
 
-                    @Html.LabelFor(m => m.Estimate)
-                    @Html.TextBoxFor(m => m.Estimate)
+                    <div class="tab-content">
+                        <div class="tab-pane" id="edit">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name)
 
+                            @Html.LabelFor(m => m.Description)
+                            @Html.TextAreaFor(m => m.Description, 4, 80, new { @class = "input-xxlarge" })
+
+                            @Html.LabelFor(m => m.Estimate)
+                            @Html.TextBoxFor(m => m.Estimate)
+                        </div>
+                        <div class="tab-pane active" id="task">tasks for story</div>
+                        <div class="tab-pane" id="comment">comments for story</div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -154,7 +166,7 @@
                     match.updateItem(jsonObject);
                 }
                 else {
-                    storyViewModel.itemList.push(new tenant(jsonObject));
+                    storyViewModel.itemList.push(new story(jsonObject));
                 }
                 $('#msbModalEdit').modal('hide');
             }
@@ -173,33 +185,33 @@
     }
 
     $('#msbModalEdit').on('hide', function () {
-        console.log("trace: onHide");
+        am.Trace("trace: msbModalEdit onHide");
         var form = $('#msbFormEdit');
         form.validate().resetForm();
         form.get(0).reset();
-        form.removeData('tenant');
+        form.removeData('story');
         form.find("input[type='hidden'][id='id']").remove();
     });
 
     $('#msbModalEdit').on('show', function () {
-        console.log("trace: onShow");
+        am.Trace("trace: msbModalEdit onShow");
         var form = $('#msbFormEdit');
         var story = form.data('story');
         if (!story)
             return;
 
-        console.dir(story);
         $('<input>').attr('type', 'hidden').attr('id', 'id').attr('name', 'id')
             .val(story.id()).prependTo(form);
 
-        console.log('form show');
         // Update the form fields to be edited.
         form.find("#ProjectId").val(story.projectId());
         form.find('#Name').val(story.name());
         form.find('#Description').val(story.description());
         form.find('#Estimate').val(story.estimate());
 
+        $("#spnTitle").html(story.name() + ' <span class="EditTitle">(' + story.id() + ')</span>');
     });
+
 
     $(function () {
         $("#msbLink").click(function () {
@@ -211,6 +223,8 @@
             // ko.applyBindings(storyViewModel);
             storyViewModel.loadItemList();
 
+            // Show the second tab.
+            $('#storyTab li:eq(1) a').tab('show');
         });
 
         $('#msbModalEdit').modal({ "backdrop": "static", show: false });

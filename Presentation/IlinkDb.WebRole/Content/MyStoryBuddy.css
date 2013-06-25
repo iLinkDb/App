@@ -1,0 +1,9 @@
+﻿#myStoryBuddy {
+    background-color: #ffffe1;
+    border-top: 3px dashed gray;
+}
+.EditTitle {
+    font-size: 10px; 
+    font-weight: normal;
+    color: gray;
+}
