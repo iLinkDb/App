@@ -13,7 +13,8 @@
 <body>
     <div id="msbMain">
         <div class='container'>
-            <div class='row'>
+            <div id="msbLink"><a href="#">Stories</a></div>
+            <div id="msbStories" class='row hide'>
                 <div id='siteNotes' class='span12'>
                     <div class='text-center'>
                         <span class='pull-left'><b>Stories</b></span>
@@ -201,10 +202,16 @@
     });
 
     $(function () {
-        console.log("trace: applyBindings for storyViewModel");
-        ko.applyBindings(storyViewModel, document.getElementById("msbMain"));
-        // ko.applyBindings(storyViewModel);
-        storyViewModel.loadItemList();
+        $("#msbLink").click(function () {
+            $(this).hide();
+            $("#msbStories").slideDown('fast');
+
+            am.Trace("ko.applyBindings for storyViewModel");
+            ko.applyBindings(storyViewModel, document.getElementById("msbMain"));
+            // ko.applyBindings(storyViewModel);
+            storyViewModel.loadItemList();
+
+        });
 
         $('#msbModalEdit').modal({ "backdrop": "static", show: false });
     });
