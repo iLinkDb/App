@@ -158,6 +158,7 @@
         // console.log('In PostEdit');
 
         var update = form.find("input[type='hidden'][id='id']").val();
+        am.TraceDir("msb.PostEdit update: ", update);
         var httpVerb = !update ? "POST" : "PUT";
 
         var self = this;
