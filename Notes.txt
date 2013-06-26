@@ -47,4 +47,6 @@ Stories need to be filtered by page (using labels)
 Need to see comments and tasks for stories
 
 UserId for TeamCity is scottb, pwd is fred
+Changing a file to kick the build.
+
 
