@@ -47,7 +47,7 @@ namespace AppCommon
          _tw.WriteLine("<style type='text/css'>");
          _tw.WriteLine("<!--");
          _tw.WriteLine("th {background: #ffc;} ");
-         _tw.WriteLine(".success {color: Black;} ");
+         _tw.WriteLine(".success {color: Black; background: #CAFFD8;} ");
          _tw.WriteLine(".error {color: White; background: Red;} ");
 
          _tw.WriteLine("a:link {color: White;}");

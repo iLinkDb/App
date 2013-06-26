@@ -11,13 +11,20 @@ using WatiN.Core;
 using AppCommon;
 namespace IlinkDb.WebRole.UiTests
 {
-    public class DuckDuckGoTests : TestBase
+    public class DuckDuckGoTests : TestBase, ITestBase
     {
+        private string _siteUrl = "http://www.duckduckgo.com";
+
         public void Begin(HtmlLogFile htmlLogFile)
         {
-            string logMsg = "GoogleTests/Begin";
+            Begin(htmlLogFile, _siteUrl);
+        }
 
-            _siteUrl = "https://duckduckgo.com/";
+        public void Begin(HtmlLogFile htmlLogFile, string siteUrl)
+        {
+            string logMsg = "DuckDuckGoTests/Begin";
+
+            _siteUrl = siteUrl;
 
             try
             {
@@ -29,12 +36,12 @@ namespace IlinkDb.WebRole.UiTests
                         ClearCache(browser);
                         browser.WaitForComplete();
 
-//                        TestData data = new TestData(TestDataEnum.BarneyRubble);
+                        //                        TestData data = new TestData(TestDataEnum.BarneyRubble);
                         string searchFor = "giving100";
 
-                        SetTextFieldByName(browser, HtmlControls.SearchBox, searchFor);
+                        SetTextFieldByName(browser, TestData.SearchBox, searchFor);
 
-                        browser.Button(Find.ById(HtmlControls.Submit)).Click();
+                        browser.Button(Find.ById(TestData.DuckSubmit)).Click();
                         Assert(browser, searchFor);
 
                     }

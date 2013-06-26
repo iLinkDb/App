@@ -17,7 +17,8 @@
             <div id="msbStories" class='row hide'>
                 <div id='myStoryBuddy' class='span12'>
                     <div class='text-center'>
-                        <span class='pull-left'><b>Stories</b></span>
+                        <span class='pull-left'><b>Stories</b>&nbsp;&nbsp;
+                        <a id="addStory" class="icon-plus" title="Add new story" data-toggle="modal" href="#msbModalEdit" /></span>
                         (Everything below this line will <b>not</b> be displayed on the final site)
                     </div>
                     <div id='msbContent'>
@@ -222,7 +223,7 @@
 
         msb.editStoryId = story.id();
         loadTasks();
-        
+
         $("#spnTitle").html(story.name() + ' <span class="EditTitle">(' + story.id() + ')</span>');
     });
 
@@ -264,8 +265,8 @@
             $(this).remove();
 
             $("#btnCancelTask").click(function () { loadTasks(); });
-            
-            $("#btnSaveTask").click(function() {
+
+            $("#btnSaveTask").click(function () {
 
                 $.ajax({
                     type: "POST",
@@ -284,7 +285,7 @@
             alert("Please Save or cancel the current edit before editing this task");
         }
     }
-    
+
     $(function () {
         $("#msbLink").click(function () {
             $(this).hide();
@@ -298,6 +299,12 @@
             // Show the second tab.
             $('#storyTab li:eq(1) a').tab('show');
         });
+
+        $("#addStory").click(function () {
+            // Show the first tab.
+            $('#storyTab li:eq(0) a').tab('show');
+        });
+        
 
         $('#msbModalEdit').modal({ "backdrop": "static", show: false });
     });

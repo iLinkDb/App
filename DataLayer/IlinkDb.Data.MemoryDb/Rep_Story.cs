@@ -10,19 +10,18 @@ namespace IlinkDb.Data.MemoryDb
 {
     public partial class RepositoryMemory : IRepository
     {
-        private IList<Story> _storyList;
+        private IList<Story> _storyList = new List<Story>();
         private int _storyListCount;
 
         private void StoryInitialize(RandomData random)
         {
-            _storyList = new List<Story>();
             for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
             {
                 Story newStory = new Story
                 {
                     Id = iLoop + 1,
                     ProjectId = 830205,
-                    Name =  random.Ipsum(3, 8) + " story",
+                    Name =  random.Ipsum(2, 5) + " story",
                     Description = random.Ipsum(10, 20),
                     Estimate = random.Int(0, 3)
                 };
@@ -31,7 +30,6 @@ namespace IlinkDb.Data.MemoryDb
 
                 _storyList.Add(newStory);
             }
-
         }
 
         public Story StoryGet(long id)

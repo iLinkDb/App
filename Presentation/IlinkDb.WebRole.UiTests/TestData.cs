@@ -14,6 +14,9 @@ namespace IlinkDb.WebRole.UiTests
 
    public class TestData
    {
+       public const string SearchBox = "q";
+       public const string DuckSubmit = "search_button_homepage";
+
       public string CardNumber { get; set; }
       public string CardHolderName { get; set; }
       public string CardMonth { get; set; }

@@ -16,38 +16,13 @@ namespace IlinkDb.WebRole.UiTests
         [STAThread]
         static void Main(string[] args)
         {
-            string logMsg = "Program/Main";
-
-            string htmlFileName = "";
-            try
+            if (args.Length > 0)
             {
-                HtmlLogFile html = new HtmlLogFile("E:\\PayWebRoleTest");
-                htmlFileName = html.FileName;
-
-                try
-                {
-                    // Each of the tests should be in this Try block.
-                    DuckDuckGoTests duck = new DuckDuckGoTests();
-                    duck.Begin(html);
-
-                    //TenantTests tenantTests = new TenantTests();
-                    //tenantTests.Begin(html);
-
-                }
-                catch (Exception ex)
-                { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
-
-                // After all Tests, close the file.
-                html.WritePageFooter();
+                TestRunner.Begin("E:\\AppTests\\WebRole", args);
             }
-            catch (Exception ex)
-            { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
-            finally
+            else
             {
-                System.Threading.Thread.Sleep(2000);
-                Process someProcess = new Process();
-                someProcess.StartInfo.FileName = htmlFileName;
-                someProcess.Start();
+                TestRunner.ShowHelp();
             }
         }
     }

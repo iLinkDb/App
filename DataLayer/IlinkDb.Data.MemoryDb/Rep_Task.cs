@@ -10,24 +10,28 @@ namespace IlinkDb.Data.MemoryDb
 {
     public partial class RepositoryMemory : IRepository
     {
-        private IList<Task> _taskList;
+        private IList<Task> _taskList = new List<Task>();
         private int _taskListCount;
 
         private IList<Task> TaskInitialize(RandomData random, Story story)
         {
-            _taskList = new List<Task>();
+            IList<Task> retVal = new List<Task>();
 
             // Add a random number of tasks.
             for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
             {
-                _taskList.Add(new Task
+                Task newTask = new Task
                 {
                     Id = iLoop + 1,
-                    Description = random.Ipsum(10, 30) + " task",
+                    StoryId = story.Id,
+                    Description = random.Ipsum(6, 10) + " task",
                     Position = iLoop + 1
-                });
+                };
+
+                retVal.Add(newTask);
+                _taskList.Add(newTask);
             }
-            return _taskList;
+            return retVal;
         }
 
         public Task Add(Story story, Task task)
