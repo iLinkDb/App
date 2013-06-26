@@ -51,6 +51,10 @@
     <Compile Include="Rep_User.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AppCommon\AppCommon.Logging\AppCommon.Logging.csproj">
+      <Project>{5bfab067-72fc-4efd-86d3-227d9182d868}</Project>
+      <Name>AppCommon.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\AppCommon\AppCommon.Misc\AppCommon.Misc.csproj">
       <Project>{05c26666-e4c3-43b9-979a-89e1d9449f3b}</Project>
       <Name>AppCommon.Misc</Name>

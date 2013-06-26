@@ -20,7 +20,6 @@ namespace IlinkDb.Entity
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "position")]
         [Display(Name = "Position")]
         public int Position { get; set; }
@@ -32,6 +31,8 @@ namespace IlinkDb.Entity
         [JsonProperty(PropertyName = "createdAt")]
         [Display(Name = "CreatedAt")]
         public DateTime? CreatedAt { get; set; }
+
+        public long StoryId { get; set; }
 
         public Task()
         {

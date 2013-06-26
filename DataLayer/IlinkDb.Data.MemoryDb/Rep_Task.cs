@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using IlinkDb.Entity;
+using AppCommon;
 
 namespace IlinkDb.Data.MemoryDb
 {
@@ -44,18 +45,47 @@ namespace IlinkDb.Data.MemoryDb
         {
             Task retVal = null;
 
-            if (newOne.Id > 0)
-            { retVal = _taskList.First(o => o.Id == newOne.Id); }
+            string logMsg = "Rep_Task/Save";
 
-            if (retVal == null)
+            try
             {
-                newOne.Id = _taskListCount++;
-                _taskList.Add(newOne);
-                retVal = newOne;
+                if (newOne.StoryId < 1)
+                {
+                    Logging.LogError(logMsg + ", ERROR - Invalid StoryId");
+                }
+                else
+                {
+                    if (newOne.Id > 0)
+                    {
+                        foreach (Story story in _storyList)
+                        {
+                            if (story.Id == newOne.StoryId)
+                            {
+                                if (newOne.Id <= story.Tasks.Count)
+                                {
+                                    retVal = story.Tasks.First(o => o.Id == newOne.Id);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (retVal == null)
+                    {
+                        newOne.Id = _taskListCount++;
+                        _taskList.Add(newOne);
+                        retVal = newOne;
+                    }
+                    else
+                    {
+                        retVal.Description = newOne.Description;
+                    }
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                retVal.Description = newOne.Description;
+                Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex);
             }
 
             return retVal;

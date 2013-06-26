@@ -2,8 +2,28 @@
     background-color: #ffffe1;
     border-top: 3px dashed gray;
 }
+
 .EditTitle {
-    font-size: 10px; 
+    font-size: 10px;
     font-weight: normal;
     color: gray;
+}
+
+.input-xxlarge {
+    width: 510px;
+}
+
+#btnSaveTask {
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+#btnCancelTask {
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+.liTaskEdit {
+    cursor: hand;
+    cursor: pointer;
 }

@@ -34,10 +34,10 @@ namespace IlinkDb.Business
             return _db.Add(story, task);
         }
 
-        //public Task Save(Task task)
-        //{
-        //    return _db.TaskSave(task);
-        //}
+        public Task Save(Task task)
+        {
+            return _db.Save(task);
+        }
 
         public bool Delete(Task task)
         {
