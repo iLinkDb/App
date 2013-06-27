@@ -158,6 +158,9 @@
         // console.log('In PostEdit');
 
         var update = form.find("input[type='hidden'][id='id']").val();
+        if (update == undefined) {
+            update = false;
+        }
         am.TraceDir("msb.PostEdit update: ", update);
         var httpVerb = !update ? "POST" : "PUT";
 
@@ -177,7 +180,7 @@
                     match.updateItem(jsonObject);
                 }
                 else {
-                    storyViewModel.itemList.push(new story(jsonObject));
+                    storyViewModel.itemList().push(new story(jsonObject));
                 }
                 $('#msbModalEdit').modal('hide');
             }
