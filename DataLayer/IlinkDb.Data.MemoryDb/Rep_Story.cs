@@ -30,11 +30,16 @@ namespace IlinkDb.Data.MemoryDb
 
                 _storyList.Add(newStory);
             }
+            _storyListCount = _storyList.Count;
         }
 
         public Story StoryGet(long id)
         {
             Story retVal = _storyList.First<Story>(t => t.Id == id);
+            if (retVal != null)
+            {
+                retVal.Tasks = List(retVal).ToList();
+            }
             return retVal;
         }
 
@@ -47,7 +52,7 @@ namespace IlinkDb.Data.MemoryDb
 
             if (retVal == null)
             {
-                newOne.Id = _storyListCount++;
+                newOne.Id = ++_storyListCount;
                 _storyList.Add(newOne);
                 retVal = newOne;
             }

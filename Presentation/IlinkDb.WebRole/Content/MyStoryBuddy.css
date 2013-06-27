@@ -27,3 +27,7 @@
     cursor: hand;
     cursor: pointer;
 }
+.liTaskAdd {
+    color: blue;
+    font-style: italic;
+}

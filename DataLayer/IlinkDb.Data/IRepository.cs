@@ -71,6 +71,8 @@ namespace IlinkDb.Data
         //        Story Add(Project project, Story story);
         Story Add(long projectId, Story story);
 
+        #endregion
+
         #region Task
 
         Task Get(long id);
@@ -79,7 +81,6 @@ namespace IlinkDb.Data
         IQueryable<Task> List(Story story);
         Task Add(Story story, Task task);
 
-        #endregion
         #endregion
     }
 }

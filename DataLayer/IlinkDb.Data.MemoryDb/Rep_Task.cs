@@ -18,7 +18,7 @@ namespace IlinkDb.Data.MemoryDb
             IList<Task> retVal = new List<Task>();
 
             // Add a random number of tasks.
-            for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
+            for (int iLoop = 0; iLoop < random.Int(3, 6); iLoop++)
             {
                 Task newTask = new Task
                 {
@@ -31,6 +31,7 @@ namespace IlinkDb.Data.MemoryDb
                 retVal.Add(newTask);
                 _taskList.Add(newTask);
             }
+            _taskListCount = _taskList.Count;
             return retVal;
         }
 
@@ -76,7 +77,7 @@ namespace IlinkDb.Data.MemoryDb
 
                     if (retVal == null)
                     {
-                        newOne.Id = _taskListCount++;
+                        newOne.Id = ++_taskListCount;
                         _taskList.Add(newOne);
                         retVal = newOne;
                     }
@@ -111,7 +112,7 @@ namespace IlinkDb.Data.MemoryDb
 
         public IQueryable<Task> List(Story story)
         {
-            return ((IEnumerable<Task>)_taskList).Select(x => x).AsQueryable();
+            return ((IEnumerable<Task>)_taskList).Where(x => x.StoryId == story.Id).AsQueryable();
         }
     }
 }

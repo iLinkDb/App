@@ -24,7 +24,7 @@ namespace IlinkDb.Data.MemoryDb
                     Url = "www." + random.Word() + random.Word() + ".com"
                 });
             }
-            _linkListCount = _linkList.Count + 1;
+            _linkListCount = _linkList.Count;
         }
 
         public Link LinkGet(long id)
@@ -47,7 +47,7 @@ namespace IlinkDb.Data.MemoryDb
 
             if (retVal == null)
             {
-                newOne.Id = _linkListCount++;
+                newOne.Id = ++_linkListCount;
                 _linkList.Add(newOne);
                 retVal = newOne;
             }

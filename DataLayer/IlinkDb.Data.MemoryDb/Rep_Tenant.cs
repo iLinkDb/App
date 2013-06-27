@@ -30,7 +30,7 @@ namespace IlinkDb.Data.MemoryDb
                 Id = _tenantList.Count + 1,
                 Domain = "test"
             });
-            _tenantListCount = _tenantList.Count + 1;
+            _tenantListCount = _tenantList.Count;
 
         }
 
@@ -54,7 +54,7 @@ namespace IlinkDb.Data.MemoryDb
 
             if (retVal == null)
             {
-                newOne.Id = _tenantListCount++;
+                newOne.Id = ++_tenantListCount;
                 _tenantList.Add(newOne);
                 retVal = newOne;
             }

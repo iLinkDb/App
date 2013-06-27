@@ -26,7 +26,6 @@ namespace IlinkDb.Data.MemoryDb
                 User = "Tom Tuttle",
                 Text = "The main note for the root of the site."
             });
-            _noteListCount = _noteList.Count + 1;
 
             // Add a random number of notes.
             for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
@@ -38,6 +37,7 @@ namespace IlinkDb.Data.MemoryDb
                     Text = random.Ipsum(10, 30)
                 });
             }
+            _noteListCount = _noteList.Count;
         }
 
         public Note NoteGet(long id)
@@ -60,7 +60,7 @@ namespace IlinkDb.Data.MemoryDb
 
             if (retVal == null)
             {
-                newOne.Id = _noteListCount++;
+                newOne.Id = ++_noteListCount;
                 _noteList.Add(newOne);
                 retVal = newOne;
             }
