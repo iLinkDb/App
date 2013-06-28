@@ -68,14 +68,53 @@ namespace IlinkDb.Service.Controllers
             return retVal;
         }
 
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage ListForLabel(long projectId, string label)
+        {
+            HttpResponseMessage retVal = new HttpResponseMessage();
+
+            string logMsg = "ListForLabel/List";
+
+            try
+            {
+                string workLabel = CleanLabel(label);
+                StoryManager mgr = new StoryManager();
+                List<Story> storys = mgr.ListForLabel(projectId, workLabel);
+
+                Logging.LogDebug(logMsg + string.Format(" for projectId: {0}, Label: {1} Story Count: {2}",
+                    projectId, label, storys.Count()));
+
+                retVal = Request.CreateResponse(HttpStatusCode.OK, storys);
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex);
+                retVal.StatusCode = HttpStatusCode.InternalServerError;
+                retVal.Content = new StringContent(ex.Message);
+            }
+            return retVal;
+        }
+
         [AcceptVerbs("POST")]
         public HttpResponseMessage Post(Story story)
         {
-            return Put(story);
+            return Put(story, "");
+        }
+
+        [AcceptVerbs("POST")]
+        public HttpResponseMessage Post(Story story, string label)
+        {
+            return Put(story, label);
         }
 
         [AcceptVerbs("PUT")]
         public HttpResponseMessage Put(Story story)
+        {
+            return Put(story, "");
+        }
+
+        [AcceptVerbs("PUT")]
+        public HttpResponseMessage Put(Story story, string label)
         {
             HttpResponseMessage retVal = Request.CreateResponse(HttpStatusCode.OK, story);
 
@@ -84,6 +123,19 @@ namespace IlinkDb.Service.Controllers
             try
             {
                 StoryManager mgr = new StoryManager();
+
+
+                if (!string.IsNullOrEmpty(label))
+                {
+                    string tempLabel = CleanLabel(label);
+                    if (string.IsNullOrEmpty(story.Labels))
+                    { story.Labels = tempLabel; }
+                    else
+                    {
+                        if (!story.Labels.ToLower().Contains(tempLabel.ToLower()))
+                        { story.Labels += tempLabel; }
+                    }
+                }
 
                 Story updatedStory = mgr.Save(story);
 
@@ -138,6 +190,12 @@ namespace IlinkDb.Service.Controllers
             }
             return retVal;
 
+        }
+
+        private string CleanLabel(string label)
+        {
+            string retVal = label.Replace("/", "_").Replace(" ", "");
+            return retVal;
         }
     }
 }

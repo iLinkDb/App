@@ -36,5 +36,11 @@ namespace IlinkDb.Data.EntityFramework
         {
             throw new NotImplementedException();
         }
+
+
+        public IQueryable<Story> StoryListForLabel(long projectId, string label)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

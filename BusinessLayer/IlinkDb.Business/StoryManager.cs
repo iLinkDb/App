@@ -49,5 +49,11 @@ namespace IlinkDb.Business
         {
             return _db.StoryList(projectId).ToList();
         }
+
+        public List<Story> ListForLabel(long projectId, string label)
+        {
+            return _db.StoryListForLabel(projectId, label).ToList();
+        }
+
     }
 }

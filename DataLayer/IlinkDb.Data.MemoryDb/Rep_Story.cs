@@ -21,7 +21,7 @@ namespace IlinkDb.Data.MemoryDb
                 {
                     Id = iLoop + 1,
                     ProjectId = 830205,
-                    Name =  random.Ipsum(2, 5) + " story",
+                    Name = random.Ipsum(2, 5) + " story",
                     Description = random.Ipsum(10, 20),
                     Estimate = random.Int(0, 3)
                 };
@@ -58,10 +58,12 @@ namespace IlinkDb.Data.MemoryDb
             }
             else
             {
-                retVal.Name = newOne.Name;
-                retVal.ProjectId = newOne.ProjectId;
-                retVal.Description = newOne.Description;
-                retVal.Estimate = newOne.Estimate;
+                retVal = newOne;
+                //retVal.Name = newOne.Name;
+                //retVal.ProjectId = newOne.ProjectId;
+                //retVal.Description = newOne.Description;
+                //retVal.Estimate = newOne.Estimate;
+                //retVal.Labels = newOne.Labels;
             }
 
             return retVal;
@@ -90,6 +92,13 @@ namespace IlinkDb.Data.MemoryDb
         {
             story.ProjectId = projectId;
             return StorySave(story);
+        }
+
+
+        public IQueryable<Story> StoryListForLabel(long projectId, string label)
+        {
+            return ((IEnumerable<Story>)_storyList).Select(x => x).Where(x => x.ProjectId == projectId
+                && (!string.IsNullOrEmpty(x.Labels)) && x.Labels.ToLower().Contains(label.ToLower())).AsQueryable();
         }
     }
 }

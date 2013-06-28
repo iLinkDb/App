@@ -106,5 +106,11 @@ namespace IlinkDb.Data.PivotalApi
             }
             return retVal;
         }
+
+
+        public IQueryable<Story> StoryListForLabel(long projectId, string label)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

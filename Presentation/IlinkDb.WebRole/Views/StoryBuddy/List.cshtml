@@ -113,6 +113,7 @@
         this.name = ko.observable(item.name);
         this.description = ko.observable(item.description);
         this.estimate = ko.observable(item.estimate);
+        this.labels = ko.observable(item.labels);
 
         this.updateItem = function (item) {
             am.Trace("msb.updateItem");
@@ -121,6 +122,7 @@
             this.name(item.name);
             this.description(item.description);
             this.estimate(item.estimate);
+            this.labels(item.labels);
         };
 
         this.editItem = function () {
@@ -136,7 +138,7 @@
 
         loadItemList: function () {
             var self = this;
-            $.getJSON('http://' + msb.restHost + '/' + msb.controller + '/list?projectid=830205',
+            $.getJSON('http://' + msb.restHost + '/' + msb.controller + '/ListForLabel?projectid=830205&label=' + encodeURIComponent(location.pathname),
                 function (itemList) {
                     self.itemList.removeAll();
                     $.each(itemList, function (index, item) {
@@ -166,7 +168,7 @@
 
         var self = this;
         $.ajax({
-            url: 'http://' + msb.restHost + '/' + msb.controller + '/' + httpVerb.toLowerCase(),
+            url: 'http://' + msb.restHost + '/' + msb.controller + '/' + httpVerb.toLowerCase() + '?label=' + encodeURIComponent(location.pathname),
             type: httpVerb,
             data: json,
             dataType: 'json',
