@@ -251,6 +251,8 @@
     <Content Include="Views\StoryBuddy\List.cshtml" />
     <Content Include="Views\StoryBuddy\Partial_Task.cshtml" />
     <Content Include="Views\StoryBuddy\Partial_Story.cshtml" />
+    <Content Include="Views\StoryBuddy\Partial_StoryScript.cshtml" />
+    <Content Include="Views\StoryBuddy\Partial_TaskScript.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
