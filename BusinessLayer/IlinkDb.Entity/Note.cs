@@ -6,22 +6,30 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Xml;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 using AppCommon;
 
 namespace IlinkDb.Entity
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class Note : EntityBase
     {
+        [JsonProperty(PropertyName = "storyId")]
+        [Display(Name = "StoryId")]
         public long StoryId { get; set; }
 
         [Required]
+        [JsonProperty(PropertyName = "text")]
+        [Display(Name = "Text")]
         public string Text { get; set; }
 
-        [Required]
+        [JsonProperty(PropertyName = "user")]
+        [Display(Name = "User")]
         public string User { get; set; }
 
-        [Required]
+        [JsonProperty(PropertyName = "dateAdded")]
+        [Display(Name = "DateAdded")]
         public DateTime? DateAdded { get; set; }
 
         public Note()

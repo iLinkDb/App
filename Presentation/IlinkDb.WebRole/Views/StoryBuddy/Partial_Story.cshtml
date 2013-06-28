@@ -1,0 +1,174 @@
+﻿@model IlinkDb.Entity.Story
+
+<div class="modal hide" id="msbModalEdit">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Edit <span id="spnTitle"></span></h3>
+    </div>
+
+    <form id="msbFormEdit" data-bind="submit: function (form) { msb.PostEdit() }">
+        <div class="modal-body">
+            <input type="hidden" name="ProjectId" value="830205" />
+
+            <ul id="storyTab" class="nav nav-tabs">
+                <li><a href="#edit" data-toggle="tab">Edit</a></li>
+                <li><a href="#task" data-toggle="tab">Tasks</a></li>
+                <li><a href="#comment" data-toggle="tab">Comments</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane" id="edit">
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name)
+
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextAreaFor(m => m.Description, 4, 80, new { @class = "input-xxlarge" })
+
+                    @Html.LabelFor(m => m.Estimate)
+                    @Html.TextBoxFor(m => m.Estimate)
+
+                    <input type="submit" class="btn btn-primary pull-right" value="Save" />
+                </div>
+                <div class="tab-pane" id="task">
+                    <ul id="taskList">
+                    </ul>
+                </div>
+                <div class="tab-pane" id="comment">comments for story</div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+        </div>
+    </form>
+</div>
+
+<script type='text/javascript'>
+
+    msb.story = function (item) {
+        am.TraceDir("Story/msb.story", item);
+        this.id = ko.observable(item.id);
+        this.projectId = ko.observable(item.projectId);
+        this.name = ko.observable(item.name);
+        this.description = ko.observable(item.description);
+        this.estimate = ko.observable(item.estimate);
+        this.labels = ko.observable(item.labels);
+
+        this.updateItem = function (item) {
+            am.Trace("Story/msb.updateItem");
+            this.id(item.id);
+            this.projectId(item.projectId);
+            this.name(item.name);
+            this.description(item.description);
+            this.estimate(item.estimate);
+            this.labels(item.labels);
+        };
+
+        this.editItem = function () {
+            am.TraceDir("Story/msb.editItem", this);
+            var form = $('#msbFormEdit');
+
+            form.data('story', this);
+        };
+    }
+
+    var storyViewModel = {
+        itemList: ko.observableArray([]),
+
+        loadItemList: function () {
+            var self = this;
+            $.getJSON('http://' + msb.restHost + '/' + msb.controller + '/ListForLabel?projectid=830205&label=' + encodeURIComponent(location.pathname),
+                function (itemList) {
+                    self.itemList.removeAll();
+                    $.each(itemList, function (index, item) {
+                        am.TraceDir("pushing items:", item);
+                        self.itemList.push(new msb.story(item));
+                    });
+                }
+            );
+        }
+    };
+
+    msb.PostEdit = function() {
+        var form = $('#msbFormEdit');
+        am.TraceDir("msb.PostEdit", form);
+        //                if (!form.valid())
+        //                    return;
+        var json = JSON.stringify(msb.GetItemFromForm());
+
+        // console.log('In PostEdit');
+
+        var update = form.find("input[type='hidden'][id='id']").val();
+        if (update == undefined) {
+            update = false;
+        }
+        am.TraceDir("msb.PostEdit update: ", update);
+        var httpVerb = !update ? "POST" : "PUT";
+
+        var self = this;
+        $.ajax({
+            url: 'http://' + msb.restHost + '/' + msb.controller + '/' + httpVerb.toLowerCase() + '?label=' + encodeURIComponent(location.pathname),
+            type: httpVerb,
+            data: json,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function(jsonObject) {
+                am.Trace("updateSuccess");
+                if (update) {
+                    var match = ko.utils.arrayFirst(storyViewModel.itemList(), function(item) {
+                        return jsonObject.id === item.id();
+                    });
+                    match.updateItem(jsonObject);
+                } else {
+                    storyViewModel.itemList.push(new msb.story(jsonObject));
+                }
+                $('#msbModalEdit').modal('hide');
+            }
+        });
+    };
+
+    msb.GetItemFromForm = function() {
+        var form = $('#msbFormEdit');
+        var item = {};
+        form.find('input[type!=submit],select,textarea').each(function() {
+            am.Trace("msb.GetItemFromForm", this);
+            item[this.name] = $(this).val();
+        });
+        return item;
+    };
+
+    $('#msbModalEdit').on('hide', function () {
+        am.Trace("msbModalEdit onHide");
+        var form = $('#msbFormEdit');
+        form.validate().resetForm();
+        form.get(0).reset();
+        form.removeData('story');
+        form.find("input[type='hidden'][id='id']").remove();
+    });
+
+    $('#msbModalEdit').on('show', function () {
+        am.Trace("msbModalEdit onShow");
+        var form = $('#msbFormEdit');
+        var story = form.data('story');
+        if (!story)
+            return;
+
+        am.TraceDir("story: ", story);
+        $('<input>').attr('type', 'hidden').attr('id', 'id').attr('name', 'id')
+            .val(story.id()).prependTo(form);
+
+        // Update the form fields to be edited.
+        form.find("#ProjectId").val(story.projectId());
+        form.find('#Name').val(story.name());
+        form.find('#Description').val(story.description());
+        form.find('#Estimate').val(story.estimate());
+
+        am.TraceDir("Dumping story:", story);
+
+        msb.editStoryId = story.id();
+        loadTasks();
+
+        $("#spnTitle").html(story.name() + ' <span class="EditTitle">(' + story.id() + ')</span>');
+    });
+
+</script>

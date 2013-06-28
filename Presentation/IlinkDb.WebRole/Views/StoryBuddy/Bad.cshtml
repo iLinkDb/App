@@ -1,0 +1,98 @@
+﻿@using IlinkDb.Entity
+@model IlinkDb.Entity.Story
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fred</title>
+</head>
+<body>
+    <div id="msbMain">
+        <div class='container'>
+            <div id="msbLink"><a href="#">Stories</a></div>
+            <div id="msbStories" class='row hide'>
+                <div id='myStoryBuddy' class='span12'>
+                    <div class='text-center'>
+                        <span class='pull-left'><b>Stories</b>&nbsp;&nbsp;
+                        <a id="addStory" class="icon-plus" title="Add new story" data-toggle="modal" href="#msbModalEdit" /></span>
+                        (Everything below this line will <b>not</b> be displayed on the final site)
+                    </div>
+                    <div id='msbContent'>
+                        <table id="stories" class="table table-striped table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>Id</td>
+                                    <td>Name</td>
+                                    <td>Estimate</td>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: storyViewModel.itemList">
+                                <tr>
+                                    <td width="20px">
+                                        <a href="#msbModalEdit" data-bind="click: function (form) { editItem() }" data-toggle="modal" class='icon-pencil'></a>
+                                    </td>
+                                    <td data-bind="text: id"></td>
+                                    <td class="item" data-bind="text: name"></td>
+                                    <td data-bind="text: estimate"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*        <div data-bind="text: ko.toJSON(storyViewModel)"></div>*@
+    </div>
+
+    <script type='text/javascript'>
+
+        if (typeof msb == 'undefined' || !msb) {
+            msb = {};
+        }
+
+        msb.restHost = 'localhost:30441';
+        msb.controller = 'story';
+        msb.editStoryId = 0;
+        msb.editTaskId = 0;
+
+    </script>
+
+    @{ Html.RenderPartial("Partial_Story", new Story()); }
+    @{ Html.RenderPartial("Partial_Task"); }
+
+</body>
+
+<script type='text/javascript'>
+
+    $(function () {
+        $("#msbLink").click(function () {
+            $(this).hide();
+            $("#msbStories").slideDown('fast');
+
+            am.Trace("ko.applyBindings for storyViewModel");
+            ko.applyBindings(storyViewModel, document.getElementById("msbMain"));
+            // ko.applyBindings(storyViewModel);
+            storyViewModel.loadItemList();
+
+            // Show the second tab.
+            $('#storyTab li:eq(1) a').tab('show');
+        });
+
+        $("#addStory").click(function () {
+            // Show the first tab.
+            $('#storyTab li:eq(0) a').tab('show');
+        });
+
+
+        $('#msbModalEdit').modal({ "backdrop": "static", show: false });
+    });
+
+</script>
+
+</html>

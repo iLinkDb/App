@@ -1,0 +1,69 @@
+﻿<script type='text/javascript'>
+
+    function loadTasks() {
+        am.TraceDir("Task/loadTasks for story:", msb.editStoryId)
+        msb.editTaskId = 0;
+        $.ajax({
+            url: 'http://' + msb.restHost + '/' + msb.controller + '/get/' + msb.editStoryId,
+            success: showTasks,
+            dataType: 'json'
+        });
+    }
+    function showTasks(data) {
+        am.TraceDir("Task/showTasks", data);
+
+        $("#taskList").empty();
+        if (data.tasks != null) {
+            for (var iLoop = 0; iLoop < data.tasks.length; iLoop++) {
+                $("<li />", { text: data.tasks[iLoop].description, class: "liTaskEdit", id: "task-" + data.tasks[iLoop].id }).appendTo("#taskList");
+            }
+            $("<li />", { text: "Add New Task", class: "liTaskEdit liTaskAdd", id: "task-0" }).appendTo("#taskList");
+
+            $(".liTaskEdit").click(editTask);
+        }
+    }
+
+    function editTask() {
+
+        am.TraceDir("Task/editTask", this);
+        var item = this;
+
+        if (msb.editTaskId < 1) {
+            msb.editTaskId = item.id.substring(5);
+            am.TraceDir("Task/item.id", msb.editTaskId);
+
+            var text = item.innerHTML;
+            if ($(item).hasClass("liTaskAdd")) {
+                text = "";
+            }
+
+            var newLi = $("<li />").insertBefore(this);
+            $("<textarea />", { id: 'txtTaskInput', width: '380px', value: text }).appendTo(newLi);
+            $("<a />", { href: '#', id: 'btnSaveTask', class: 'icon-ok' }).appendTo(newLi);
+            $("<a />", { href: '#', id: 'btnCancelTask', class: 'icon-remove' }).appendTo(newLi);
+
+            $(this).remove();
+
+            $("#btnCancelTask").click(function () { loadTasks(); });
+
+            $("#btnSaveTask").click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: 'http://' + msb.restHost + '/Task/post',
+                    data: {
+                        id: msb.editTaskId,
+                        description: $("#txtTaskInput").val(),
+                        storyId: msb.editStoryId
+                    },
+                    success: loadTasks,
+                    dataType: 'json'
+                });
+            });
+
+        } else {
+            alert("Please Save or cancel the current edit before editing this task");
+        }
+    }
+
+</script>
