@@ -18,7 +18,7 @@
                 <div id='myStoryBuddy' class='span12'>
                     <div class='text-center'>
                         <span class='pull-left'><b>Stories</b>&nbsp;&nbsp;
-                        <a id="addStory" class="icon-plus" title="Add new story" data-toggle="modal" href="#msbModalEdit" /></span>
+                        <a id="msb_addStory" class="icon-plus" title="Add new story" data-toggle="modal" href="#msb_ModalEdit" /></span>
                         (Everything below this line will <b>not</b> be displayed on the final site)
                     </div>
                     <div id='msbContent'>
@@ -34,7 +34,7 @@
                             <tbody data-bind="foreach: msb.storyViewModel.itemList">
                                 <tr>
                                     <td width="20px">
-                                        <a href="#msbModalEdit" data-bind="click: function (form) { editItem() }" data-toggle="modal" class='icon-pencil'></a>
+                                        <a href="#msb_ModalEdit" data-bind="click: function (form) { editItem() }" data-toggle="modal" class='icon-pencil'></a>
                                     </td>
                                     <td data-bind="text: id"></td>
                                     <td class="item" data-bind="text: name"></td>
@@ -76,15 +76,15 @@
             msb.storyViewModel.loadItemList();
 
             // Show the second tab.
-            $('#storyTab li:eq(1) a').tab('show');
+            $('#msb_storyTab li:eq(1) a').tab('show');
         });
 
-        $("#addStory").click(function () {
+        $("#msb_addStory").click(function () {
             // Show the first tab.
-            $('#storyTab li:eq(0) a').tab('show');
+            $('#msb_storyTab li:eq(0) a').tab('show');
         });
 
-        $('#msbModalEdit').modal({ "backdrop": "static", show: false });
+        $('#msb_ModalEdit').modal({ "backdrop": "static", show: false });
     });
 
 </script>

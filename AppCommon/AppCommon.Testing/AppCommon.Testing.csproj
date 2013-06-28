@@ -43,6 +43,9 @@
       <Private>True</Private>
       <HintPath>..\..\packages\WatiN.2.1.0\lib\net40\Microsoft.mshtml.dll</HintPath>
     </Reference>
+    <Reference Include="Selenium.WebDriverBackedSelenium">
+      <HintPath>..\..\packages\Selenium.WebDriverBackedSelenium.2.33.0\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -52,17 +55,31 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ThoughtWorks.Selenium.Core">
+      <HintPath>..\..\packages\Selenium.RC.2.33.0\lib\net40\ThoughtWorks.Selenium.Core.dll</HintPath>
+    </Reference>
     <Reference Include="WatiN.Core">
       <HintPath>..\..\packages\WatiN.2.1.0\lib\net40\WatiN.Core.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>..\..\packages\Selenium.WebDriver.2.33.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\..\packages\Selenium.Support.2.33.0\lib\net40\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HtmlLogFile.cs" />
     <Compile Include="IgnoreTestAttribute.cs" />
+    <Compile Include="ITestEngine.cs" />
     <Compile Include="ITestBase.cs" />
     <Compile Include="TestBase.cs" />
+    <Compile Include="TestBaseWatin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBaseSelenium.cs" />
+    <Compile Include="TestEngineSelenium.cs" />
+    <Compile Include="TestEngineWatin.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="WatiNExtensions.cs" />
   </ItemGroup>
@@ -78,6 +95,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Drivers\ChromeDriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

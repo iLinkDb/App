@@ -6,12 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using WatiN.Core;
-
 using AppCommon;
+
 namespace IlinkDb.WebRole.UiTests
 {
-    public class DuckDuckGoTests : TestBase, ITestBase
+    public class DuckDuckGoTests : ITestBase
     {
         private string _siteUrl = "http://www.duckduckgo.com";
 
@@ -24,41 +23,38 @@ namespace IlinkDb.WebRole.UiTests
         {
             string logMsg = "DuckDuckGoTests/Begin";
 
-            _siteUrl = siteUrl;
-
             try
             {
-                WriteStartTest(htmlLogFile, logMsg);
-                using (IE browser = new IE(_siteUrl))
+                TestEngineWatin test = new TestEngineWatin(siteUrl, htmlLogFile, logMsg);
+
+                try
                 {
-                    try
-                    {
-                        ClearCache(browser);
-                        browser.WaitForComplete();
+                    string searchFor = "giving100";
 
-                        //                        TestData data = new TestData(TestDataEnum.BarneyRubble);
-                        string searchFor = "giving100";
+                    test.SetTextFieldByName(TestData.SearchBox, searchFor);
 
-                        SetTextFieldByName(browser, TestData.SearchBox, searchFor);
+                    test.ButtonClickById(TestData.DuckSubmit);
 
-                        browser.Button(Find.ById(TestData.DuckSubmit)).Click();
-                        Assert(browser, searchFor);
+                    test.Assert(searchFor);
 
-                    }
-                    catch (COMException ex)
-                    {
-                        ShowError(logMsg + ", COMException: " + ex.Message, ex);
-                    }
-                    catch (Exception ex)
-                    {
-                        WriteScreenShot(browser, ex.Message);
-                        ShowError(logMsg + ", EXCEPTION (With Screen Capture) " + ex.Message, ex);
-                    }
+                    test.Cleanup();
                 }
-                WriteEndTest();
+                catch (COMException ex)
+                {
+                    test.ShowError(logMsg + ", COMException: " + ex.Message, ex);
+                }
+                catch (Exception ex)
+                {
+                    test.WriteScreenShot(ex.Message);
+                    test.ShowError(logMsg + ", EXCEPTION (With Screen Capture) " + ex.Message, ex);
+                }
             }
             catch (Exception ex)
-            { ShowError(logMsg + ", EXCEPTION (Without Screen Capture) " + ex.Message, ex); }
+            {
+                string errMsg = logMsg + ", EXCEPTION " + ex.Message;
+                Console.WriteLine(errMsg);
+                Logging.LogError(errMsg, ex);
+            }
         }
 
     }

@@ -53,7 +53,12 @@ namespace AppCommon
          Console.WriteLine("  0 = All Tests");
          for (int iLoop = 0; iLoop < list.Count; iLoop++)
          {
-            Console.WriteLine("  {0:#0} = {1}", iLoop + 1, list[iLoop]);
+            string testName = list[iLoop];
+            if (testName.LastIndexOf(".") > 0)
+            {
+               testName = testName.Substring(testName.LastIndexOf(".") + 1);
+            }
+            Console.WriteLine("  {0:#0} = {1}", iLoop + 1, testName);
          }
          StringBuilder help = new StringBuilder();
          help.AppendLine();
@@ -92,7 +97,8 @@ namespace AppCommon
                {
                   foreach (Type type in Assembly.GetEntryAssembly().GetTypes())
                   {
-                     if (type.BaseType == typeof(TestBase) && type.GetInterfaces().Contains(typeof(ITestBase)))
+                     //if (type.BaseType == typeof(TestBase) && type.GetInterfaces().Contains(typeof(ITestBase)))
+                     if (type.GetInterfaces().Contains(typeof(ITestBase)))
                      {
                         bool ignore = (type.GetCustomAttributes(typeof(IgnoreTestAttribute), true).Length > 0);
                         if (ignore)
@@ -155,7 +161,8 @@ namespace AppCommon
 
          foreach (Type type in Assembly.GetEntryAssembly().GetTypes())
          {
-            if (type.BaseType == typeof(TestBase) && type.GetInterfaces().Contains(typeof(ITestBase)))
+            //if (type.BaseType == typeof(TestBase) && type.GetInterfaces().Contains(typeof(ITestBase)))
+            if (type.GetInterfaces().Contains(typeof(ITestBase)))
             {
                retVal.Add(type.FullName);
             }
