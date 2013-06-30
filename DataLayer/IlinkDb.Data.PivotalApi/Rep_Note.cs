@@ -14,14 +14,47 @@ namespace IlinkDb.Data.PivotalApi
     {
         private void NoteInitialize()
         {
-            throw new NotImplementedException();
+            //
         }
 
-        public Note Add(Story story, Note note)
+        public Note NoteGet(Story story, long noteId)
         {
             Note retVal = null;
 
-            string logMsg = "Rep_Note/Add";
+            string logMsg = "Rep_Note/NoteGet";
+
+            try
+            {
+                string action = string.Format("projects/{0}/stories/{1}/notes/{2}", story.ProjectId, story.Id, noteId);
+                GetRequest getRequest = new GetRequest(action);
+                ApiResponse response = PivotApi.Get(getRequest);
+
+                if (response.Success)
+                {
+                    XDocument doc = XDocument.Parse(response.Xml);
+
+                    var query = from node in doc.Descendants("note")
+                                select new Note(node);
+
+                    retVal = query.First();
+                }
+                else
+                {
+                    Logging.LogError(logMsg + string.Format(", ERROR Code: {0}, Message: {1}",
+                      response.StatusCode, response.ErrorMessage));
+                }
+            }
+            catch (Exception ex)
+            { Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex); }
+
+            return retVal;
+        }
+
+        public Note NoteSave(Story story, Note note)
+        {
+            Note retVal = null;
+
+            string logMsg = "Rep_Note/NoteSave";
 
             string postAction = string.Format("projects/{0}/stories/{1}/notes",
                 story.ProjectId, story.Id);
@@ -29,7 +62,11 @@ namespace IlinkDb.Data.PivotalApi
 
             postRequest.XmlDoc = note.XmlDoc;
 
-            ApiResponse response = PivotApi.Post(postRequest);
+            ApiResponse response;
+            if (note.Id > 0)
+            { response = PivotApi.Put(postRequest); }
+            else
+            { response = PivotApi.Post(postRequest); }
 
             if (response.Success)
             {
@@ -46,30 +83,14 @@ namespace IlinkDb.Data.PivotalApi
             return retVal;
         }
 
-        public Note NoteGet(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Note NoteSave(Note note)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool NoteDelete(Note note)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Note> NoteList()
+        public IQueryable<Note> NoteList(Story story)
         {
             throw new NotImplementedException();
         }
-
-        public IQueryable<Note> NoteListForPath(string path)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

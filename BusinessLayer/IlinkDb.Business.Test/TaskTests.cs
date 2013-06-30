@@ -62,19 +62,32 @@ namespace IlinkDb.Business.Test
         #endregion
 
         [TestMethod]
+        public void TaskListCountGreaterThanZeroTest()
+        {
+            StoryManager storyManager = new StoryManager(true);
+            List<Story> storyList = storyManager.List();
+
+            long storyId = storyList[0].Id;
+            List<Task> taskList = _taskManager.List(storyList[0]);
+            Assert.IsTrue(taskList.Count > 0, "List method failed to return any items");
+        }
+
+
+
+        [TestMethod]
         public void AddTaskTest()
         {
-            long projectId = 830205;
-
             StoryManager storyManager = new StoryManager(true);
-            List<Story> storyList = storyManager.List(projectId);
+            List<Story> storyList = storyManager.List();
 
             Task task = new Task();
             task.Description = "First task from API";
-            Task newTask = _taskManager.Add(storyList[1], task);
+            Task newTask = _taskManager.Save(storyList[1], task);
             Assert.IsNotNull(newTask, "newTask should not have been null");
             Assert.IsTrue(newTask.Id > 0, "newTask ID should have been > 0");
         }
+
+
 
     }
 }

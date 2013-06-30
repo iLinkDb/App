@@ -74,10 +74,9 @@
     <Compile Include="IgnoreTestAttribute.cs" />
     <Compile Include="ITestEngine.cs" />
     <Compile Include="ITestBase.cs" />
+    <Compile Include="SelectByEnum.cs" />
     <Compile Include="TestBase.cs" />
-    <Compile Include="TestBaseWatin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestBaseSelenium.cs" />
     <Compile Include="TestEngineSelenium.cs" />
     <Compile Include="TestEngineWatin.cs" />
     <Compile Include="TestRunner.cs" />

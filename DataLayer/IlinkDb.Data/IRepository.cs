@@ -35,11 +35,10 @@ namespace IlinkDb.Data
 
         #region Note
 
-        Note NoteGet(long id);
-        Note NoteSave(Note note);
+        Note NoteGet(Story story, long noteId);
+        Note NoteSave(Story story, Note newItem);
         bool NoteDelete(Note note);
-        IQueryable<Note> NoteList();
-        Note Add(Story story, Note note);
+        IQueryable<Note> NoteList(Story story);
 
         #endregion
 
@@ -64,22 +63,20 @@ namespace IlinkDb.Data
 
         #region Story
 
-        Story StoryGet(long id);
+        Story StoryGet(long projectId, long storyId);
         Story StorySave(Story story);
         bool StoryDelete(Story story);
         IQueryable<Story> StoryList(long projectId);
         IQueryable<Story> StoryListForLabel(long projectId, string label);
-        Story Add(long projectId, Story story);
 
         #endregion
 
         #region Task
 
-        Task Get(long id);
-        Task Save(Task task);
-        bool Delete(Task task);
-        IQueryable<Task> List(Story story);
-        Task Add(Story story, Task task);
+        Task TaskGet(Story story, long id);
+        Task TaskSave(Story story, Task task);
+        bool TaskDelete(Task task);
+        IQueryable<Task> TaskList(Story story);
 
         #endregion
     }

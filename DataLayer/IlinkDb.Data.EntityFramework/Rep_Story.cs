@@ -10,8 +10,7 @@ namespace IlinkDb.Data.EntityFramework
 {
     public partial class RepositoryEntityFramework : IRepository
     {
-
-        public Story StoryGet(long id)
+        public Story StoryGet(long projectId, long storyId)
         {
             throw new NotImplementedException();
         }
@@ -30,13 +29,6 @@ namespace IlinkDb.Data.EntityFramework
         {
             throw new NotImplementedException();
         }
-
-
-        public Story Add(long projectId, Story story)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public IQueryable<Story> StoryListForLabel(long projectId, string label)
         {

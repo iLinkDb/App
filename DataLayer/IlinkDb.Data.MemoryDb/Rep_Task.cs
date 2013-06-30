@@ -35,18 +35,13 @@ namespace IlinkDb.Data.MemoryDb
             return retVal;
         }
 
-        public Task Add(Story story, Task task)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Get(long id)
+        public Task TaskGet(Story story, long id)
         {
             Task retVal = _taskList.First<Task>(t => t.Id == id);
             return retVal;
         }
 
-        public Task Save(Task newOne)
+        public Task TaskSave(Story story, Task task)
         {
             Task retVal = null;
 
@@ -54,21 +49,21 @@ namespace IlinkDb.Data.MemoryDb
 
             try
             {
-                if (newOne.StoryId < 1)
+                if (task.StoryId < 1)
                 {
                     Logging.LogError(logMsg + ", ERROR - Invalid StoryId");
                 }
                 else
                 {
-                    if (newOne.Id > 0)
+                    if (task.Id > 0)
                     {
-                        foreach (Story story in _storyList)
+                        foreach (Story item in _storyList)
                         {
-                            if (story.Id == newOne.StoryId)
+                            if (item.Id == task.StoryId)
                             {
-                                if (newOne.Id <= story.Tasks.Count)
+                                if (task.Id <= _taskList.Count)
                                 {
-                                    retVal = story.Tasks.First(o => o.Id == newOne.Id);
+                                    retVal = _taskList.First(o => o.Id == task.Id);
                                     break;
                                 }
                             }
@@ -77,16 +72,15 @@ namespace IlinkDb.Data.MemoryDb
 
                     if (retVal == null)
                     {
-                        newOne.Id = ++_taskListCount;
-                        _taskList.Add(newOne);
-                        retVal = newOne;
+                        task.Id = ++_taskListCount;
+                        _taskList.Add(task);
+                        retVal = task;
                     }
                     else
                     {
-                        retVal.Description = newOne.Description;
+                        retVal.Description = task.Description;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -96,7 +90,7 @@ namespace IlinkDb.Data.MemoryDb
             return retVal;
         }
 
-        public bool Delete(Task task)
+        public bool TaskDelete(Task task)
         {
             bool retVal = false;
 
@@ -110,9 +104,10 @@ namespace IlinkDb.Data.MemoryDb
             return retVal;
         }
 
-        public IQueryable<Task> List(Story story)
+        public IQueryable<Task> TaskList(Story story)
         {
             return ((IEnumerable<Task>)_taskList).Where(x => x.StoryId == story.Id).AsQueryable();
         }
+
     }
 }

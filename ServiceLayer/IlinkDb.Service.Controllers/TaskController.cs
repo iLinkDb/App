@@ -31,14 +31,21 @@ namespace IlinkDb.Service.Controllers
 
             try
             {
-                TaskManager mgr = new TaskManager();
+                if (task.StoryId > 0)
+                {
+                    StoryManager mgrStory = new StoryManager();
+                    Story story = mgrStory.Get(task.StoryId);
 
-                Task updatedTask = mgr.Save(task);
+                    TaskManager mgrTask = new TaskManager();
 
-                Logging.LogDebug(logMsg + string.Format(" Task: {0}", updatedTask));
+                    Task updatedTask = mgrTask.Save(story, task);
 
-                retVal = Request.CreateResponse(HttpStatusCode.OK, updatedTask);
+                    Logging.LogDebug(logMsg + string.Format(" Task: {0}", updatedTask));
 
+                    retVal = Request.CreateResponse(HttpStatusCode.OK, updatedTask);
+                }
+                else
+                { Logging.LogError(logMsg + ", ERROR StoryId must be > 0"); }
                 //string uri = Url.Route(null, new { id = timesheet.Id }); // Where is the modified timesheet?
                 //response.Headers.Location = new Uri(Request.RequestUri, uri);
 

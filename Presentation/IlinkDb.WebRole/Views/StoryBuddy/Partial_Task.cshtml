@@ -9,21 +9,8 @@
             dataType: 'json'
         });
     }
-    function showTasks(data) {
-        am.TraceDir("Task/showTasks", data);
 
-        $("#taskList").empty();
-        if (data.tasks != null) {
-            for (var iLoop = 0; iLoop < data.tasks.length; iLoop++) {
-                $("<li />", { text: data.tasks[iLoop].description, class: "liTaskEdit", id: "task-" + data.tasks[iLoop].id }).appendTo("#taskList");
-            }
-            $("<li />", { text: "Add New Task", class: "liTaskEdit liTaskAdd", id: "task-0" }).appendTo("#taskList");
-
-            $(".liTaskEdit").click(editTask);
-        }
-    }
-
-    function editTask() {
+    msb.editTask = function () {
 
         am.TraceDir("Task/editTask", this);
         var item = this;
@@ -64,6 +51,20 @@
         } else {
             alert("Please Save or cancel the current edit before editing this task");
         }
-    }
+    };
+
+    function showTasks(data) {
+        am.TraceDir("Task/showTasks", data);
+
+        $("#taskList").empty();
+        if (data.tasks != null) {
+            for (var iLoop = 0; iLoop < data.tasks.length; iLoop++) {
+                $("<li />", { text: data.tasks[iLoop].description, class: "liTaskEdit", id: "task-" + data.tasks[iLoop].id }).appendTo("#taskList");
+            }
+            $("<li />", { text: "Add New Task", class: "liTaskEdit liTaskAdd", id: "task-0" }).appendTo("#taskList");
+
+            $(".liTaskEdit").click(msb.editTask);
+        }
+    };
 
 </script>

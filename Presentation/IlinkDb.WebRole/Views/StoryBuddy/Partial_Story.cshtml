@@ -8,8 +8,6 @@
     </div>
     <form id="msbFormEdit" data-bind="submit: function (form) { msb.PostEdit() }">
         <div class="modal-body">
-            <input type="hidden" name="ProjectId" value="830205" />
-
             <ul id="msb_storyTab" class="nav nav-tabs">
                 <li><a href="#edit" data-toggle="tab">Edit</a></li>
                 <li><a href="#task" data-toggle="tab">Tasks</a></li>
@@ -27,7 +25,7 @@
                     @Html.LabelFor(m => m.Estimate)
                     @Html.TextBoxFor(m => m.Estimate)
 
-                    <input type="submit" class="btn btn-primary pull-right" value="Save" />
+                    <input id="btnStorySubmit" type="submit" class="btn btn-primary pull-right" value="Save" />
                 </div>
                 <div class="tab-pane" id="task">
                     <ul id="taskList">

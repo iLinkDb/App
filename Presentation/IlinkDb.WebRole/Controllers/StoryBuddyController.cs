@@ -15,7 +15,7 @@ namespace IlinkDb.WebRole.Controllers
 
         public ActionResult List()
         {
-            Story story = new Story { ProjectId = 830205 };
+            Story story = new Story();
             return View(story);
         }
 

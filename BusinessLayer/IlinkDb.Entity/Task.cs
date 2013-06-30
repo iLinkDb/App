@@ -43,6 +43,9 @@ namespace IlinkDb.Entity
         {
             string logMsg = "Task/Constructor";
 
+            if (node == null)
+            { throw new ArgumentNullException(logMsg + " node parameter must not be null"); }
+
             try
             {
                 Id = EntityHelper.GetIntElementValue(node, "id");

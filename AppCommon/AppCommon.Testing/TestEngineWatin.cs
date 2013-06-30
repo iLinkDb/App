@@ -38,18 +38,18 @@ namespace AppCommon
         }
 
         public void SetTextFieldById(string fieldName, string value)
-        { SetTextField(fieldName, value, SelectTextFieldEnum.Id); }
+        { SetTextField(fieldName, value, SelectByEnum.Id); }
 
         public void SetTextFieldByName(string fieldName, string value)
-        { SetTextField(fieldName, value, SelectTextFieldEnum.Name); }
+        { SetTextField(fieldName, value, SelectByEnum.Name); }
 
-        private void SetTextField(string fieldName, string value, SelectTextFieldEnum selectBy)
+        private void SetTextField(string fieldName, string value, SelectByEnum selectBy)
         {
             string msg = string.Format("SetTextFieldBy{0} for {1} to: <b>{2}</b>",
                    selectBy, fieldName, value);
 
             TextField field;
-            if (selectBy == SelectTextFieldEnum.Id)
+            if (selectBy == SelectByEnum.Id)
             { field = _browser.TextField(Find.ById(fieldName)); }
             else
             { field = _browser.TextField(Find.ByName(fieldName)); }
@@ -60,7 +60,7 @@ namespace AppCommon
                 // (In jQuery Mobile, numeric text fields are of type 'tel')
                 Element element;
 
-                if (selectBy == SelectTextFieldEnum.Id)
+                if (selectBy == SelectByEnum.Id)
                 { element = _browser.Element(Find.ById(fieldName)); }
                 else
                 { element = _browser.Element(Find.ByName(fieldName)); }
@@ -189,11 +189,11 @@ namespace AppCommon
             }
         }
 
-        public void ClickLinkByText(string fieldName)
+        public void LinkClickByText(string linkText)
         {
-            string msg = string.Format("ClickLinkByText for {0} (by Id)",
-                   fieldName);
-            Link field = _browser.Link(Find.ByText(fieldName));
+            string msg = string.Format("LinkClickByText for {0} (by Id)",
+                   linkText);
+            Link field = _browser.Link(Find.ByText(linkText));
 
             if (field == null)
             { ShowError(msg); }
@@ -205,5 +205,11 @@ namespace AppCommon
             }
         }
 
+
+
+        public void LinkClickById(string linkId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

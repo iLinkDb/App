@@ -9,6 +9,7 @@ namespace IlinkDb.Data.PivotalApi
     internal class GetRequest
     {
         public string Action { get; set; }
+        public string Parameters { get; set; }
 
         public GetRequest()
         {
@@ -17,6 +18,11 @@ namespace IlinkDb.Data.PivotalApi
         public GetRequest(string action)
         {
             Action = action;
+        }
+        public GetRequest(string action, string parameters)
+        {
+            Action = action;
+            Parameters = parameters;
         }
     }
 

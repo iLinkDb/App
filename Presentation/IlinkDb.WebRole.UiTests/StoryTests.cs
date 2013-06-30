@@ -12,9 +12,9 @@ using AppCommon;
 
 namespace IlinkDb.WebRole.UiTests
 {
-    public class DuckDuckGoTests : TestBase, ITestBase
+    public class StoryTests : TestBase, ITestBase
     {
-        private string _siteUrl = "http://www.duckduckgo.com";
+        private string _siteUrl = "http://localhost:21764/";
 
         public void Begin(HtmlLogFile htmlLogFile)
         {
@@ -23,17 +23,17 @@ namespace IlinkDb.WebRole.UiTests
 
         public void Begin(HtmlLogFile htmlLogFile, string siteUrl)
         {
-            string logMsg = "DuckDuckGoTests/Begin";
+            string logMsg = "StoryTests/Begin";
 
             Console.WriteLine("Url: {0}", siteUrl);
 
             try
             {
-                TestEngineSelenium chromeTest = new TestEngineSelenium(siteUrl, htmlLogFile, "DuckDuck-Chrome");
+                TestEngineSelenium chromeTest = new TestEngineSelenium(siteUrl, htmlLogFile, "StoryTests-Chrome");
                 RunTest(chromeTest);
 
-                TestEngineWatin ieTest = new TestEngineWatin(siteUrl, htmlLogFile, "DuckDuck-IE");
-                RunTest(ieTest);
+//                TestEngineWatin ieTest = new TestEngineWatin(siteUrl, htmlLogFile, "StoryTests-IE");
+//                RunTest(ieTest);
             }
             catch (Exception ex)
             {
@@ -45,20 +45,34 @@ namespace IlinkDb.WebRole.UiTests
 
         private void RunTest(ITestEngine test)
         {
-            string logMsg = "DuckDuckGoTests/RunTest";
+            string logMsg = "StoryTests/RunTest";
 
             try
             {
                 try
                 {
-                    string searchFor = "giving100";
+                    test.Assert("Stories");
 
-                    test.SetTextFieldByName(TestData.SearchBox, searchFor);
+                    test.LinkClickByText("Stories");
 
-                    test.ButtonClickById(TestData.DuckSubmit);
+                    test.Assert("Everything below this line");
 
-                    test.Assert(searchFor);
+                    test.LinkClickById("msb_addStory");
 
+                    test.SetTextFieldByName("Name", "Tom Tuttle");
+
+                    test.SetTextFieldByName("Description", "Automated Test @ " + DateTime.Now.ToString());
+
+                    test.SetTextFieldByName("Estimate", "0");
+
+                    test.ButtonClickById("btnStorySubmit");
+                    
+                    System.Threading.Thread.Sleep(5000);
+                    //test.SetTextFieldByName(TestData.SearchBox, searchFor);
+
+                    //test.ButtonClickById(TestData.DuckSubmit);
+
+                    //test.Assert(searchFor);
                     test.Cleanup();
                 }
                 catch (COMException ex)
@@ -78,5 +92,6 @@ namespace IlinkDb.WebRole.UiTests
                 Logging.LogError(errMsg, ex);
             }
         }
+
     }
 }

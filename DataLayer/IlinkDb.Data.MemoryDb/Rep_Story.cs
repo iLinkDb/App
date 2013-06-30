@@ -27,18 +27,19 @@ namespace IlinkDb.Data.MemoryDb
                 };
 
                 newStory.Tasks = TaskInitialize(random, newStory).ToList();
+                newStory.Notes = NoteInitialize(random, newStory).ToList();
 
                 _storyList.Add(newStory);
             }
             _storyListCount = _storyList.Count;
         }
 
-        public Story StoryGet(long id)
+        public Story StoryGet(long projectId, long storyId)
         {
-            Story retVal = _storyList.First<Story>(t => t.Id == id);
+            Story retVal = _storyList.First<Story>(t => t.Id == storyId);
             if (retVal != null)
             {
-                retVal.Tasks = List(retVal).ToList();
+                retVal.Tasks = TaskList(retVal).ToList();
             }
             return retVal;
         }
@@ -88,17 +89,11 @@ namespace IlinkDb.Data.MemoryDb
             return ((IEnumerable<Story>)_storyList).Select(x => x).Where(x => x.ProjectId == projectId).AsQueryable();
         }
 
-        public Story Add(long projectId, Story story)
-        {
-            story.ProjectId = projectId;
-            return StorySave(story);
-        }
-
-
         public IQueryable<Story> StoryListForLabel(long projectId, string label)
         {
             return ((IEnumerable<Story>)_storyList).Select(x => x).Where(x => x.ProjectId == projectId
                 && (!string.IsNullOrEmpty(x.Labels)) && x.Labels.ToLower().Contains(label.ToLower())).AsQueryable();
         }
+
     }
 }

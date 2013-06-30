@@ -27,8 +27,11 @@ namespace IlinkDb.Data.PivotalApi
             try
             {
 
-                string url = string.Format("{0}/{1}/{2}?token={3}", 
+                string url = string.Format("{0}/{1}/{2}?token={3}",
                     ApiUrl, ApiVersion, getRequest.Action, ApiToken);
+
+                if (!string.IsNullOrEmpty(getRequest.Parameters))
+                { url += getRequest.Parameters; }
 
                 HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
                 //CredentialCache myCache = new CredentialCache();
@@ -60,14 +63,24 @@ namespace IlinkDb.Data.PivotalApi
             return retVal;
         }
 
+        internal static ApiResponse Put(PostRequest putRequest)
+        {
+            return Send(putRequest, false);
+        }
+
         internal static ApiResponse Post(PostRequest putRequest)
+        {
+            return Send(putRequest, true);
+        }
+
+        private static ApiResponse Send(PostRequest putRequest, bool post)
         {
             ApiResponse retVal = new ApiResponse();
 
-            string logMsg = "PivotApi/Post";
+            string logMsg = post ? "PivotApi/Post" : "PivotApi/Put";
             try
             {
-                string url = string.Format("{0}/{1}/{2}?token={3}", 
+                string url = string.Format("{0}/{1}/{2}?token={3}",
                     ApiUrl, ApiVersion, putRequest.Action, ApiToken);
 
                 HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
@@ -76,7 +89,7 @@ namespace IlinkDb.Data.PivotalApi
 
                 myReq.ContentType = "application/xml";
                 myReq.ContentLength = byteArray.Length;
-                myReq.Method = "POST";
+                myReq.Method = post ? "POST" : "PUT";
 
                 Stream dataStream = myReq.GetRequestStream();
                 dataStream.Write(byteArray, 0, byteArray.Length);

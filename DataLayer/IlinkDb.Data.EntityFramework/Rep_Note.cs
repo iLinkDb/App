@@ -9,12 +9,12 @@ namespace IlinkDb.Data.EntityFramework
 {
     public partial class RepositoryEntityFramework : IRepository
     {
-        public Note NoteGet(long id)
+        public Note NoteGet(Story story, long noteId)
         {
             throw new NotImplementedException();
         }
 
-        public Note NoteSave(Note note)
+        public Note NoteSave(Story story, Note newItem)
         {
             throw new NotImplementedException();
         }
@@ -24,18 +24,7 @@ namespace IlinkDb.Data.EntityFramework
             throw new NotImplementedException();
         }
 
-        public IQueryable<Note> NoteList()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Note> NoteListForPath(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Note Add(Story story, Note note)
+        public IQueryable<Note> NoteList(Story story)
         {
             throw new NotImplementedException();
         }

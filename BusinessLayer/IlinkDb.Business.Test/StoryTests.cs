@@ -69,8 +69,14 @@ namespace IlinkDb.Business.Test
         [TestMethod]
         public void StoryListCountGreaterThanZeroTest()
         {
-            long projectId = 830205;
-            List<Story> list = _storyManager.List(projectId);
+            List<Story> list = _storyManager.List();
+            Assert.IsTrue(list.Count > 0, "List method failed to return any items");
+        }
+
+        [TestMethod]
+        public void StoryListForLabelCountGreaterThanZeroTest()
+        {
+            List<Story> list = _storyManager.ListForLabel("just_some_label");
             Assert.IsTrue(list.Count > 0, "List method failed to return any items");
         }
 
@@ -87,7 +93,7 @@ namespace IlinkDb.Business.Test
             // story.StoryType = "feature";
             // story.Description = "Desc for story";
 
-            Story newStory = _storyManager.Add(projectId, story);
+            Story newStory = _storyManager.Save(story);
             Assert.IsNotNull(newStory, "newStory should not have been null");
             Assert.IsTrue(newStory.Id > 0, "newStory ID should have been > 0");
         }

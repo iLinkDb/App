@@ -10,8 +10,7 @@ namespace IlinkDb.Data.DynamoDb
 {
     public partial class RepositoryDynamoDb : IRepository
     {
-
-        public Story StoryGet(long id)
+        public Story StoryGet(long projectId, long storyId)
         {
             throw new NotImplementedException();
         }
@@ -30,19 +29,6 @@ namespace IlinkDb.Data.DynamoDb
         {
             throw new NotImplementedException();
         }
-
-
-        public Story Add(Story story)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Story Add(long projectId, Story story)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public IQueryable<Story> StoryListForLabel(long projectId, string label)
         {

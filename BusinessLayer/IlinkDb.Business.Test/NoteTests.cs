@@ -77,15 +77,13 @@ namespace IlinkDb.Business.Test
         [TestMethod]
         public void AddNoteTest()
         {
-            long projectId = 830205;
-
             StoryManager storyManager = new StoryManager(true);
-            List<Story> storyList = storyManager.List(projectId);
+            List<Story> storyList = storyManager.List();
 
             Note note = new Note();
             // note.User = "ilinkdb";
             note.Text = "from API test @ " + DateTime.Now;
-            Note newNote = _noteManager.AddNote(storyList[1], note);
+            Note newNote = _noteManager.Save(storyList[1], note);
             Assert.IsNotNull(newNote, "newNote should not have been null");
             Assert.IsTrue(newNote.Id > 0, "newNote ID should have been > 0");
         }

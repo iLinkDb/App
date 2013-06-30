@@ -11,6 +11,7 @@ namespace IlinkDb.Data.DynamoDb
     public partial class RepositoryDynamoDb : IRepository
     {
 
+
         public Project ProjectGet(long id)
         {
             throw new NotImplementedException();

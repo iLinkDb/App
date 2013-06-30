@@ -24,29 +24,27 @@ namespace IlinkDb.Business
             { _db.Initialize(); }
         }
 
-        public Task Get(long id)
+        public Task Get(Story story, long id)
         {
-            return _db.Get(id);
+            story.ProjectId = TenantManager.ProjectId;
+            return _db.TaskGet(story, id);
         }
 
-        public Task Add(Story story, Task task)
+        public Task Save(Story story, Task task)
         {
-            return _db.Add(story, task);
-        }
-
-        public Task Save(Task task)
-        {
-            return _db.Save(task);
+            story.ProjectId = TenantManager.ProjectId;
+            return _db.TaskSave(story, task);
         }
 
         public bool Delete(Task task)
         {
-            return _db.Delete(task);
+            return _db.TaskDelete(task);
         }
 
         public List<Task> List(Story story)
         {
-            return _db.List(story).ToList();
+            story.ProjectId = TenantManager.ProjectId;
+            return _db.TaskList(story).ToList();
         }
 
     }

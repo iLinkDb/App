@@ -1,17 +1,18 @@
 ﻿<script type='text/javascript'>
+
     msb.story = function (item) {
         am.TraceDir("Story/msb.story", item);
-        this.id = ko.observable(item.id);
-        this.projectId = ko.observable(item.projectId);
-        this.name = ko.observable(item.name);
-        this.description = ko.observable(item.description);
-        this.estimate = ko.observable(item.estimate);
-        this.labels = ko.observable(item.labels);
+        var self = this;
 
+        self.id = ko.observable(item.id);
+        self.name = ko.observable(item.name);
+        self.description = ko.observable(item.description);
+        self.estimate = ko.observable(item.estimate);
+        self.labels = ko.observable(item.labels);
+        
         this.updateItem = function (item) {
-            am.Trace("msb.updateItem");
+            am.TraceDir("msb.updateItem", item);
             this.id(item.id);
-            this.projectId(item.projectId);
             this.name(item.name);
             this.description(item.description);
             this.estimate(item.estimate);
@@ -24,18 +25,18 @@
 
             form.data('story', this);
         };
-    }
+    };
 
     msb.storyViewModel = {
         itemList: ko.observableArray([]),
 
         loadItemList: function () {
             var self = this;
-            $.getJSON('http://' + msb.restHost + '/' + msb.controller + '/ListForLabel?projectid=830205&label=' + encodeURIComponent(location.pathname),
+            $.getJSON('http://' + msb.restHost + '/' + msb.controller + '/ListForLabel?label=' + encodeURIComponent(location.pathname),
                 function (itemList) {
                     self.itemList.removeAll();
                     $.each(itemList, function (index, item) {
-                        am.TraceDir("pushing items:", item);
+                        am.TraceDir("pushing story:", item);
                         self.itemList.push(new msb.story(item));
                     });
                 }
@@ -73,14 +74,13 @@
                         return jsonObject.id === item.id();
                     });
                     match.updateItem(jsonObject);
-                }
-                else {
+                } else {
                     msb.storyViewModel.itemList.push(new msb.story(jsonObject));
                 }
                 $('#msb_ModalEdit').modal('hide');
             }
         });
-    }
+    };
 
     msb.GetItemFromForm = function () {
         var form = $('#msbFormEdit');
@@ -90,7 +90,7 @@
             item[this.name] = $(this).val();
         });
         return item;
-    }
+    };
 
     $('#msb_ModalEdit').on('hide', function () {
         am.Trace("msb_ModalEdit onHide");
@@ -113,7 +113,6 @@
             .val(story.id()).prependTo(form);
 
         // Update the form fields to be edited.
-        form.find("#ProjectId").val(story.projectId());
         form.find('#Name').val(story.name());
         form.find('#Description').val(story.description());
         form.find('#Estimate').val(story.estimate());
@@ -121,7 +120,7 @@
         am.TraceDir("Dumping story:", story);
 
         msb.editStoryId = story.id();
-        loadTasks();
+        msb.loadTasks();
 
         $("#spnTitle").html(story.name() + ' <span class="EditTitle">(' + story.id() + ')</span>');
     });

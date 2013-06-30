@@ -10,13 +10,12 @@ namespace IlinkDb.Data.DynamoDb
 {
     public partial class RepositoryDynamoDb : IRepository
     {
-
-        public Note NoteGet(long id)
+        public Note NoteGet(Story story, long noteId)
         {
             throw new NotImplementedException();
         }
 
-        public Note NoteSave(Note note)
+        public Note NoteSave(Story story, Note newItem)
         {
             throw new NotImplementedException();
         }
@@ -26,17 +25,7 @@ namespace IlinkDb.Data.DynamoDb
             throw new NotImplementedException();
         }
 
-        public IQueryable<Note> NoteList()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Note> NoteListForPath(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Note Add(Story story, Note note)
+        public IQueryable<Note> NoteList(Story story)
         {
             throw new NotImplementedException();
         }

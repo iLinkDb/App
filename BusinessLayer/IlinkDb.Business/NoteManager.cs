@@ -25,29 +25,24 @@ namespace IlinkDb.Business
             { _db.Initialize(); }
         }
 
-        public Note Get(long id)
+        public Note Get(Story story, long noteId)
         {
-            return _db.NoteGet(id);
+            return _db.NoteGet(story, noteId);
         }
 
-        public Note AddNote(Story story, Note note)
+        public Note Save(Story story, Note note)
         {
-            return _db.Add(story, note);
+            return _db.NoteSave(story, note);
         }
-
-        //public Note Save(Note note)
-        //{
-        //    return _db.NoteSave(note);
-        //}
 
         public bool Delete(Note note)
         {
             return _db.NoteDelete(note);
         }
 
-        public List<Note> List()
+        public List<Note> List(Story story)
         {
-            return _db.NoteList().ToList();
+            return _db.NoteList(story).ToList();
         }
 
     }

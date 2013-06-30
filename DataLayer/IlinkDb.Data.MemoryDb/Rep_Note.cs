@@ -3,72 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using AppCommon;
 using IlinkDb.Entity;
 
 namespace IlinkDb.Data.MemoryDb
 {
     public partial class RepositoryMemory : IRepository
     {
-        private IList<Note> _noteList;
+        private IList<Note> _noteList = new List<Note>();
         private int _noteListCount;
 
-        private void NoteInitialize(RandomData random, Story story)
+        private IList<Note> NoteInitialize(RandomData random, Story story)
         {
-            if (_noteList == null)
-            { _noteList = new List<Note>(); }
-
-            // Add one known domain to the list.
-            _noteList.Add(new Note
-            {
-                Id = _noteList.Count + 1,
-                StoryId = story.Id,
-                User = "Tom Tuttle",
-                Text = "The main note for the root of the site."
-            });
+            IList<Note> retVal = new List<Note>();
 
             // Add a random number of notes.
-            for (int iLoop = 0; iLoop < random.Int(5, 10); iLoop++)
+            for (int iLoop = 0; iLoop < random.Int(3, 6); iLoop++)
             {
-                _noteList.Add(new Note
+                Note newNote = new Note
                 {
                     Id = iLoop + 1,
-                    User = "Tom Tuttle",
-                    Text = random.Ipsum(10, 30)
-                });
+                    StoryId = story.Id,
+                    User = random.NameAndTitle(),
+                    Text = random.Ipsum(6, 10) + " newItem",
+                };
+
+                retVal.Add(newNote);
+                _noteList.Add(newNote);
             }
             _noteListCount = _noteList.Count;
-        }
 
-        public Note NoteGet(long id)
-        {
-            Note retVal = _noteList.First<Note>(n => n.Id == id);
-            //foreach (Note item in _noteList)
-            //{
-            //    if (item.Id == id)
-            //    { retVal = item; break; }
-            //}
             return retVal;
         }
 
-        public Note NoteSave(Note newOne)
+        public Note NoteGet(Story story, long noteId)
+        {
+            Note retVal = _noteList.First<Note>(n => n.Id == noteId);
+            return retVal;
+        }
+
+        public Note NoteSave(Story story, Note newItem)
         {
             Note retVal = null;
 
-            if (newOne.Id > 0)
-            { retVal = _noteList.First(o => o.Id == newOne.Id); }
+            string logMsg = "Rep_Note/Save";
 
-            if (retVal == null)
+            try
             {
-                newOne.Id = ++_noteListCount;
-                _noteList.Add(newOne);
-                retVal = newOne;
+                if (newItem.StoryId < 1)
+                {
+                    Logging.LogError(logMsg + ", ERROR - Invalid StoryId");
+                }
+                else
+                {
+                    if (newItem.Id > 0)
+                    {
+                        foreach (Story item in _storyList)
+                        {
+                            if (item.Id == newItem.StoryId)
+                            {
+                                if (newItem.Id <= _noteList.Count)
+                                {
+                                    retVal = _noteList.First(o => o.Id == newItem.Id);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (retVal == null)
+                    {
+                        newItem.Id = ++_noteListCount;
+                        _noteList.Add(newItem);
+                        retVal = newItem;
+                    }
+                    else
+                    {
+                        retVal.Text = newItem.Text;
+                        retVal.User = newItem.User;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                retVal.User = newOne.User;
-                retVal.Text = newOne.Text;
-                retVal.DateAdded = newOne.DateAdded;
+                Logging.LogError(logMsg + ", EXCEPTION: " + ex.Message, ex);
             }
 
             return retVal;
@@ -88,20 +106,11 @@ namespace IlinkDb.Data.MemoryDb
             return retVal;
         }
 
-        public IQueryable<Note> NoteList()
+        public IQueryable<Note> NoteList(Story story)
         {
-            return ((IEnumerable<Note>)_noteList).Select(x => x).AsQueryable();
-        }
+            //return ((IEnumerable<Note>)_noteList).Select(x => x).AsQueryable();
+            return ((IEnumerable<Note>)_noteList).Where(x => x.StoryId == story.Id).AsQueryable();
 
-        //public IQueryable<Note> NoteListForPath(string path)
-        //{
-        //    return ((IEnumerable<Note>)_noteList).Select(x => x).Where(w => w.NotePath == path).AsQueryable();
-        //}
-
-
-        public Note Add(Story story, Note note)
-        {
-            throw new NotImplementedException();
         }
     }
 }

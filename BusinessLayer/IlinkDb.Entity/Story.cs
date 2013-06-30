@@ -75,17 +75,12 @@ namespace IlinkDb.Entity
             Estimate = -1;
         }
 
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("Id: {0}", Id);
-            sb.AppendFormat(", Name: {0}", Name);
-            return sb.ToString();
-        }
-
         public Story(XElement node)
         {
             string logMsg = "Story/Constructor";
+
+            if (node == null)
+            { throw new ArgumentNullException(logMsg + " node parameter must not be null"); }
 
             try
             {
@@ -222,19 +217,19 @@ namespace IlinkDb.Entity
                         xmlNode.AppendChild(element);
                     }
 
-                    if (CreatedAt.HasValue)
-                    {
-                        XmlElement element = retVal.CreateElement("created_at");
-                        element.InnerText = CreatedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
-                        xmlNode.AppendChild(element);
-                    }
+                    //if (CreatedAt.HasValue)
+                    //{
+                    //    XmlElement element = retVal.CreateElement("created_at");
+                    //    element.InnerText = CreatedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
+                    //    xmlNode.AppendChild(element);
+                    //}
 
-                    if (AcceptedAt.HasValue)
-                    {
-                        XmlElement element = retVal.CreateElement("accepted_at");
-                        element.InnerText = AcceptedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
-                        xmlNode.AppendChild(element);
-                    }
+                    //if (AcceptedAt.HasValue)
+                    //{
+                    //    XmlElement element = retVal.CreateElement("accepted_at");
+                    //    element.InnerText = AcceptedAt.GetValueOrDefault().ToString("yyyyMMdd"); //TaskDueDate
+                    //    xmlNode.AppendChild(element);
+                    //}
 
                     retVal.AppendChild(xmlNode);
                 }
@@ -243,6 +238,14 @@ namespace IlinkDb.Entity
 
                 return retVal;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Id: {0}", Id);
+            sb.AppendFormat(", Name: {0}", Name);
+            return sb.ToString();
         }
 
     }

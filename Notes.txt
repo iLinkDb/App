@@ -49,4 +49,6 @@ Need to see comments and tasks for stories
 UserId for TeamCity is scottb, pwd is fred
 Changing a file to kick the build.
 
+ProjectId needs to be removed from the Presentation layer.  This is something that should be looked up from
+the tenant table in the business layer.
 

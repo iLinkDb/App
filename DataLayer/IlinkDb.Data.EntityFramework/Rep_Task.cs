@@ -9,28 +9,22 @@ namespace IlinkDb.Data.EntityFramework
 {
     public partial class RepositoryEntityFramework : IRepository
     {
-
-        public Task Get(long id)
+        public Task TaskGet(Story story, long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task Save(Task task)
+        public Task TaskSave(Story story, Task task)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(Task task)
+        public bool TaskDelete(Task task)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Task> List(Story story)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Add(Story story, Task task)
+        public IQueryable<Task> TaskList(Story story)
         {
             throw new NotImplementedException();
         }

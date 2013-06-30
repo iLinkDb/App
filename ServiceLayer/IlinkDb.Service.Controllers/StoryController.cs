@@ -18,7 +18,7 @@ namespace IlinkDb.Service.Controllers
     public class StoryController : ApiController
     {
         [AcceptVerbs("GET")]
-        public HttpResponseMessage Get(long id)
+        public HttpResponseMessage Get(long storyId)
         {
             HttpResponseMessage retVal = new HttpResponseMessage();
 
@@ -27,7 +27,7 @@ namespace IlinkDb.Service.Controllers
             try
             {
                 StoryManager mgr = new StoryManager();
-                Story story = mgr.Get(id);
+                Story story = mgr.Get(storyId);
 
                 Logging.LogDebug(logMsg + string.Format(" Story: {0}", story));
 
@@ -43,7 +43,7 @@ namespace IlinkDb.Service.Controllers
         }
 
         [AcceptVerbs("GET")]
-        public HttpResponseMessage List(long projectId)
+        public HttpResponseMessage List()
         {
             HttpResponseMessage retVal = new HttpResponseMessage();
 
@@ -52,10 +52,10 @@ namespace IlinkDb.Service.Controllers
             try
             {
                 StoryManager mgr = new StoryManager();
-                List<Story> storys = mgr.List(projectId);
+                List<Story> storys = mgr.List();
 
-                Logging.LogDebug(logMsg + string.Format(" for projectId: {0} Story Count: {1}",
-                    projectId, storys.Count()));
+                Logging.LogDebug(logMsg + string.Format(" Story Count: {0}",
+                    storys.Count()));
 
                 retVal = Request.CreateResponse(HttpStatusCode.OK, storys);
             }
@@ -69,7 +69,7 @@ namespace IlinkDb.Service.Controllers
         }
 
         [AcceptVerbs("GET")]
-        public HttpResponseMessage ListForLabel(long projectId, string label)
+        public HttpResponseMessage ListForLabel(string label)
         {
             HttpResponseMessage retVal = new HttpResponseMessage();
 
@@ -79,10 +79,10 @@ namespace IlinkDb.Service.Controllers
             {
                 string workLabel = CleanLabel(label);
                 StoryManager mgr = new StoryManager();
-                List<Story> storys = mgr.ListForLabel(projectId, workLabel);
+                List<Story> storys = mgr.ListForLabel(workLabel);
 
-                Logging.LogDebug(logMsg + string.Format(" for projectId: {0}, Label: {1} Story Count: {2}",
-                    projectId, label, storys.Count()));
+                Logging.LogDebug(logMsg + string.Format(" for Label: {0} Story Count: {1}",
+                    label, storys.Count()));
 
                 retVal = Request.CreateResponse(HttpStatusCode.OK, storys);
             }

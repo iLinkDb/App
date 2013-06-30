@@ -44,5 +44,9 @@ namespace IlinkDb.Business
         {
             return _db.TenantList().ToList();
         }
+
+        // TODO The ProjectId needs to be looked up from the Tenant table.
+        public static long ProjectId
+        { get { return 830205; } }
     }
 }

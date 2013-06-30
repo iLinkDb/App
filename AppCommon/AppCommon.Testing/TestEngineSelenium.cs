@@ -45,41 +45,12 @@ namespace AppCommon
             _browser.Quit();
         }
 
-        public void SetTextFieldById(string fieldName, string value)
-        { SetTextField(fieldName, value, SelectTextFieldEnum.Id); }
-
-        public void SetTextFieldByName(string fieldName, string value)
-        { SetTextField(fieldName, value, SelectTextFieldEnum.Name); }
-
-        #region Private Methods
-
-        private void SetTextField(string fieldName, string value, SelectTextFieldEnum selectBy)
-        {
-            string msg = string.Format("SetTextFieldBy{0} for {1} to: <b>{2}</b>",
-                   selectBy, fieldName, value);
-
-            IWebElement field;
-            if (selectBy == SelectTextFieldEnum.Id)
-            { field = _browser.FindElement(By.Name(fieldName)); }
-            else
-            { field = _browser.FindElement(By.Name(fieldName)); }
-
-            if (field == null )
-            {
-                 ShowError(msg); 
-            }
-            else
-            {
-                field.SendKeys(value);
-                ShowSuccess(msg);
-            }
-        }
-
-        #endregion
-
         public bool Assert(string lookFor)
         {
-            bool retVal = _browser.PageSource.Contains(lookFor);
+            const int WAIT_SECONDS = 15;
+            WebDriverWait wait = new WebDriverWait(_browser, new TimeSpan(0, 0, WAIT_SECONDS));
+
+            bool retVal = wait.Until(d => d.PageSource.Contains(lookFor));
 
             //var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
             //return wait.Until(drv => drv.FindElement(by));
@@ -103,11 +74,6 @@ namespace AppCommon
             // Not sure what to do here yet...
         }
 
-        public void ClickLinkByText(string fieldName)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetFocusToBody()
         {
             throw new NotImplementedException();
@@ -127,5 +93,77 @@ namespace AppCommon
         {
             throw new NotImplementedException();
         }
+
+        #region Links
+
+        public void LinkClickById(string linkId)
+        { LinkClick(linkId, SelectByEnum.Id); }
+
+        public void LinkClickByText(string linkText)
+        { LinkClick(linkText, SelectByEnum.Name); }
+
+        private void LinkClick(string linkFind, SelectByEnum selectBy)
+        {
+            string msg = string.Format("LinkClick{0} for {1}",
+                   selectBy, linkFind);
+
+            IWebElement element;
+            if (selectBy == SelectByEnum.Id)
+            { element = _browser.FindElement(By.Id(linkFind)); }
+            else
+            { element = _browser.FindElement(By.LinkText(linkFind)); }
+
+            if (element == null)
+            {
+                ShowError(msg);
+            }
+            else
+            {
+                element.Click();
+                ShowSuccess(msg);
+            }
+        }
+
+        #endregion
+
+        #region Text Input
+
+        public void SetTextFieldById(string fieldName, string value)
+        { SetTextField(fieldName, value, SelectByEnum.Id); }
+
+        public void SetTextFieldByName(string fieldName, string value)
+        { SetTextField(fieldName, value, SelectByEnum.Name); }
+
+        private void SetTextField(string fieldName, string value, SelectByEnum selectBy)
+        {
+            string msg = string.Format("SetTextFieldBy{0} for {1} to: <b>{2}</b>",
+                   selectBy, fieldName, value);
+
+            try
+            {
+                IWebElement element;
+                if (selectBy == SelectByEnum.Id)
+                { element = _browser.FindElement(By.Name(fieldName)); }
+                else
+                { element = _browser.FindElement(By.Name(fieldName)); }
+
+                if (element == null)
+                {
+                    ShowError(msg);
+                }
+                else
+                {
+                    element.SendKeys(value);
+                    ShowSuccess(msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(msg);
+            }
+        }
+
+        #endregion
+
     }
 }

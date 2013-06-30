@@ -25,34 +25,31 @@ namespace IlinkDb.Business
             { _db.Initialize(); }
         }
 
-        public Story Get(long id)
+        public Story Get(long storyId)
         {
-            return _db.StoryGet(id);
+            return _db.StoryGet(TenantManager.ProjectId, storyId);
         }
 
         public Story Save(Story story)
         {
+            story.ProjectId = TenantManager.ProjectId;
             return _db.StorySave(story);
-        }
-
-        public Story Add(long projectId, Story story)
-        {
-            return _db.Add(projectId, story);
         }
 
         public bool Delete(Story story)
         {
+            story.ProjectId = TenantManager.ProjectId;
             return _db.StoryDelete(story);
         }
 
-        public List<Story> List(long projectId)
+        public List<Story> List()
         {
-            return _db.StoryList(projectId).ToList();
+            return _db.StoryList(TenantManager.ProjectId).ToList();
         }
 
-        public List<Story> ListForLabel(long projectId, string label)
+        public List<Story> ListForLabel(string label)
         {
-            return _db.StoryListForLabel(projectId, label).ToList();
+            return _db.StoryListForLabel(TenantManager.ProjectId, label).ToList();
         }
 
     }

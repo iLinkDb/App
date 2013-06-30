@@ -105,7 +105,7 @@ namespace AppCommon
          _tw.WriteLine("<table>");
 
          _tw.WriteLine("<tr>");
-         _tw.WriteLine("<th colspan='2' align='left'><h2>" + testText + "</h2></th>");
+         _tw.WriteLine("<th colspan='2' align='left'><h2 style='height: 12px;'>" + testText + "</h2></th>");
          _tw.WriteLine("</tr>");
 
          _tw.WriteLine("<tr>");
@@ -151,6 +151,7 @@ namespace AppCommon
       internal void WriteEndTest()
       {
          _tw.WriteLine("</table>");
+         _tw.WriteLine("<br />");
          _tw.Flush();
       }
 

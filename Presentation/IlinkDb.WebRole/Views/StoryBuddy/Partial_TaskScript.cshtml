@@ -1,35 +1,22 @@
 ﻿<script type='text/javascript'>
-    function loadTasks() {
-        am.TraceDir("loadTasks for story:", msb.editStoryId)
+
+    msb.loadTasks = function () {
+        am.TraceDir("Task/msb.loadTasks for story:", msb.editStoryId);
         msb.editTaskId = 0;
         $.ajax({
-            url: 'http://' + msb.restHost + '/' + msb.controller + '/get/' + msb.editStoryId,
-            success: showTasks,
+            url: 'http://' + msb.restHost + '/' + msb.controller + '/get?storyId=' + msb.editStoryId,
+            success: msb.showTasks,
             dataType: 'json'
         });
-    }
-    function showTasks(data) {
-        am.TraceDir("showTasks", data);
+    };
 
-        $("#taskList").empty();
-        if (data.tasks != null) {
-            for (var iLoop = 0; iLoop < data.tasks.length; iLoop++) {
-                $("<li />", { text: data.tasks[iLoop].description, class: "liTaskEdit", id: "task-" + data.tasks[iLoop].id }).appendTo("#taskList");
-            }
-            $("<li />", { text: "Add New Task", class: "liTaskEdit liTaskAdd", id: "task-0" }).appendTo("#taskList");
-
-            $(".liTaskEdit").click(editTask);
-        }
-    }
-
-    function editTask() {
-
-        am.TraceDir("editTask", this);
+    msb.editTask = function () {
+        am.TraceDir("Task/msb.editTask", this);
         var item = this;
 
         if (msb.editTaskId < 1) {
             msb.editTaskId = item.id.substring(5);
-            am.TraceDir("item.id", msb.editTaskId);
+            am.TraceDir("Task/msb.editTask, item.id", msb.editTaskId);
 
             var text = item.innerHTML;
             if ($(item).hasClass("liTaskAdd")) {
@@ -43,7 +30,7 @@
 
             $(this).remove();
 
-            $("#btnCancelTask").click(function () { loadTasks(); });
+            $("#btnCancelTask").click(function () { msb.loadTasks(); });
 
             $("#btnSaveTask").click(function () {
 
@@ -55,7 +42,7 @@
                         description: $("#txtTaskInput").val(),
                         storyId: msb.editStoryId
                     },
-                    success: loadTasks,
+                    success: msb.loadTasks,
                     dataType: 'json'
                 });
             });
@@ -63,6 +50,29 @@
         } else {
             alert("Please Save or cancel the current edit before editing this task");
         }
-    }
+    };
+
+    msb.showTasks = function (data) {
+        am.TraceDir("Task/msb.showTasks", data);
+
+        $("#taskList").empty();
+        if (data.id > 0) {
+            if (data.tasks != null) {
+                for (var iLoop = 0; iLoop < data.tasks.length; iLoop++) {
+                    $("<li />", { text: data.tasks[iLoop].description, class: "liTaskEdit", id: "task-" + data.tasks[iLoop].id }).appendTo("#taskList");
+                }
+                //am.TraceDir("Before Match: ", data);
+                //var match = ko.utils.arrayFirst(msb.storyViewModel.itemList(), function (item) {
+                //    return data.id === item.id();
+                //});
+                //am.TraceDir("After Match: ", match);
+                //match.updateItem(data);
+            }
+            $("<li />", { text: "Add New Task", class: "liTaskEdit liTaskAdd", id: "task-0" }).appendTo("#taskList");
+
+            $(".liTaskEdit").click(msb.editTask);
+        }
+    };
+
 
 </script>
