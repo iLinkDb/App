@@ -95,7 +95,7 @@
     $('#msb_ModalEdit').on('hide', function () {
         am.Trace("msb_ModalEdit onHide");
         var form = $('#msbFormEdit');
-        form.validate().resetForm();
+        //form.validate().resetForm();
         form.get(0).reset();
         form.removeData('story');
         form.find("input[type='hidden'][id='id']").remove();
